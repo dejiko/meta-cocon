@@ -1,0 +1,27 @@
+--- linux-3.10.54/drivers/video/Kconfig.org	2014-09-29 17:45:06.461505970 +0900
++++ linux-3.10.54/drivers/video/Kconfig	2014-09-29 17:45:44.581504296 +0900
+@@ -2470,6 +2470,8 @@ config FB_SIMPLE
+ 	  through device tree, or potentially plain old platform data in the
+ 	  future.
+ 
++source "drivers/video/sm712fb/Kconfig"
++
+ source "drivers/video/omap/Kconfig"
+ source "drivers/video/omap2/Kconfig"
+ source "drivers/video/exynos/Kconfig"
+--- linux-3.10.54/drivers/video/Makefile.org	2014-09-29 17:39:48.161522581 +0900
++++ linux-3.10.54/drivers/video/Makefile	2014-09-29 17:40:21.233523394 +0900
+@@ -133,6 +133,7 @@ obj-$(CONFIG_FB_COBALT)           += cob
+ obj-$(CONFIG_FB_IBM_GXT4500)	  += gxt4500.o
+ obj-$(CONFIG_FB_PS3)		  += ps3fb.o
+ obj-$(CONFIG_FB_SM501)            += sm501fb.o
++obj-$(CONFIG_FB_SM712)            += sm712fb/
+ obj-$(CONFIG_FB_UDL)		  += udlfb.o
+ obj-$(CONFIG_FB_SMSCUFX)	  += smscufx.o
+ obj-$(CONFIG_FB_XILINX)           += xilinxfb.o
+--- linux-3.10.54/drivers/video/sm712fb/Makefile.org	2014-09-29 18:37:06.125235354 +0900
++++ linux-3.10.54/drivers/video/sm712fb/Makefile	2014-09-29 18:40:06.393232895 +0900
+@@ -1 +1,2 @@
+-obj-$(CONFIG_FB_SM712) += sm712fb_drv.o sm712fb_accel.o
++obj-$(CONFIG_FB_SM712) += sm712fb.o
++sm712fb-objs := sm712fb_drv.o sm712fb_accel.o

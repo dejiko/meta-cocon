@@ -91,15 +91,14 @@ do
     ;;
 
   NTP)
-      dialog --inputbox "Enter NTP Server to connect" 8 40 2>$NTP_HOSTN
+      dialog --inputbox "Enter NTP Server to connect (If empty, connect to ntppool.)" 8 40 2>$NTP_HOSTN
 
       ntp_host=`cat $NTP_HOSTN`
 
-      # TODO : vendor id is pending! do not uncomment.
-#      if [ -z "$ntp_host" ];
-#      then
-#        ntp_host="` echo $((RANDOM % 4)) `.opencocon.pool.ntp.org"
-#      fi
+      if [ -z "$ntp_host" ];
+      then
+        ntp_host="` echo $((RANDOM % 4)) `.opencocon.pool.ntp.org"
+      fi
       if [ -n "$ntp_host" ];
       then
         su -c "ntpdate $ntp_host"

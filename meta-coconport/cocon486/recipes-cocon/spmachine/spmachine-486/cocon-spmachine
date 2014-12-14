@@ -106,20 +106,15 @@ fi
 # Workaround for Libretto L1, L2, ...
 if [ "`echo "$MACHINE_MAKER" | grep 'TOSHIBA'`" -a "`echo "$MACHINE_NAME" | grep -E 'Libretto L'`" ];
 then
-  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
+#  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
+  ln -s $SPMACHINE486_CONF/card-fbdev.conf $XORG_CONF_D/card-fbdev.conf
 fi
 
 # Siliconmotion : Workaroud for SM712
 if [ "` lspci | grep -E '126f:0712' `" ];
 then
-#  ln -sf $SPMACHINE486_CONF/smi_712.conf $XORG_CONF_D/smi_712.conf
-  if [ -b /dev/fb0 ];
-  then
-    echo "SM712 Framebuffer mode."
-  else
-    dialog --msgbox "Unfortunately, Siliconmotion SM712 device can't run X.org correctly without use SVGA framebuffer. Please reboot and select Force Framebuffer option." 15 60
-
-  fi
+  modprobe sm712fb
+  ln -s $SPMACHINE486_CONF/card-fbdev.conf $XORG_CONF_D/card-fbdev.conf
 fi
 
 

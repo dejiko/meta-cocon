@@ -54,9 +54,23 @@ then
 fi
 
 
+# Auto VPN connection
+# TODO : multiple protocol
+if [ "$COCON_AUTOVPN" ];
+then
+  echo "============== AUTOVPN : $COCON_AUTOVPN"
+  case $COCON_AUTOVPN in
+  se)
+    lxterminal -e "/usr/bin/cocon-softether-launch connect"
+    ;;
+  esac
+fi
+
+
 # Auto connection
 if [ "$COCON_AUTOCONNECT" ];
 then
+  echo "============== AUTOCONNECT : $COCON_AUTOCONNECT"
   case $COCON_AUTOCONNECT in
   rdp)
     lxterminal -e /usr/bin/cocon-freerdp-launch
@@ -74,17 +88,33 @@ then
     cocon-xephyr-launch
     ;;
   esac
-  
-  # Poweroff Flag
-  if [ "$COCON_POWEROFF_AFTER_AUTOCONNECT" = "1" ];
-  then
-    touch $PWROFF
-    exit 0
-  else
-    # TODO : Disable Autoconnect settings!
-    sleep 5
-  fi 
 fi
+
+# Disconnect VPN
+# Auto VPN connection
+if [ "$COCON_AUTOVPN" ];
+then
+  echo "============== AUTOVPN (Disconnect) : $COCON_AUTOVPN"
+  case $COCON_AUTOVPN in
+  se)
+    cocon-softether-launch hangup
+    ;;
+  esac
+fi
+
+
+
+# Poweroff Flag
+if [ "$COCON_POWEROFF_AFTER_AUTOCONNECT" = "1" ];
+then
+  echo "============== Poweroff after AUTOCONNECT"
+  touch $PWROFF
+  exit 0
+else
+  # TODO : Disable Autoconnect settings!
+  sleep 5
+fi 
+
 
 
   # New mode menu

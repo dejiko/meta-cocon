@@ -8,7 +8,6 @@ CNFFILE="/tmp/.cocon.cnf"
 DISKSTATS_TMP="/var/volatile/tmp/.cocon.diskstats"
 CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
 
-. /usr/bin/cocon-read-cnf
 
 read_args() {
     [ -z "$CMDLINE" ] && CMDLINE=`cat /proc/cmdline`
@@ -84,7 +83,7 @@ scan_cocon_setting()
         if [ -r $CONF_MOUNT/cocon.cnf -a "$dev" != "$rootdv" ];
         then
           echo  " --> cocon.cnf found"
-          read_cocon_cnf $CONF_MOUNT/cocon.cnf
+          cocon-read-cnf $CONF_MOUNT/cocon.cnf >> $CNFFILE
         fi
 
         # Non-redistributable Firmwares
@@ -207,17 +206,17 @@ fi
 # First : /usr/share/cocon/default.cnf
 # Second : /mnt/cf/mnt/realroot/cocon.cnf
 # Third : (mounted device except boot device)/cocon.cnf [TODO]
-read_cocon_cnf "$DEFCONF"
+cocon-read-cnf $DEFCONF >> $CNFFILE
 if [ -z "$BOOT_FS" ];
 then
   if [ -r $SECCONF_EXTREME ];
   then
-    read_cocon_cnf $SECCONF_EXTREME
+    cocon-read-cnf $SECCONF_EXTREME >> $CNFFILE
   fi
 else
   if [ -r $SECCONF ];
   then
-    read_cocon_cnf $SECCONF
+    cocon-read-cnf $SECCONF >> $CNFFILE
   fi
 fi
 

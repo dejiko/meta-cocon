@@ -1,0 +1,20 @@
+diff --git a/src/smi_driver.c b/src/smi_driver.c
+index 134db79..f0ed9de 100644
+--- a/src/smi_driver.c
++++ b/src/smi_driver.c
+@@ -131,7 +131,6 @@ static SymTabRec SMIChipsets[] =
+     { PCI_CHIP_SMI810, "LynxE"   },
+     { PCI_CHIP_SMI820, "Lynx3D"  },
+     { PCI_CHIP_SMI710, "LynxEM"  },
+-    { PCI_CHIP_SMI712, "LynxEM+" },
+     { PCI_CHIP_SMI720, "Lynx3DM" },
+     { PCI_CHIP_SMI731, "Cougar3DR" },
+     { PCI_CHIP_SMI501, "MSOC"	 },
+@@ -145,7 +144,6 @@ static PciChipsets SMIPciChipsets[] =
+     { PCI_CHIP_SMI810,	PCI_CHIP_SMI810,	RES_SHARED_VGA },
+     { PCI_CHIP_SMI820,	PCI_CHIP_SMI820,	RES_SHARED_VGA },
+     { PCI_CHIP_SMI710,	PCI_CHIP_SMI710,	RES_SHARED_VGA },
+-    { PCI_CHIP_SMI712,	PCI_CHIP_SMI712,	RES_SHARED_VGA },
+     { PCI_CHIP_SMI720,	PCI_CHIP_SMI720,	RES_SHARED_VGA },
+     { PCI_CHIP_SMI731,	PCI_CHIP_SMI731,	RES_SHARED_VGA },
+     { PCI_CHIP_SMI501,	PCI_CHIP_SMI501,	RES_UNDEFINED  },

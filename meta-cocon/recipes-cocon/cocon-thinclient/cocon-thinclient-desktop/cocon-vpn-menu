@@ -17,26 +17,17 @@ SE_FLAG=/tmp/.cocon.softether
 SE_DISCONN=/tmp/.cocon.sedisconn
 SE_GATEWAY_SELECT=/tmp/.cocon.segw.select
 SE_RESOLV_BACKUP=/tmp/.cocon.seresolv
+PARTCNF=/tmp/.cocon.cnf.part
 
 while :
 do
 
 
 
-  # If connected SoftEther, show SEDHCP
-  if [ -e $SE_FLAG ];
-  then
-    menu_sedhcp="SEDHCP"
-    menu_sedhcp_desc="Enable DHCP for SoftEther VPN Port"
-  else
-    menu_sedhcp="----"
-  fi
-
 
   dialog --no-cancel --menu "VPN connect menu" 20 60 25 \
     SSHPF "Setup SSH port forwarding" \
     SE    "Connect (or disconnect) SoftEther VPN Server" \
-    "$menu_sedhcp" "$menu_sedhcp_desc" \
     SEST  "SoftEther connection status" \
     RET   "Return to main menu" 2>$SELECT
 
@@ -86,132 +77,63 @@ do
       se_disconn_ret="$?"
       if [ "$se_disconn_ret" = "0" ];
       then
-
-        # Stop udhcpc process
-        su -c "/usr/vpnclient/vpnclient stop"
-        se_dhcp_process=` ps ax | grep vpn_tun0 | sed /grep/d | awk '{print $1}' `
-        su -c "kill $se_dhcp_process"
-
-        # Restore gateway if changed
-        if [ "`cat $SE_GATEWAY_SELECT`" = "VPN" ];
-        then
-          su -c "cp $SE_RESOLV_BACKUP /etc/resolv.conf"
-          su -c "/sbin/ip route del default"
-          su -c "/sbin/ip route add default via ` cat $SE_GATEWAY `"
-        fi
-
-        # Disconnect
-        vpncmd /CLIENT localhost /CMD AccountDisconnect gate
-        vpncmd /CLIENT localhost /CMD NicDisable tun0
-        vpncmd /CLIENT localhost /CMD NicDelete tun0
-
-        rm $SE_FLAG
+        cocon-softether-launch hangup
       fi
     else
 
       dialog --inputbox "Enter SoftEther VPN hostname:port to connect" 8 40 2>$SE_HOSTN
-      dialog --inputbox "Enter SoftEther username" 8 40 2>$SE_USERN
       dialog --inputbox "Enter Hub name to connect" 8 40 2>$SE_HUBN
 
       dialog --no-cancel --menu "Select auth method" 20 60 25 \
         PASS "Password Auth (standard)" \
         ANON "Anonymous Login"  2>$SE_METHOD
+
+      dialog --inputbox "Enter SoftEther username" 8 40 2>$SE_USERN
+
+
+      dialog --no-cancel --menu "Select default gateway to use" 20 60 25 \
+        PHY "Physical gateway" \
+        VPN "VPN gateway" 2>$SE_GATEWAY_SELECT
+
+      if [ `cat $SE_GATEWAY_SELECT` = "VPN" ];
+      then
+        se_gateway_onvpn=1
+      else
+        se_gateway_onvpn=0
+      fi
   
       se_host=`cat $SE_HOSTN`
       se_user=`cat $SE_USERN`
       se_hub=`cat $SE_HUBN`
       se_method=`cat $SE_METHOD`
 
+
       if [ -n $se_host -a -n $se_user -a -n $se_hub ];
       then
-        # Backup gateway ( address  )
-        /sbin/ip route | awk '/default/ { print $3 }' > $SE_GATEWAY
+        echo "COCON_SE_HOST=$se_host" >> $PARTCNF
+        echo "COCON_SE_USER=$se_user" >> $PARTCNF
+        echo "COCON_SE_HUB=$se_hub" >> $PARTCNF
+        echo "COCON_SE_AUTH_METHOD=$se_method" >> $PARTCNF
+        echo "COCON_SE_WAIT_CONNECTED=4" >> $PARTCNF
+        echo "COCON_SE_SET_GATEWAY_ONVPN=$se_gateway_onvpn" >> $PARTCNF
 
-        # Connect
-        su -c "/usr/vpnclient/vpnclient start"
-        vpncmd /CLIENT localhost /CMD NicCreate tun0
-        vpncmd /CLIENT localhost /CMD NicEnable tun0
-        vpncmd /CLIENT localhost /CMD AccountCreate gate "/SERVER:$se_host" "/HUB:$se_hub" "/USERNAME:$se_user" /NICNAME:tun0
-
-        if [ "$se_method" = "PASS" ];
+        cocon-softether-launch connect
+        ret=$?
+        if [ $ret -eq 0 ];
         then
-          vpncmd /CLIENT localhost /CMD AccountPasswordSet gate /TYPE:standard
+          dialog --msgbox "Okey, SoftEther connect complete." 15 60
         fi
 
-        if [ "$se_method" = "ANON" ];
-        then
-          vpncmd /CLIENT localhost /CMD AccountAnonymousSet gate
-        fi
-
-        vpncmd /CLIENT localhost /CMD AccountConnect gate
-        if [ $? -eq 0 ];
-        then
-          dialog --msgbox "Okey, connected. Please select SEDHCP to get IP address, or specify manually." 15 60
-          touch $SE_FLAG
-        else
-          # Cleanup
-          vpncmd /CLIENT localhost /CMD AccountDisconnect gate
-          vpncmd /CLIENT localhost /CMD NicDisable tun0
-          vpncmd /CLIENT localhost /CMD NicDelete tun0
-
-          su -c "/usr/vpnclient/vpnclient stop"
-
-          dialog --msgbox "Failed to connect." 15 60
-        fi
-
+        rm $PARTCNF
+        
       fi
 
     fi
     ;;
 
-
-  SEDHCP)
-    # If really connected?
-    if [ -z "` vpncmd /CLIENT localhost /CMD AccountStatusGet gate | grep "Connection Completed" `" ];
-    then
-
-      dialog --msgbox "It seems not connected for SoftEther VPN server completely. Please check network connection, and clock is correct(run NTP on Option menu)." 15 60
-
-    else
-
-      # After set DHCP to vpn_tun0, two default gateway makes. (phsical, on VPN)
-      # It is good that choice before run DHCP client...
-
-      # Do DHCP, and change default gateway to VPN here.
-      su -c "cp /etc/resolv.conf $SE_RESOLV_BACKUP"
-      su -c "udhcpc -i vpn_tun0"
-
-      # And get default gateway and exclude Physical
-      gateway_org=` cat $SE_GATEWAY `
-      gateway_vpn=` /sbin/ip route | awk '/default/ { print $3 }' `
-
-      if [ -n $gateway_vpn ];
-      then
-        dialog --no-cancel --menu "Select default gateway to use" 20 60 25 \
-          VPN "VPN gateway ($gateway_vpn)" \
-          PHY "Physical gateway ($gateway_org)" 2>$SE_GATEWAY_SELECT
-
-        if [ `cat $SE_GATEWAY_SELECT` = "PHY" ];
-        then
-          su -c "/sbin/ip route del default"
-          su -c "/sbin/ip route add default via $gateway_org"
-          su -c "cp $SE_RESOLV_BACKUP /etc/resolv.conf"
-        fi
-
-## Do nothing while selected VPN.
-#        if [ `cat $SE_GATEWAY_SELECT` = "VPN" ];
-#        then
-#          su -c "/sbin/ip route del default"
-#          su -c "/sbin/ip route add default via $gateway_vpn"
-#        fi
-
-      fi
-    fi
-    
-    ;;
 
   SEST)
-    about=`vpncmd /CLIENT localhost /CMD AccountStatusGet gate`
+    about=` cocon-softether-launch status `
     dialog --msgbox "$about" 40 80
     ;;
 

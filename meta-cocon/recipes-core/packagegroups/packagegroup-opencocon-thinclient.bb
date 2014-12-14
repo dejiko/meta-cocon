@@ -44,6 +44,9 @@ networkmanager \
 ntpdate \
 opencocon-init \
 polkit-gnome \
+python-core \
+python-io \
+python-shell \
 spice-gtk \
 tzdata \
 viewnior \

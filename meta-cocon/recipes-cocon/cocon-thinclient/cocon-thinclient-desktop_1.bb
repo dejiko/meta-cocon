@@ -27,6 +27,7 @@ SRC_URI = "file://COPYING.MIT \
            file://cocon-select-kbd \
            file://dialogrc \
            file://cocon-vpn-menu \
+           file://cocon-softether-launch \
 "
 
 
@@ -52,6 +53,7 @@ do_install() {
         install -m 0755    ${WORKDIR}/cocon-x-session    ${D}${bindir}/cocon-x-session
         install -m 0755    ${WORKDIR}/cocon-select-kbd   ${D}${bindir}/cocon-select-kbd
         install -m 0755    ${WORKDIR}/cocon-vpn-menu   ${D}${bindir}/cocon-vpn-menu
+        install -m 0755    ${WORKDIR}/cocon-softether-launch   ${D}${bindir}/cocon-softether-launch
 
         install -d ${D}${sysconfdir}/
         install -m 0644 ${WORKDIR}/dialogrc ${D}${sysconfdir}/dialogrc

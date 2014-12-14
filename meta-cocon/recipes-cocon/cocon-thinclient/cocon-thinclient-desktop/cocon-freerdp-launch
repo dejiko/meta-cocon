@@ -62,6 +62,8 @@ fi
 # finally, add HOSTNAME
 OPTION="$OPTION $COCON_RDP_HOST "
 
+pw_count=0
+
 while :
 do
 
@@ -76,6 +78,15 @@ do
   then
     break
   fi
+
+  # exceed the retry count?
+  pw_count=` expr $pw_count + 1 `
+  if [ $pw_count -gt 4 ];
+  then
+    break
+  fi
+
+
 done
 
 # echo "Current return : $retr" > /var/volatile/log/cocon-freerdp.log

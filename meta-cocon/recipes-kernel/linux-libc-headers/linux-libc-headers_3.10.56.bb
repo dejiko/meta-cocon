@@ -5,6 +5,6 @@ require recipes-kernel/linux-libc-headers/linux-libc-headers.inc
 
 KORG_ARCHIVE_COMPRESSION = "xz"
 
-SRC_URI[md5sum] = "ef927e91cf8b8c4ddf98847341ccf2c8"
-SRC_URI[sha256sum] = "95f9be5a26f6c15d21528ecdb2cd3307fc99c715cfb3bce13843de8393f67028"
+SRC_URI[md5sum] = "97505772fb888d755185403e905e6bb1"
+SRC_URI[sha256sum] = "2a7d0df1efec4731199346568345de0f4c0a1d4ae3dbd1447457e91654cb000b"
 

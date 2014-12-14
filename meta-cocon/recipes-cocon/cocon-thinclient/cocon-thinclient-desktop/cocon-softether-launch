@@ -1,0 +1,188 @@
+#!/bin/bash
+
+# opencocon SoftEther launcher 
+
+SE_HOSTN=/tmp/.cocon.sehost
+SE_USERN=/tmp/.cocon.seuser
+SE_HUBN=/tmp/.cocon.sehub
+SE_METHOD=/tmp/.cocon.semethod
+SE_GATEWAY=/tmp/.cocon.segw
+SE_FLAG=/tmp/.cocon.softether
+SE_DISCONN=/tmp/.cocon.sedisconn
+SE_GATEWAY_SELECT=/tmp/.cocon.segw.select
+SE_RESOLV_BACKUP=/tmp/.cocon.seresolv
+SE_RETRY=/tmp/.cocon.seretry
+
+
+if [ -e /tmp/.cocon.cnf ];
+then
+  . /tmp/.cocon.cnf
+fi
+if [ -e /tmp/.cocon.cnf.part ];
+then
+  . /tmp/.cocon.cnf.part
+fi
+
+
+# Disconnect
+se_clean()
+{
+  # Stop udhcpc process
+  su -c "/usr/vpnclient/vpnclient stop"
+  se_dhcp_process=` ps ax | grep vpn_tun0 | sed /grep/d | awk '{print $1}' `
+  su -c "kill $se_dhcp_process"
+
+  # Restore gateway if changed
+  if [ "`cat $SE_GATEWAY_SELECT`" = "VPN" ];
+  then
+    su -c "cp $SE_RESOLV_BACKUP /etc/resolv.conf"
+    su -c "/sbin/ip route del default"
+    su -c "/sbin/ip route add default via ` cat $SE_GATEWAY `"
+  fi
+
+  # Disconnect
+  vpncmd /CLIENT localhost /CMD AccountDisconnect gate
+  vpncmd /CLIENT localhost /CMD AccountDelete gate
+  vpncmd /CLIENT localhost /CMD NicDisable tun0
+  vpncmd /CLIENT localhost /CMD NicDelete tun0
+
+  rm $SE_FLAG
+}
+
+
+
+
+
+if [ -z "$1" ];
+then
+    echo "$0 [connect|hangup|status]"
+    exit 1
+fi
+
+
+
+if [ "$1" = "connect" ];
+then
+  se_host="$COCON_SE_HOST"
+  se_user="$COCON_SE_USER"
+  se_hub="$COCON_SE_HUB"
+  se_method="$COCON_SE_AUTH_METHOD"
+
+  if [ -n "$se_host" -a -n "$se_user" -a -n "$se_hub" ];
+  then
+    # Backup gateway ( address )
+    /sbin/ip route | awk '/default/ { print $3 }' > $SE_GATEWAY
+
+    # Connect
+    su -c "/usr/vpnclient/vpnclient start"
+    vpncmd /CLIENT localhost /CMD NicCreate tun0
+    vpncmd /CLIENT localhost /CMD NicEnable tun0
+    vpncmd /CLIENT localhost /CMD AccountCreate gate "/SERVER:$se_host" "/HUB:$se_hub" "/USERNAME:$se_user" /NICNAME:tun0
+
+    if [ "$se_method" = "PASS" ];
+    then
+      vpncmd /CLIENT localhost /CMD AccountPasswordSet gate /TYPE:standard
+    fi
+
+    if [ "$se_method" = "ANON" ];
+    then
+      vpncmd /CLIENT localhost /CMD AccountAnonymousSet gate
+    fi
+
+    vpncmd /CLIENT localhost /CMD AccountConnect gate
+    if [ $? -eq 0 ];
+    then
+      # connected correctly. request DHCP.
+      touch $SE_FLAG
+
+      # Wait connect correctly.
+      # In most case, it have some delay time.
+      # wait COCON_SE_WAIT_CONNECTED * 5 sec, and if exceed it show prompt.
+      # 
+      trycount=0
+
+      if [ -z "$COCON_SE_WAIT_CONNECTED" ];
+      then
+        COCON_SE_WAIT_CONNECTED=6
+      fi
+
+      while [ -z "` vpncmd /CLIENT localhost /CMD AccountStatusGet gate | grep "Connection Completed" `" ]
+      do
+
+        sleep 5
+        trycount=` expr $trycount + 1 `
+        if [ $trycount -ge $COCON_SE_WAIT_CONNECTED ];
+        then
+          # Show dialog : 
+          dialog --yesno "Retry SoftEther connection?" 8 40 2>$SE_RETRY
+          se_retry_ret="$?"
+          if [ "$se_retry_ret" = "0" ];
+          then
+            # Yes
+            trycount=0
+          else
+            # No : Abort.
+            se_clean
+            exit 1
+          fi
+        fi
+      done
+
+      # After set DHCP to vpn_tun0, two default gateway makes. (phsical, on VPN)
+      # It is good that choice before run DHCP client...
+
+      # Do DHCP, and change default gateway to VPN here.
+      su -c "cp /etc/resolv.conf $SE_RESOLV_BACKUP"
+      su -c "udhcpc -i vpn_tun0"
+
+      # And get default gateway and exclude Physical
+      gateway_org=` cat $SE_GATEWAY `
+      gateway_vpn=` /sbin/ip route | awk '/default/ { print $3 }' `
+
+      if [ -n $gateway_vpn ];
+      then
+
+        if [ -z "$COCON_SE_SET_GATEWAY_ONVPN" ];
+        then
+          # by default, use physical gateway
+          COCON_SE_SET_GATEWAY_ONVPN=0
+        fi
+
+
+        if [ $COCON_SE_SET_GATEWAY_ONVPN -eq 0 ];
+        then
+          # use physical gateway
+          su -c "/sbin/ip route del default"
+          su -c "/sbin/ip route add default via $gateway_org"
+          su -c "cp $SE_RESOLV_BACKUP /etc/resolv.conf"
+        fi
+      fi
+
+    else
+      # Cleanup flag
+      se_clean
+      exit 1
+    fi
+  fi
+  exit 0
+fi
+
+
+# Hangup
+
+if [ "$1" = "hangup" ];
+then
+  se_clean
+  exit 0
+fi
+
+
+# Show status
+
+if [ "$1" = "status" ];
+then
+  about=`vpncmd /CLIENT localhost /CMD AccountStatusGet gate`
+  echo "$about"
+  exit 0
+fi 
+

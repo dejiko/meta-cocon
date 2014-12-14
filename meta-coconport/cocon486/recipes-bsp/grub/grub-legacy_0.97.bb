@@ -10,7 +10,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b \
                     file://grub/main.c;beginline=3;endline=9;md5=22a5f28d2130fff9f2a17ed54be90ed6"
 
 RDEPENDS_${PN} = "diffutils"
-PR = "r10"
 
 SRC_URI = "ftp://alpha.gnu.org/gnu/grub/grub-${PV}.tar.gz; \
 	   http://ftp.debian.org/debian/pool/main/g/grub/grub_0.97-67.diff.gz;name=debian-patch \
@@ -31,7 +30,8 @@ S = "${WORKDIR}/grub-${PV}"
 
 inherit autotools
 
-COMPATIBLE_HOST = "i.86.*-linux"
+# x86_64-linux
+COMPATIBLE_HOST = ".*86.*-linux"
 
 do_install_append_vmware() {
 	mkdir -p ${D}/boot/
