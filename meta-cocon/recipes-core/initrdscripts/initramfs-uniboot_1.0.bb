@@ -1,6 +1,4 @@
-PR = "r64"
 DESCRIPTION = "A modular initramfs init script system."
-# RRECOMMENDS_${PN} = "kernel-module-mtdblock"
 
 SRC_URI = "file://init.sh \
 file://clean.sh \

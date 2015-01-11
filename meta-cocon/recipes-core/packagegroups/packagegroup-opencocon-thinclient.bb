@@ -12,13 +12,13 @@ celt \
 cocon-data \
 cocon-data-doc \
 cocon-thinclient-desktop \
+coconvnc \
 cyrus-sasl \
 dialog \
 eject \
 freerdp \
 gnome-icon-theme \
 gnome-keyring \
-gtk-vnc \
 hicolor-icon-theme \
 iproute2 \
 libfreerdp \

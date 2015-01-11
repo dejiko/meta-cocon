@@ -14,14 +14,8 @@ fi
 if [ $COCON_VNC_HOST ];
 then
     
-  if [ "`echo $COCON_VNC_GTK-VNC`" = "1" ];
-  then
-    # gtk-vnc
-    exec gvncviewer $COCON_VNC_HOST
-  else
-    # libvncviewer
-    exec gtkvncviewer $COCON_VNC_HOST
-  fi
+  # libvncviewer
+  exec coconvnc $COCON_VNC_HOST
  
 else
   echo "Please specify HOST."

@@ -250,12 +250,12 @@ ln -sf /var/lib/dbus/machine-id /etc/machine-id
 
 /etc/init.d/NetworkManager start
 
-# Touchpad driver
-#if [ -e "/dev/input/touchpad0" ];
-#then
-#  
-#
-#fi
+
+# Volume mute 
+if [ "$COCON_MUTE_MASTER_ON_BOOT" = "1" ];
+then
+  amixer set 'Master' 0%
+fi
 
 
 # Keymap (TODO)

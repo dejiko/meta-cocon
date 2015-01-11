@@ -15,8 +15,8 @@ allow_option_bool=["COCON_FORCEFB",
                    "COCON_FORCESVGA",
                    "COCON_WAIT_CONNECTED",
                    "COCON_POWEROFF_AFTER_AUTOCONNECT",
-                   "COCON_VNC_GTK-VNC",
-                   "COCON_SE_SET_GATEWAY_ONVPN"]
+                   "COCON_SE_SET_GATEWAY_ONVPN",
+                   "COCON_MUTE_MASTER_ON_BOOT"]
 
 allow_option_str=["COCON_KBD_CONSOLE",
                   "COCON_KBD_X_MODEL",

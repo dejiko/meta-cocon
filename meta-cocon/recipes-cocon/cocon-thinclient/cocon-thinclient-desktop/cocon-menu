@@ -32,8 +32,7 @@ dialog --no-cancel --menu "`cat $VERSION` (experimental)" 20 40 25 \
 "$menu_reconnect" "$menu_reconnect_desc" \
 XEPHYR "Connect XDMCP" \
 RDP "Connect RDP" \
-VNC2 "Connect VNC" \
-VNC "Connect VNC (Alt.)" \
+VNC "Connect VNC" \
 SPICE "Connect SPICE" \
 WWW "Web Browser" \
 NET "Network Setting" \
@@ -78,31 +77,6 @@ XEPHYR)
 
 
 VNC)
-
-  # Connect VNC via gtk-vnc (Alt.)
-  if [ $reconn -eq 0 ];
-  then
-    dialog --inputbox "Enter hostname:display to connect" 8 40 2>$HOSTN
-    if [ $? -ne 0 ];
-    then
-      rm $HOSTN $SELECT_PREV
-      exit 0
-    fi
-  fi
-
-  hostn="`cat $HOSTN`"
-  if [ $hostn ];
-  then
-    echo "COCON_VNC_HOST=$hostn" >> $PARTCNF
-    echo "COCON_VNC_GTK-VNC=1" >> $PARTCNF
-
-    cocon-vnc-launch
-    rm $PARTCNF
-    echo "VNC" > $SELECT_PREV
-  fi
-  ;;
-
-VNC2)
    
   # Connect VNC via libvncclient 
   if [ $reconn -eq 0 ];
@@ -122,7 +96,7 @@ VNC2)
 
     cocon-vnc-launch
     rm $PARTCNF
-    echo "VNC2" > $SELECT_PREV
+    echo "VNC" > $SELECT_PREV
   fi
   ;;
 

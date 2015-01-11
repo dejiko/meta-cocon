@@ -98,14 +98,14 @@ boot_iso9660()
       # export COCON_SQSFILE
     fi
 
-    if [ `echo $COCON_COPYTORAM` ];
+    if [ -n "`echo $COCON_COPYTORAM`" ];
     then
       # Copy-to-RAM
       # TODO: disable for low memory
       echo "--- copy squashfs image to ram ---"
       mount -t tmpfs none $COPYTORAMLOC
       # cp $MOUNTLOC/$SQSFILE.md5sum $COPYTORAMLOC/$SQSFILE.md5sum
-      if [ $COCON_ISO_ONDISK -eq 1 ];
+      if [ "$COCON_ISO_ONDISK" = "1" ];
       then
         cp $ISOLOC/$SQSFILE $COPYTORAMLOC/$SQSFILE
       else
@@ -118,7 +118,7 @@ boot_iso9660()
       then
 
         # copy ok. release the MOUNTLOC.
-        if [ $COCON_ISO_ONDISK -eq 1 ];
+        if [ "$COCON_ISO_ONDISK" = "1" ];
         then
            umount -lf $ISOLOC >/dev/null 2>&1
         fi
@@ -155,7 +155,7 @@ boot_iso9660()
         unset COCON_COPYTORAM
         # TODO : is working?
 
-        if [ $COCON_ISO_ONDISK -eq 1 ];
+        if [ "$COCON_ISO_ONDISK" = "1" ];
         then
           SQS_DEVICE="$ISOLOC"
         else
@@ -167,7 +167,7 @@ boot_iso9660()
     else
       echo "WARNING: Do not Eject or Unplug boot media."
 
-      if [ $COCON_ISO_ONDISK -eq 1 ];
+      if [ "$COCON_ISO_ONDISK" = "1" ];
       then
         SQS_DEVICE="$ISOLOC" 
       else
