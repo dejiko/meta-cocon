@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 3.10.56 Kernel Configuration
+# Linux/x86 3.10.64 Kernel Configuration
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -1198,7 +1198,7 @@ CONFIG_PCMCIA_XIRC2PS=m
 # CONFIG_FDDI is not set
 # CONFIG_HIPPI is not set
 # CONFIG_NET_SB1000 is not set
-CONFIG_PHYLIB=m
+CONFIG_PHYLIB=y
 
 #
 # MII PHY device drivers
@@ -1212,14 +1212,15 @@ CONFIG_PHYLIB=m
 # CONFIG_CICADA_PHY is not set
 # CONFIG_VITESSE_PHY is not set
 CONFIG_SMSC_PHY=m
-# CONFIG_BROADCOM_PHY is not set
-# CONFIG_BCM87XX_PHY is not set
+CONFIG_BROADCOM_PHY=y
+CONFIG_BCM87XX_PHY=y
 # CONFIG_ICPLUS_PHY is not set
 # CONFIG_REALTEK_PHY is not set
 # CONFIG_NATIONAL_PHY is not set
 # CONFIG_STE10XP is not set
 # CONFIG_LSI_ET1011C_PHY is not set
 # CONFIG_MICREL_PHY is not set
+# CONFIG_FIXED_PHY is not set
 # CONFIG_MDIO_BITBANG is not set
 CONFIG_PPP=m
 CONFIG_PPP_BSDCOMP=m
@@ -2938,6 +2939,7 @@ CONFIG_AUFS_BRANCH_MAX_127=y
 # CONFIG_AUFS_BRANCH_MAX_32767 is not set
 CONFIG_AUFS_SBILIST=y
 # CONFIG_AUFS_HNOTIFY is not set
+# CONFIG_AUFS_XATTR is not set
 # CONFIG_AUFS_FHSM is not set
 CONFIG_AUFS_RDU=y
 # CONFIG_AUFS_SHWH is not set

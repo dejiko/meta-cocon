@@ -1,6 +1,6 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
-DEPENDS += " xineramaproto xf86miscproto drm xf86driproto"
+DEPENDS += "xf86miscproto drm xf86driproto"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=2b1ee283c95fdba674307f121936ca9a"
 

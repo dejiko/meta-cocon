@@ -17,9 +17,9 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v3.0/linux-${PV}.tar.xz;name=kernel 
 "
 
 
-SRCREV_aufs = "6faf71020cbf01bd20520556b5ea46542711922a"
-SRC_URI[sm712.md5sum] = "e06b8a4a6086ae03dbb44c7833011a59"
-SRC_URI[sm712.sha256sum] = "76d7e2a41466eba5fa61d771874ce3f397623398f962c82a1310a70cf8e57166"
+SRCREV_aufs = "3ec542bfe6854491bceb77b40c46f3b63849445a"
+SRC_URI[md5sum] = "1c0c682d7776ffad05bf799a1e88320d"
+SRC_URI[sha256sum] = "f8e2403614e5a8c3f511ecebeec27c22bc7187dfb2e5e19bea08f9d2082e764c"
 
 COMPATIBLE_MACHINE = "cocon486"
 

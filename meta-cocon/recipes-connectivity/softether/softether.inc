@@ -9,7 +9,7 @@ LICENSE = "GPLv2"
 SRC_URI = "git://github.com/SoftEtherVPN/SoftEtherVPN.git;branch=master \
 "
 
-SRCREV = "16b713b98da8dba29f0f845d5a8c36d6f7c34824"
+SRCREV = "5efab0381cc9bfc907114f1135005d3aa869776c"
 
 S = "${WORKDIR}/git"
 
@@ -26,7 +26,5 @@ do_configure() {
 #}
 
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=ae0f79a294fc4ffa1016533c172ad594"
-
-
+LIC_FILES_CHKSUM = "file://LICENSE;md5=bb2892df08b38bb8481923827d174b93"
 

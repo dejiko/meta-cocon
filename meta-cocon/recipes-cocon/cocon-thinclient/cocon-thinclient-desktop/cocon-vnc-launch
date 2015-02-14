@@ -13,9 +13,15 @@ fi
 
 if [ $COCON_VNC_HOST ];
 then
+
+    # Username
+    if [ $COCON_VNC_USER ];
+    then
+      OPTION="$OPTION -u $COCON_VNC_USER "
+    fi
     
   # libvncviewer
-  exec coconvnc $COCON_VNC_HOST
+  exec coconvnc $OPTION $COCON_VNC_HOST
  
 else
   echo "Please specify HOST."

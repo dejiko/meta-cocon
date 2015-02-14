@@ -29,6 +29,7 @@ do
   KBD   "Change keyboard layout" \
   TZ    "Set timezone" \
   NTP   "Adjust clock using NTP" \
+  SH    "Run shell" \
   "$menu_eject" "$menu_eject_desc" \
   RET   "Return to main menu" 2>$SELECT
 
@@ -103,7 +104,11 @@ do
       then
         su -c "ntpdate $ntp_host"
       fi
-    ;;
+  ;;
+
+  SH)
+      /bin/bash
+  ;;
 
   esac
 

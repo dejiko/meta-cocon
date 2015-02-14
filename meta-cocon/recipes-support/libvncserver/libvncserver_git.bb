@@ -14,8 +14,11 @@ SRC_URI = "git://github.com/LibVNC/libvncserver;protocol=git;branch=master \
 #           file://no_x11vnc_subdir.patch
 #           file://no_sdl_example.patch
 
+# v9e
+SRCREV = "cf03f71780ace5db61f194bbe6c832f32fbc10f8"
+
 # v9d
-SRCREV = "53becab94cccbcab9b20efd24b6071c2f3557eff"
+#SRCREV = "53becab94cccbcab9b20efd24b6071c2f3557eff"
 
 # v6
 #SRCREV = "7b9fc019de681125df48eb0650d3235aed87d8a5"

@@ -11,5 +11,5 @@ inherit cmake
 
 S = "${WORKDIR}/git"
 SRC_URI = "git://github.com/dejiko/coconvnc.git"
-SRCREV = "45bf0b33a413e0f1d6dd74bba388dafd43be6cc9"
+SRCREV = "a69f6d2fb6bc73e5b090ae0346aabb63b722a06f"
 

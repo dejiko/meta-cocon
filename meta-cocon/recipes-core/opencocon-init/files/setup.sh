@@ -48,7 +48,6 @@ scan_cocon_setting()
   if [ "$ROOT_DEVICE" ];
   then
     # Exclude Boot device (because already loaded)
-    # TODO: not working?
     # sed "/`basename $ROOT_DEVICE`/d" $DISKSTATS_TMP > /tmp/.cocon.scan
     # echo "Exclude: $ROOT_DEVICE"
     rootdv=`basename $ROOT_DEVICE`
@@ -66,10 +65,14 @@ scan_cocon_setting()
 
     if [ "$BOOT_FS" = "iso9660" -a "$ROOT_DEVICE" = "/dev/$dev" ];
     then
-      # This is booted CD drive.
-      # after Copy-to-RAM, mount this drive then close CD tray.
-      # then ignore this drive.
-      continue;
+      if [ "$COCON_COPYTORAM" = "1" ];
+      then
+        # This is booted CD drive.
+        # after Copy-to-RAM, mount this drive then close CD tray.
+        # then ignore this drive.
+        # TODO : copy cocon.cnf and related files on initramfs
+        continue;
+      fi
     fi
 
     get_partition_type
@@ -80,7 +83,7 @@ scan_cocon_setting()
         mount -o ro /dev/$dev $CONF_MOUNT
         
         # cocon.cnf and related files
-        if [ -r $CONF_MOUNT/cocon.cnf -a "$dev" != "$rootdv" ];
+        if [ -r $CONF_MOUNT/cocon.cnf ];
         then
           echo  " --> cocon.cnf found"
           cocon-read-cnf $CONF_MOUNT/cocon.cnf >> $CNFFILE

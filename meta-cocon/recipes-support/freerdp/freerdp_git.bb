@@ -19,6 +19,7 @@ SRCREV = "de9156e4a0dd6bf71b88d3c4bbd875ea48cd380a"
 ##SRCREV = "15069020d398c203df921da93eb1b72f55b6010a"
 
 SRC_URI = "git://github.com/FreeRDP/FreeRDP.git \
+           file://CVE-2014-0791_cocon-backport.patch \
 "
 #           file://futimens_cocon_v2.patch"
 
