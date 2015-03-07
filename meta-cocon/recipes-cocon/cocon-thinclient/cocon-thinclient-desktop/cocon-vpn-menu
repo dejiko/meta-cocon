@@ -19,12 +19,9 @@ SE_GATEWAY_SELECT=/tmp/.cocon.segw.select
 SE_RESOLV_BACKUP=/tmp/.cocon.seresolv
 PARTCNF=/tmp/.cocon.cnf.part
 
+
 while :
 do
-
-
-
-
   dialog --no-cancel --menu "VPN connect menu" 20 60 25 \
     SSHPF "Setup SSH port forwarding" \
     SE    "Connect (or disconnect) SoftEther VPN Server" \

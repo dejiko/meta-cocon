@@ -21,17 +21,6 @@ gnome-icon-theme \
 gnome-keyring \
 hicolor-icon-theme \
 iproute2 \
-libfreerdp \
-libfreerdp-plugin-audin \
-libfreerdp-plugin-audin-alsa \
-libfreerdp-plugin-audin-pulse \
-libfreerdp-plugin-drdynvc \
-libfreerdp-plugin-rdpsnd \
-libfreerdp-plugin-rdpsnd-alsa \
-libfreerdp-plugin-rdpsnd-pulse \
-libfreerdp-plugin-tsmf \
-libfreerdp-plugin-tsmf-alsa \
-libfreerdp-plugin-tsmf-pulse \
 libnotify \
 libvncserver \
 libwnck \
@@ -54,3 +43,15 @@ xserver-xorg-xephyr \
 xuser-account \
 "
 
+# libfreerdp \
+# libfreerdp-plugin-audin \
+# libfreerdp-plugin-audin-alsa \
+# libfreerdp-plugin-audin-pulse \
+# libfreerdp-plugin-drdynvc \
+# libfreerdp-plugin-rdpsnd \
+# libfreerdp-plugin-rdpsnd-alsa \
+# libfreerdp-plugin-rdpsnd-pulse \
+# libfreerdp-plugin-tsmf \
+# libfreerdp-plugin-tsmf-alsa \
+# libfreerdp-plugin-tsmf-pulse \
+#  

@@ -14,6 +14,7 @@ SE_RESOLV_BACKUP=/tmp/.cocon.seresolv
 SE_RETRY=/tmp/.cocon.seretry
 
 
+
 if [ -e /tmp/.cocon.cnf ];
 then
   . /tmp/.cocon.cnf
@@ -46,7 +47,8 @@ se_clean()
   vpncmd /CLIENT localhost /CMD NicDisable tun0
   vpncmd /CLIENT localhost /CMD NicDelete tun0
 
-  rm $SE_FLAG
+  # Delete files
+  rm $SE_HOSTN $SE_USERN $SE_HUBN $SE_METHOD $SE_GATEWAY $SE_FLAG $SE_DISCONN $SE_GATEWAY_SELECT $SE_RESOLV_BACKUP $SE_RETRY
 }
 
 

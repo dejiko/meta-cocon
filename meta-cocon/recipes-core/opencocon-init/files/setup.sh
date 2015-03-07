@@ -7,7 +7,7 @@ CONF_MOUNT="/mnt/cfg"
 CNFFILE="/tmp/.cocon.cnf"
 DISKSTATS_TMP="/var/volatile/tmp/.cocon.diskstats"
 CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
-
+COPYTORAM_AFTER_INITRD="/mnt/oldroot/mnt/copytoram"
 
 read_args() {
     [ -z "$CMDLINE" ] && CMDLINE=`cat /proc/cmdline`
@@ -38,10 +38,6 @@ get_partition_type()
 
 scan_cocon_setting()
 {
-  ALLOW_LOAD_FIRMWARE_B43="wl_apsta-3.130.20.0.o\|wl_apsta.o"
-  ALLOW_LOAD_FIRMWARE_IPW2X00="ipw2100-1.3-i.fw\|ipw2100-1.3-p.fw\|ipw2100-1.3.fw\|ipw2200-bss.fw\|ipw2200-ibss.fw\|ipw2200-sniffer.fw"
-  ALLOW_LOAD_FIRMWARE_P54="isl3886pci\|isl3886usb\|isl3887usb"
-
   # Scan all available device/partitions
   cat /proc/diskstats > $DISKSTATS_TMP
 
@@ -63,79 +59,88 @@ scan_cocon_setting()
       continue;
     fi
 
-    if [ "$BOOT_FS" = "iso9660" -a "$ROOT_DEVICE" = "/dev/$dev" ];
+    if [ "$ROOT_DEVICE" = "/dev/$dev" -a "$COCON_COPYTORAM" = "1" ];
     then
-      if [ "$COCON_COPYTORAM" = "1" ];
+      # This is booted CD drive (or USB Stick).
+      # after Copy-to-RAM, mount this drive then close CD tray.
+      # then ignore this drive.
+      # Instead, copyed config file may store on (initrd)/mnt/copytoram.
+
+      if [ -d "$COPYTORAM_AFTER_INITRD" ];
       then
-        # This is booted CD drive.
-        # after Copy-to-RAM, mount this drive then close CD tray.
-        # then ignore this drive.
-        # TODO : copy cocon.cnf and related files on initramfs
-        continue;
+        scan_cocon_userconfig $COPYTORAM_AFTER_INITRD
       fi
+      continue;
     fi
 
     get_partition_type
 
     if [ "$fstype" = "iso9660" -o "$fstype" = "vfat" -o "$fstype" = "ext3" -o "$fstype" = "ntfs" -o  "$fstype" = "ext4" ];
     then
-        echo "Scanning setting from : $dev"
-        mount -o ro /dev/$dev $CONF_MOUNT
-        
-        # cocon.cnf and related files
-        if [ -r $CONF_MOUNT/cocon.cnf ];
-        then
-          echo  " --> cocon.cnf found"
-          cocon-read-cnf $CONF_MOUNT/cocon.cnf >> $CNFFILE
-        fi
-
-        # Non-redistributable Firmwares
-        if [ -d $CONF_MOUNT/coconfrm ];
-        then
-          echo "--> firmware directory found"
-          for frm in `ls -1 $CONF_MOUNT/coconfrm`; do
-            if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_B43" > /dev/null ;
-            then
-              # Broadcom is big firmware file, so cut now.
-              b43-fwcutter -w /lib/firmware $CONF_MOUNT/coconfrm/$frm
-              continue;
-            fi
-
-            if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_IPW2X00\|$ALLOW_LOAD_FIRMWARE_P54" > /dev/null ;
-            then
-              # Just copy
-              cp $CONF_MOUNT/coconfrm/$frm /lib/firmware
-              continue;
-            fi
-
-          done
-          
-        fi
-
-        # NetworkManager Settings
-        if [ -d $CONF_MOUNT/coconnm ];
-        then
-          mkdir -p $CNF_NM_FILE_MOVETO
-          echo "--> NetworkManager setting directory found"
-          for nm in `ls -1 $CONF_MOUNT/coconnm`; do
-          
-            if [ -z ` cat $nm | grep '\#\!\/' ` ];
-            then
-
-              # TODO : more more inf file check
-              cp $CONF_MOUNT/coconnm/$nm $CNF_NM_FILE_MOVETO
-              chmod 600 $CNF_NM_FILE_MOVETO/$nm
-            fi
-
-          done
-
-        fi
-
-        umount /dev/$dev
-
+      mount -o ro /dev/$dev $CONF_MOUNT
+      scan_cocon_userconfig $CONF_MOUNT
+      sync
+      umount /dev/$dev
     fi
-   done < $DISKSTATS_TMP
+  done < $DISKSTATS_TMP
 }
+
+
+# Scan $1 folder and place cocon.cnf, coconfrm, coconnm.
+scan_cocon_userconfig()
+{
+  ALLOW_LOAD_FIRMWARE_B43="wl_apsta-3.130.20.0.o\|wl_apsta.o"
+  ALLOW_LOAD_FIRMWARE_IPW2X00="ipw2100-1.3-i.fw\|ipw2100-1.3-p.fw\|ipw2100-1.3.fw\|ipw2200-bss.fw\|ipw2200-ibss.fw\|ipw2200-sniffer.fw"
+  ALLOW_LOAD_FIRMWARE_P54="isl3886pci\|isl3886usb\|isl3887usb"
+
+  userconfig_scanpath="$1"
+  echo "user config scan -> $userconfig_scanpath"
+
+  # cocon.cnf and related files
+  if [ -r $userconfig_scanpath/cocon.cnf ];
+  then
+    echo  " --> cocon.cnf found"
+    cocon-read-cnf $userconfig_scanpath/cocon.cnf >> $CNFFILE
+  fi
+
+  # Non-redistributable Firmwares
+  if [ -d $userconfig_scanpath/coconfrm ];
+  then
+    echo "--> firmware directory found"
+    for frm in `ls -1 $userconfig_scanpath/coconfrm`; do
+      if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_B43" > /dev/null ;
+      then
+        # Broadcom is big firmware file, so cut now.
+        b43-fwcutter -w /lib/firmware $userconfig_scanpath/coconfrm/$frm
+        continue;
+      fi
+
+      if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_IPW2X00\|$ALLOW_LOAD_FIRMWARE_P54" > /dev/null ;
+      then
+        # Just copy
+        cp $userconfig_scanpath/coconfrm/$frm /lib/firmware
+        continue;
+      fi
+    done
+          
+  fi
+
+  # NetworkManager Settings
+  if [ -d $userconfig_scanpath/coconnm ];
+  then
+    mkdir -p $CNF_NM_FILE_MOVETO
+    echo "--> NetworkManager setting directory found"
+    for nm in `ls -1 $userconfig_scanpath/coconnm`; do
+      if [ -z ` cat $nm | grep '\#\!\/' ` ];
+      then
+        # TODO : more more inf file check
+        cp $CONF_MOUNT/coconnm/$nm $CNF_NM_FILE_MOVETO
+        chmod 600 $CNF_NM_FILE_MOVETO/$nm
+      fi
+    done
+  fi
+}
+
 
 read_args
 
@@ -255,10 +260,10 @@ ln -sf /var/lib/dbus/machine-id /etc/machine-id
 
 
 # Volume mute 
-if [ "$COCON_MUTE_MASTER_ON_BOOT" = "1" ];
-then
-  amixer set 'Master' 0%
-fi
+#if [ "$COCON_MUTE_MASTER_ON_BOOT" = "1" ];
+#then
+#  amixer set 'Master' 0%
+#fi
 
 
 # Keymap (TODO)

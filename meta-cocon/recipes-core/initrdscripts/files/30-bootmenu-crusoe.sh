@@ -107,15 +107,37 @@ boot_iso9660()
       # cp $MOUNTLOC/$SQSFILE.md5sum $COPYTORAMLOC/$SQSFILE.md5sum
       if [ "$COCON_ISO_ONDISK" = "1" ];
       then
-        cp $ISOLOC/$SQSFILE $COPYTORAMLOC/$SQSFILE
+        sqs_copyfrom="$ISOLOC"
       else
-        cp $MOUNTLOC/$SQSFILE $COPYTORAMLOC/$SQSFILE
-      fi 
+        sqs_copyfrom="$MOUNTLOC"
+      fi
+      cp $sqs_copyfrom/$SQSFILE $COPYTORAMLOC/$SQSFILE
 
       # TODO : md5sum ha shibaraku oaduke
       # cd $COPYTORAMLOC && md5sum -cs $COPYTORAMLOC/$SQSFILE.md5sum -eq 0
       if [ $? -eq 0 ];
       then
+
+        # if contain cocon.cnf/coconnm/coconfrm on media, copy to memory.
+        if [ -f "$sqs_copyfrom/cocon.cnf" ];
+        then
+          echo " -> copy cocon.cnf"
+          cp $sqs_copyfrom/cocon.cnf $COPYTORAMLOC/cocon.cnf
+        fi
+
+        if [ -d "$sqs_copyfrom/coconfrm" ];
+        then
+          # TODO : filter firmware files
+          echo " -> copy coconfrm"
+          cp -R $sqs_copyfrom/coconfrm $COPYTORAMLOC/
+        fi
+
+        if [ -d "$sqs_copyfrom/coconnm" ];
+        then
+          # TODO : filter setting files
+          echo " -> copy coconnm"
+          cp -R $sqs_copyfrom/coconnm $COPYTORAMLOC/
+        fi
 
         # copy ok. release the MOUNTLOC.
         if [ "$COCON_ISO_ONDISK" = "1" ];

@@ -28,8 +28,18 @@ lxpanel &
 nm-applet &
 
 
-# Read auto-connection setting and run (TODO)
+# Volume
+if [ "$COCON_MUTE_MASTER_ON_BOOT" = "1" ];
+then
+  amixer set 'Master' 0%
+else
+  if [ -n "$COCON_MASTER_VOLUME" ];
+  then
+    amixer set 'Master' $COCON_MASTER_VOLUME%
+  fi
+fi
 
+# Read auto-connection setting and run (TODO : Sepalate to another script)
 
 
 # Keymap

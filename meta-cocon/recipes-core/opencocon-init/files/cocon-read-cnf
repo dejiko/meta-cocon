@@ -16,7 +16,8 @@ allow_option_bool=["COCON_FORCEFB",
                    "COCON_WAIT_CONNECTED",
                    "COCON_POWEROFF_AFTER_AUTOCONNECT",
                    "COCON_SE_SET_GATEWAY_ONVPN",
-                   "COCON_MUTE_MASTER_ON_BOOT"]
+                   "COCON_MUTE_MASTER_ON_BOOT",
+                   "COCON_RDP_MODEM"]
 
 allow_option_str=["COCON_KBD_CONSOLE",
                   "COCON_KBD_X_MODEL",
@@ -40,7 +41,8 @@ allow_option_str=["COCON_KBD_CONSOLE",
 
 allow_option_int=["COCON_RDP_RFX",
                   "COCON_SPICE_PORT",
-                  "COCON_SPICE_TLSPORT"]
+                  "COCON_SPICE_TLSPORT",
+                  "COCON_MASTER_VOLUME"]
 
 allow_option_file=["COCON_RDP_RDPFILE",
                    "COCON_XCONF_ADD"]
@@ -104,7 +106,7 @@ for pickup_int in allow_option_int:
             cur = cfg.getint('DEFAULT',pickup_int)
         except ValueError:
             continue
-        print "%s=%i" % (pickup_bool,cur)
+        print "%s=%i" % (pickup_int,cur)
 
 # File.
 # pickup file from "inside same as cocon.cfg folder" + "coconkey" 
@@ -114,7 +116,7 @@ if os.path.isdir(cnf_file_moveto) == False :
     os.mkdir(cnf_file_moveto)
 
 for pickup_file in allow_option_file:
-    if cfg.has_option('DEFAULT', pickup_file) :
+    if cfg.has_option('DEFAULT',pickup_file) :
         cur = cfg.get('DEFAULT',pickup_file)
         
         # Exclude some bad word
@@ -128,11 +130,11 @@ for pickup_file in allow_option_file:
             # copy file
             mv_filename = cnf_file_moveto + '/' + cur
             try :
-                shutil.copyfile(cur_filename, mv_filename)
+                shutil.copyfile(cur_filename,mv_filename)
             except IOError:
                 continue
 
-            print "%s=%s" % (pickup_str,cur)
+            print "%s=%s" % (pickup_file,mv_filename)
 
 
 cfg_tmp.close()

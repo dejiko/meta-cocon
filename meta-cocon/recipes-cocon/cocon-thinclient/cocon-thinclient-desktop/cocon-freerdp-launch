@@ -28,12 +28,22 @@ then
       COCON_RDP_USER="`cat $USERN`"
     fi
 
-    OPTION="$OPTION -u $COCON_RDP_USER "
+    if [ -n "`echo $COCON_RDP_USER | grep [[:space:]]`" ];
+    then
+      OPTION="$OPTION \"/u:$COCON_RDP_USER\" "
+    else
+      OPTION="$OPTION /u:$COCON_RDP_USER "
+    fi
 
     # Domain name
     if [ $COCON_RDP_DOMAIN ];
     then
-      OPTION="$OPTION -d $COCON_RDP_DOMAIN "
+      if [ -n "`echo $COCON_RDP_DOMAIN | grep [[:space:]]`" ];
+      then
+        OPTION="$OPTION \"/d:$COCON_RDP_DOMAIN\" "
+      else
+        OPTION="$OPTION /d:$COCON_RDP_DOMAIN "
+      fi
     fi
 
    # TODO : password
@@ -48,19 +58,22 @@ fi
 
 
 # Remote FX
+# TODO : Redefine Settings...
 if [ "$COCON_RDP_RFX" = "1" ];
 then
-  OPTION="$OPTION --rfx --plugin drdynvc --data tsmf -- --plugin --data audin -- "
+  OPTION="$OPTION /rfx /multimedia:sys:alsa /microphone:sys:alsa "
+else
+  OPTION="$OPTION "  # TODO : /network:modem
 fi
 
 
-#if [ "$COCON_RDP_MODEM" = "1" ];
-#then
-#  OPTION="$OPTION -x modem "
-#fi
+if [ "$COCON_RDP_MODEM" = "1" ];
+then
+  OPTION="$OPTION /network:modem "
+fi
 
 # finally, add HOSTNAME
-OPTION="$OPTION $COCON_RDP_HOST "
+OPTION="$OPTION /v:$COCON_RDP_HOST "
 
 pw_count=0
 
@@ -71,7 +84,7 @@ do
   echo "    PASSWORD is not shown in console."
   echo "=========================================="
 
-  xfreerdp -f -x 81 --plugin rdpsnd --data alsa -- $OPTION
+  xfreerdp /f /sound:sys:alsa $OPTION
   retr=$?
 
   if [ "$retr" != "131" ];
@@ -85,10 +98,5 @@ do
   then
     break
   fi
-
-
 done
-
-# echo "Current return : $retr" > /var/volatile/log/cocon-freerdp.log
-# sleep 5
 
