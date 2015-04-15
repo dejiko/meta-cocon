@@ -8,6 +8,6 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-chips;protocol=g
           "
 
 S = "${WORKDIR}/git"
-SRCREV = "151a1ec855a9ada44907cb6bef06a71e9080504b"
+SRCREV = "9187d76bd4f8d500fc3403b6d4a7bef55508bf2b"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d16ab8e6e1c8f1eaca1ef57449f284b2"
