@@ -5,6 +5,22 @@
 PWROFF="/tmp/.cocon.poweroff"
 
 
+get_nm_connected() {
+  timeout=90
+  nm_connect_pass=0
+  while [ -z "`LANG=C nmcli -m multiline dev | grep -v disconnected | grep connected`" -a $nm_connect_pass -eq 0 ]
+  do
+    timeout=`expr $timeout - 1`
+    if [ $timeout -le 0 ];
+    then
+      nm_connect_pass=1
+
+      # TODO : dialog
+    fi
+    sleep 1
+  done
+}
+
 # opencocon-local startup
 if [ -e /tmp/.cocon.cnf ];
 then
@@ -63,12 +79,16 @@ then
   setxkbmap $SETXKB
 fi
 
+# Check if connected by NetworkManager
+#LANG=C nmcli -m multiline dev | grep -v disconnected | grep connected
+
 
 # Auto VPN connection
 # TODO : multiple protocol
 if [ "$COCON_AUTOVPN" ];
 then
   echo "============== AUTOVPN : $COCON_AUTOVPN"
+  get_nm_connected
   case $COCON_AUTOVPN in
   se)
     lxterminal -e "/usr/bin/cocon-softether-launch connect"
@@ -81,6 +101,7 @@ fi
 if [ "$COCON_AUTOCONNECT" ];
 then
   echo "============== AUTOCONNECT : $COCON_AUTOCONNECT"
+  get_nm_connected
   case $COCON_AUTOCONNECT in
   rdp)
     lxterminal -e /usr/bin/cocon-freerdp-launch

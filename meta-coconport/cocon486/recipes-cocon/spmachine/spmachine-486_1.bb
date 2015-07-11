@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4d
 
 SRC_URI = "file://COPYING.MIT \
            file://cocon-spmachine \
+           file://cocon-spmachine-early \
 	   file://card-fbdev.conf \
 	   file://defaultdepth.conf \
            file://geode-1024x600.conf \
@@ -24,6 +25,7 @@ do_install() {
 
 	install -d ${D}${bindir}/
         install -m 0755    ${WORKDIR}/cocon-spmachine    ${D}${bindir}/cocon-spmachine
+        install -m 0755    ${WORKDIR}/cocon-spmachine-early    ${D}${bindir}/cocon-spmachine-early
 
 	install -d ${D}${datadir}/spmachine-486/
         install -m 0644 ${WORKDIR}/*.conf ${D}${datadir}/spmachine-486/

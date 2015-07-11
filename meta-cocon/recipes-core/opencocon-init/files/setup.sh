@@ -49,6 +49,17 @@ scan_cocon_setting()
     rootdv=`basename $ROOT_DEVICE`
   fi
 
+  if [ "$COCON_COPYTORAM" = "1" ];
+    then
+    # first, attempt to read config from Copy-to-RAM mode directory.
+
+    if [ -d "$COPYTORAM_AFTER_INITRD" ];
+    then
+      scan_cocon_userconfig $COPYTORAM_AFTER_INITRD/
+    fi
+  fi
+
+  # Scan disk (except boot device)
   while read maj min dev ex1 ex2 ex3 ex4 ex5 ex6 ex7 ex8 ex9 ex10 ex11; do
 
     # echo "Searching: $dev"
@@ -59,18 +70,11 @@ scan_cocon_setting()
       continue;
     fi
 
-    if [ "$ROOT_DEVICE" = "/dev/$dev" -a "$COCON_COPYTORAM" = "1" ];
+    if [ "$ROOT_DEVICE" = "/dev/$dev" ];
     then
-      # This is booted CD drive (or USB Stick).
-      # after Copy-to-RAM, mount this drive then close CD tray.
-      # then ignore this drive.
-      # Instead, copyed config file may store on (initrd)/mnt/copytoram.
-
-      if [ -d "$COPYTORAM_AFTER_INITRD" ];
-      then
-        scan_cocon_userconfig $COPYTORAM_AFTER_INITRD
-      fi
-      continue;
+       # This is booted CD drive (or USB Stick).
+       # then ignore this drive.
+       continue;
     fi
 
     get_partition_type
@@ -134,8 +138,9 @@ scan_cocon_userconfig()
       if [ -z ` cat $nm | grep '\#\!\/' ` ];
       then
         # TODO : more more inf file check
-        cp $CONF_MOUNT/coconnm/$nm $CNF_NM_FILE_MOVETO
-        chmod 600 $CNF_NM_FILE_MOVETO/$nm
+        #cp $CONF_MOUNT/coconnm/$nm $CNF_NM_FILE_MOVETO
+        sed '/mac-address=/d' "$CONF_MOUNT/coconnm/$nm" > "$CNF_NM_FILE_MOVETO/$nm"
+        chmod 600 "$CNF_NM_FILE_MOVETO/$nm"
       fi
     done
   fi
@@ -175,15 +180,17 @@ then
   mount -t devtmpfs devtmpfs /dev
 fi
 
-  # Run udev daemon (TODO : is this safe?)
+if [ "$COCON_DEBUG" = "1" ];
+then
+  echo "DEBUG: before udev."
+  /bin/sh
+fi
+
+# spmachine-early
+cocon-spmachine-early
+
+# Run udev daemon (TODO : is this safe?)
 /etc/init.d/udev restart
-
-#else
-  # Scan again
-#  udevadm trigger --action=add
-#  udevadm settle
-#fi
-
 
 if [ "$COCON_DEBUG" = "1" ];
 then

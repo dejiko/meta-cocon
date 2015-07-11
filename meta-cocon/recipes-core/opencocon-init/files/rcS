@@ -33,7 +33,7 @@ then
     mount -t tmpfs none /mnt/ram
 
     mkdir /mnt/ram/volatile
-    mount -bind /mnt/ram/volatile /var/volatile
+    mount --bind /mnt/ram/volatile /var/volatile
     mkdir /var/volatile/tmp
     mkdir /var/volatile/log
     mkdir /var/volatile/run
@@ -41,7 +41,7 @@ then
     mkdir /var/volatile/lock
 
     mkdir /mnt/ram/run
-    mount -bind /mnt/ram/run /run
+    mount --bind /mnt/ram/run /run
 
     mkdir /mnt/ram/etc
     mount -t aufs -o br:/mnt/ram/etc:/etc none /etc

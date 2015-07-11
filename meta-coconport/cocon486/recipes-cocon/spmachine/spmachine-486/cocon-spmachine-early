@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# cocon-spmachine-early
+# Script for special machines (and need root).
+
+# This script calls BEFORE standup udev.
+
+GEOMETRY="/tmp/.cocon.geometry"
+SPMACHINE486_CONF="/usr/share/spmachine-486"
+XORG_CONF_D="/etc/X11/xorg.conf.d"
+
+# only read cocon.cnf
+if [ -e /tmp/cocon.cnf ];
+then
+  . /tmp/.cocon.cnf
+fi
+
+# Machine name
+if [ "`which dmidecode`" ];
+then
+  # dmidecode is only for x86
+  MACHINE_MAKER=`dmidecode -s system-manufacturer`
+  MACHINE_NAME=`dmidecode -s system-product-name`
+  echo "Manufacturer: $MACHINE_MAKER"
+  echo "Product name: $MACHINE_NAME"
+fi
+
+# Workaroud for HP 2533t
+if [ "`echo "$MACHINE_MAKER" | grep 'Hewlett-Packard'`" -a "`echo "$MACHINE_NAME" | grep 'HP 2533t Mobile Thin Client'`" ];
+then
+  # processer is broken : blacklisting processer driver
+  #mv /lib/modules/`uname -r`/kernel/drivers/acpi/processor.ko /lib/modules/`uname -r`/kernel/drivers/acpi/processor.disabled
+  echo "install processor /bin/false" >> /etc/modprobe.d/blacklist.conf
+
+  # b43 is not working correctly (TODO : wl driver or debug)
+  echo "install b43 /bin/false" >> /etc/modprobe.d/blacklist.conf
+fi
+

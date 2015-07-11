@@ -16,6 +16,10 @@ fi
 # Force Framebuffer driver if boot option contains "forcefb*"
 if [ `cat /proc/cmdline | grep 'forcefb'` ];
 then
+
+  # Temporary Dirty Fix : Disable some driver on forcefb
+  rm /usr/lib/xorg/modules/drivers/openchrome_drv.so
+
   ln -s $SPMACHINE486_CONF/card-fbdev.conf $XORG_CONF_D/card-fbdev.conf
 fi
 
