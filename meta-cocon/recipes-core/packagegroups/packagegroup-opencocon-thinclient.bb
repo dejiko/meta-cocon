@@ -32,7 +32,6 @@ network-manager-applet \
 networkmanager \
 ntpdate \
 opencocon-init \
-polkit-gnome \
 python-core \
 python-io \
 python-shell \

@@ -15,7 +15,6 @@ encodings \
 font-alias \
 font-util \
 freetype \
-libdricore \
 libdrm-intel \
 libdrm-kms \
 libdrm-nouveau \

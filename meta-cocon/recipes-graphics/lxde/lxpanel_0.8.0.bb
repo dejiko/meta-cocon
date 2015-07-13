@@ -1,6 +1,6 @@
 DESCRIPTION = "LXDE Panel"
 SECTION = "x11"
-DEPENDS = "libwnck menu-cache glib-2.0 gtk+ gdk-pixbuf libfm keybinder"
+DEPENDS = "libwnck menu-cache glib-2.0 gtk+ gdk-pixbuf libfm"
 LICENSE = "GPLv2"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/lxde/${PN}-${PV}.tar.xz"
