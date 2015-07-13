@@ -1,9 +1,0 @@
-#!/bin/sh
-
-echo "Reading USB drivers: \n"
-modprobe usbcore
-modprobe uhci-hcd
-modprobe ohci-hcd
-modprobe ehci-hcd
-modprobe usb-storage
- 

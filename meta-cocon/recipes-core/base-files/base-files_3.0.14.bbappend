@@ -1,5 +1,3 @@
-PRINC := "${@int(PRINC) + 7}"
-
 # look for files in the layer first
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 

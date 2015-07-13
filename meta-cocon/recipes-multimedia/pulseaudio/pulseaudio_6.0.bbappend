@@ -1,6 +1,4 @@
-PRINC := "${@int(PRINC) + 2}"
-
 # look for files in the layer first
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-GDK_PIXBUF_LOADERS = "png jpeg x11"
+EXTRA_OECONF += " ac_cv_tls=no --disable-threads "
