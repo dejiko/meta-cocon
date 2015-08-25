@@ -12,6 +12,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=ed28020670498bb992812791b7aa3cca"
 
 SRC_URI = "git://anongit.freedesktop.org/openchrome/xf86-video-openchrome;protocol=git;branch=master \
            file://hp-tc-2533t.patch \
+           file://amtek-sca001.patch \
           "
 
 S = "${WORKDIR}/git"

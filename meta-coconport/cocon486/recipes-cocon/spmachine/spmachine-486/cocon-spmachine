@@ -68,6 +68,7 @@ then
   fi
 
   # KOHJINSHA PM
+  # TODO : I think same setting can apply for ONKYO BX.
   if [ "`echo "$MACHINE_NAME" | grep 'PM Series'`" ];
   then
     ln -sf $SPMACHINE486_CONF/kohjinsha-pm.conf $XORG_CONF_D/kohjinsha-pm.conf
@@ -128,8 +129,11 @@ then
   ln -sf $SPMACHINE486_CONF/poulsbo.conf $XORG_CONF_D/poulsbo.conf
 fi
 
-
-
+# FUJITSU LOOX F-07C
+#if [ "`echo "$MACHINE_MAKER" | grep 'FUJITSU'`" -a "`echo "$MACHINE_NAME" | grep -E 'F-07C'`" ];
+#then
+#  ln -s $SPMACHINE486_CONF/f-07c_rotate.conf $XORG_CONF_D/f-07c_rotate.conf
+#fi
 
 # Re-startup b43 device and load firmware
 if [ "` lsmod | grep -E 'b43legacy'`" -a -d /lib/firmware/b43legacy ];
