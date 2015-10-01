@@ -12,7 +12,6 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v3.0/linux-${PV}.tar.xz;name=kernel 
 	   file://pd6729.patch \
            file://defconfig \
            file://sm712fb-cocon.patch \
-           file://sm712fb-800x600.patch \
            file://pata_legacy.patch \
 "
 
