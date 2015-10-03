@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # based on 30-bootmenu.sh (c) 2007 Paul Sokolovsky
 #
@@ -34,7 +35,7 @@ mount -t aufs -o br:$MODLOC:/run none /run
 /etc/init.d/udev start
 
 # Debug
-if [ `echo $COCON_DEBUG` ];
+if [ "$COCON_INITRD_DEBUG" = "1" ];
 then
   echo " DEBUG: after initalize udev on initramfs."
   /bin/sh

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-GEOMETRY="/tmp/.cocon.geometry"
 CNFFILE="/tmp/.cocon.cnf"
 
 if [ -e $CNFFILE ];
@@ -14,8 +13,6 @@ cp -R /etc/skel/.config/ /home/xuser
 cp /etc/skel/.profile /home/xuser
 cp /etc/skel/.xinitrc /home/xuser 
 
-
-
 # Workaround for graphics chipset bugs
 # ( Userspace: not root )
 
@@ -28,7 +25,7 @@ then
 fi
 
 
-if [ "`echo $COCON_DEBUG`" -o "`echo /proc/cmdline | grep stopbeforex`" ];
+if [ "$COCON_XDEBUG" = "1" ];
 then
   echo "DEBUG: before X. X_OPTION is $X_OPTION ."
   /bin/sh

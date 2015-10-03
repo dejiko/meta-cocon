@@ -40,6 +40,10 @@ read_args() {
                 COCON_DEBUG=1
                 export COCON_DEBUG
                 ;;
+            early) set -x
+                COCON_INITRD_DEBUG=1
+                export COCON_INITRD_DEBUG
+                ;;
             copytoram)
                 COCON_COPYTORAM=1
                 export COCON_COPYTORAM

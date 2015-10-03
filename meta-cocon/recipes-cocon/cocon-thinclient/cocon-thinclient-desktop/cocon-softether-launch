@@ -28,10 +28,18 @@ fi
 # Disconnect
 se_clean()
 {
-  # Stop udhcpc process
-  su -c "/usr/vpnclient/vpnclient stop"
+  # Disconnect
+  vpncmd /CLIENT localhost /CMD AccountDisconnect gate
+  vpncmd /CLIENT localhost /CMD AccountDelete gate
+
+  # stop and delete vpn_tun0 device
   se_dhcp_process=` ps ax | grep vpn_tun0 | sed /grep/d | awk '{print $1}' `
   su -c "kill $se_dhcp_process"
+  vpncmd /CLIENT localhost /CMD NicDisable tun0
+  vpncmd /CLIENT localhost /CMD NicDelete tun0
+
+  # stop softether
+  su -c "/usr/vpnclient/vpnclient stop"
 
   # Restore gateway if changed
   if [ "`cat $SE_GATEWAY_SELECT`" = "VPN" ];
@@ -41,14 +49,8 @@ se_clean()
     su -c "/sbin/ip route add default via ` cat $SE_GATEWAY `"
   fi
 
-  # Disconnect
-  vpncmd /CLIENT localhost /CMD AccountDisconnect gate
-  vpncmd /CLIENT localhost /CMD AccountDelete gate
-  vpncmd /CLIENT localhost /CMD NicDisable tun0
-  vpncmd /CLIENT localhost /CMD NicDelete tun0
-
   # Delete files
-  rm $SE_HOSTN $SE_USERN $SE_HUBN $SE_METHOD $SE_GATEWAY $SE_FLAG $SE_DISCONN $SE_GATEWAY_SELECT $SE_RESOLV_BACKUP $SE_RETRY
+  su -c "rm $SE_HOSTN $SE_USERN $SE_HUBN $SE_METHOD $SE_GATEWAY $SE_FLAG $SE_DISCONN $SE_GATEWAY_SELECT $SE_RESOLV_BACKUP $SE_RETRY"
 }
 
 
@@ -70,7 +72,7 @@ then
   se_hub="$COCON_SE_HUB"
   se_method="$COCON_SE_AUTH_METHOD"
 
-  if [ -n "$se_host" -a -n "$se_user" -a -n "$se_hub" ];
+  if [ -n "$se_host" ] && [ -n "$se_user" ] && [ -n "$se_hub" ];
   then
     # Backup gateway ( address )
     /sbin/ip route | awk '/default/ { print $3 }' > $SE_GATEWAY
@@ -141,7 +143,7 @@ then
       gateway_org=` cat $SE_GATEWAY `
       gateway_vpn=` /sbin/ip route | awk '/default/ { print $3 }' `
 
-      if [ -n $gateway_vpn ];
+      if [ -n "$gateway_vpn" ];
       then
 
         if [ -z "$COCON_SE_SET_GATEWAY_ONVPN" ];

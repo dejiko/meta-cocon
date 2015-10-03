@@ -25,6 +25,21 @@ read_args() {
             forcesvga)
                 echo "COCON_FORCESVGA=1" >> $CNFFILE
                 ;;
+            dropbear)
+                COCON_DROPBEAR=1
+                export COCON_DROPBEAR
+                echo "COCON_DROPBEAR=1"  >> $CNFFILE
+                ;;
+            stopbeforex)
+                COCON_XDEBUG=1
+                export COCON_XDEBUG
+                echo "COCON_XDEBUG=1"  >> $CNFFILE
+                ;;
+            delayreadcfg)
+                COCON_DELAY_CFG=1
+                export COCON_DELAY_CFG
+                echo "COCON_DELAY_CFG=1"  >> $CNFFILE
+                ;;
         esac
     done
 }
@@ -217,6 +232,12 @@ then
 fi
 
 
+# Delay read cocon.cnf?
+if [ "$COCON_DELAY_CFG" = "1" ];
+then
+  sleep 10
+fi
+
 # Read setting file.
 # First : /usr/share/cocon/default.cnf
 # Second : /mnt/cf/mnt/realroot/cocon.cnf
@@ -295,14 +316,16 @@ fi
 # Hostname
 hostname tiny$RANDOM
 
-if [ "$COCON_DEBUG" = "1" ];
+if [ "$COCON_DROPBEAR" = "1" ];
 then
-  sleep 4
   echo "Debug : enable dropbear. Please input user password."
   passwd xuser
   dropbearkey -t rsa -f /tmp/.cocon.debugrsa
   dropbear -r /tmp/.cocon.debugrsa -w -K 0
-  
+fi 
+
+if [ "$COCON_DEBUG" = "1" ];
+then
   echo "Debug : after setup.sh"
   /bin/sh
 fi
