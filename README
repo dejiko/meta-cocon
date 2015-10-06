@@ -1,11 +1,15 @@
 This layer depends on:
 
 URI: git://git.openembedded.org/openembedded-core
-branch: master
+branch: daisy
 revision: HEAD
 
 URI: git://git.openembedded.org/meta-openembedded
-branch: master
+branch: daisy
+revision: HEAD
+
+URI: http://git.yoctoproject.org/git/meta-raspberrypi
+branch: daisy
 revision: HEAD
 
 opencocon tree
