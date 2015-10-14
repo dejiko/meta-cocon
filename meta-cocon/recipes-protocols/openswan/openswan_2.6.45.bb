@@ -9,8 +9,7 @@ LICENSE = "GPLv2"
 DEPENDS = "gmp flex-native bison-native"
 RRECOMMENDS_${PN} = "kernel-module-ipsec"
 RDEPENDS_append_nylon = "perl"
-PR = "r1"
-LIC_FILES_CHKSUM = "file://COPYING;md5=0636e73ff0215e8d672dc4c32c317bb3"
+LIC_FILES_CHKSUM = "file://COPYING;md5=67b604758dd265c185ce36fcf76a889d"
 
 SRC_URI = "http://www.openswan.org/download/openswan-${PV}.tar.gz"
 
@@ -57,6 +56,6 @@ FILES_${PN}-test = " \
         ${libexecdir}/ipsec/verify \
 "
 
-SRC_URI[md5sum] = "199757597f9f776d85752bb0c713b5ed"
-SRC_URI[sha256sum] = "95c52552465ca3a8a57452ea425bd03347fc17d9f4a14b0b9fbe06dbd5cb013e"
+SRC_URI[md5sum] = "077346ed785be3415234ca8ba6c6a758"
+SRC_URI[sha256sum] = "b657b4a3828fc6e9830aabeabec047a71993daeb9dd2607f321e355bc5a53e1e"
 

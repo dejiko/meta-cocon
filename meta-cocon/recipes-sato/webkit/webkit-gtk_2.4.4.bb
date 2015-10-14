@@ -16,12 +16,13 @@ DEPENDS = "zlib enchant libsoup-2.4 curl libxml2 cairo libxslt libxt libidn gnut
            gtk+ gstreamer gst-plugins-base flex-native gperf-native perl-native-runtime sqlite3 ${ICU_LIB} libwebp libsecret"
 DEPENDS += " ${@base_contains('DISTRO_FEATURES', 'opengl', 'virtual/libgl', '', d)}"
 
+# Special tarball naming : reason is http://webkitgtk.org/2014/10/01/webkitgtk-contains-non-free-files.html
 SRC_URI = "\
-  http://webkitgtk.org/releases/webkitgtk-${PV}.tar.xz \
+  http://webkitgtk.org/releases/webkitgtk-${PV}a.tar.xz \
  "
 
-SRC_URI[md5sum] = "79edd28d32172abc17a8861622cc274f"
-SRC_URI[sha256sum] = "58cbfc7e352ae1e1f5e383f9f766795794d88483e9a52377a295f56eedf53ab9"
+SRC_URI[md5sum] = "a8e43e896325e8e692a1e092e818a018"
+SRC_URI[sha256sum] = "3741c8724ddf8d7330c148fce95b59554dd4d87989a5ff272c64d46949d7b75f"
 
 # webkit-gtk can NOT be built on MIPS64 with n32 ABI
 COMPATIBLE_HOST_mips64 = "mips64.*-linux$"
