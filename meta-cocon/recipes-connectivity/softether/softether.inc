@@ -9,7 +9,7 @@ LICENSE = "GPLv2"
 SRC_URI = "git://github.com/SoftEtherVPN/SoftEtherVPN.git;branch=master \
 "
 
-SRCREV = "5efab0381cc9bfc907114f1135005d3aa869776c"
+SRCREV = "4e862a7e40c095ac6ac8b1417890008fbd614ebb"
 
 S = "${WORKDIR}/git"
 
