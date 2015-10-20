@@ -28,7 +28,7 @@ then
 fi
 
 
-if [ `echo $COCON_DEBUG` ];
+if [ "`echo $COCON_DEBUG`" -o "`echo /proc/cmdline | grep stopbeforex`" ];
 then
   echo "DEBUG: before X. X_OPTION is $X_OPTION ."
   /bin/sh

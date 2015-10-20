@@ -9,11 +9,10 @@ inherit packagegroup
 RDEPENDS_${PN} = " \
 xl2tpd \
 networkmanager-l2tp \
-networkmanager-openswan \
 networkmanager-openvpn \
 networkmanager-pptp \
 openssh-ssh \
-openswan \
+strongswan \
 openvpn \
 pptp-linux \
 softether-hamcore \
