@@ -6,7 +6,7 @@ RDEPENDS_${PN} = "fontconfig-utils"
 
 inherit allarch fontcache
 
-SRC_URI = "http://osdn.dl.sourceforge.jp/koruri/62469/Koruri-${PV}.tar.xz"
+SRC_URI = "https://github.com/Koruri/Koruri/releases/download/Koruri-${PV}/Koruri-${PV}.tar.xz"
 S = "${WORKDIR}/Koruri-${PV}"
 
 
@@ -30,8 +30,8 @@ fc-cache
 PACKAGES = "${PN}"
 FILES_${PN} += "${sysconfdir} ${datadir}"
 
-SRC_URI[md5sum] = "21b1e8b0a011649e37fddf0e2bf61305"
-SRC_URI[sha256sum] = "2de09d84d05955018dd2b053ec912a94edb6320579bacfb96347d5fe8eb13872"
+SRC_URI[md5sum] = "6a2ac1420063905f8c7bca81b6646139"
+SRC_URI[sha256sum] = "6627a5a9532efb6c6c26ae5eb9127d2bbb43db0f5decf0b9d2c77a044d4fba85"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=9d088c3f7ae366ec868f971a0a4b664e \
                     file://LICENSE_E.mplus;md5=1c4767416f20215f1e61b970f2117db9"
