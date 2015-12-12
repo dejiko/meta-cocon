@@ -8,6 +8,7 @@ CNFFILE="/tmp/.cocon.cnf"
 DISKSTATS_TMP="/var/volatile/tmp/.cocon.diskstats"
 CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
 COPYTORAM_AFTER_INITRD="/mnt/oldroot/mnt/copytoram"
+CNF_LOGFILE="/var/log/cocon-cnf.log"
 
 read_args() {
     [ -z "$CMDLINE" ] && CMDLINE=`cat /proc/cmdline`
@@ -70,7 +71,7 @@ scan_cocon_setting()
 
     if [ -d "$COPYTORAM_AFTER_INITRD" ];
     then
-      scan_cocon_userconfig $COPYTORAM_AFTER_INITRD/
+      scan_cocon_userconfig $COPYTORAM_AFTER_INITRD/ COPYTORAM
     fi
   fi
 
@@ -97,7 +98,7 @@ scan_cocon_setting()
     if [ "$fstype" = "iso9660" -o "$fstype" = "vfat" -o "$fstype" = "ext3" -o "$fstype" = "ntfs" -o  "$fstype" = "ext4" ];
     then
       mount -o ro /dev/$dev $CONF_MOUNT
-      scan_cocon_userconfig $CONF_MOUNT
+      scan_cocon_userconfig $CONF_MOUNT /dev/$dev
       sync
       umount /dev/$dev
     fi
@@ -113,13 +114,20 @@ scan_cocon_userconfig()
   ALLOW_LOAD_FIRMWARE_P54="isl3886pci\|isl3886usb\|isl3887usb"
 
   userconfig_scanpath="$1"
-  echo "user config scan -> $userconfig_scanpath"
+  echo "user config scan -> $2"
+  echo "scan $2" >> $CNF_LOGFILE
 
   # cocon.cnf and related files
   if [ -r $userconfig_scanpath/cocon.cnf ];
   then
     echo  " --> cocon.cnf found"
+    echo "read $2/cocon.cnf ==>" >> $CNF_LOGFILE
+    cat $userconfig_scanpath/cocon.cnf >> $CNF_LOGFILE
+    echo "=====" >> $CNF_LOGFILE
     cocon-read-cnf $userconfig_scanpath/cocon.cnf >> $CNFFILE
+    echo "parsed data ==>" >> $CNF_LOGFILE
+    cat $CNFFILE >> $CNF_LOGFILE
+    echo "=====" >> $CNF_LOGFILE
   fi
 
   # Non-redistributable Firmwares
