@@ -186,6 +186,8 @@ boot_iso9660()
           SQS_DEVICE="$MOUNTLOC"
         fi
 
+        # TODO : add reading cocon.cnf
+
      fi
     else
       echo "WARNING: Do not Eject or Unplug boot media."
@@ -197,6 +199,9 @@ boot_iso9660()
       # TODO
         SQS_DEVICE="$MOUNTLOC"
       fi
+
+      # TODO : add reading cocon.cnf
+
     fi 
 
     echo "--- mount squashfs ---"

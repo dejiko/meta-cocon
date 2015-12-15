@@ -109,6 +109,7 @@ then
 fi 
 
 # Workaround for Libretto L1, L2, ...
+# TODO : maybe broken by sis driver.
 if [ "`echo "$MACHINE_MAKER" | grep 'TOSHIBA'`" -a "`echo "$MACHINE_NAME" | grep -E 'Libretto L'`" ];
 then
 #  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
@@ -134,6 +135,13 @@ fi
 #then
 #  ln -s $SPMACHINE486_CONF/f-07c_rotate.conf $XORG_CONF_D/f-07c_rotate.conf
 #fi
+
+# PBJ SCA001, SCA002
+# Macine name is same "SCA001" on SCA002.
+if [ "`echo "$MACHINE_MAKER" | grep 'PBJ'`" -a "`echo "$MACHINE_NAME" | grep -E 'SCA001'`" ];
+then
+  ln -sf $SPMACHINE486_CONF/sca001.conf $XORG_CONF_D/sca001.conf
+fi
 
 # Re-startup b43 device and load firmware
 if [ "` lsmod | grep -E 'b43legacy'`" -a -d /lib/firmware/b43legacy ];
