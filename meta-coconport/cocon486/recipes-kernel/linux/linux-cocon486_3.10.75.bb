@@ -15,12 +15,11 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v3.0/linux-${PV}.tar.xz;name=kernel 
            file://pata_legacy.patch \
 "
 
-SRC_URI[md5sum] = "688e92ff6f0132586fce97b10d8c2c4f"
-SRC_URI[sha256sum] = "18987c2e9a8f5e2583b1ac5c2bed52777b8730ab29612a5b70c94fa17c659803"
 SRCREV_aufs = "3ec542bfe6854491bceb77b40c46f3b63849445a"
 SRC_URI[sm712.md5sum] = "8c572e554eef38be73a1673a0b2b6fa7"
 SRC_URI[sm712.sha256sum] = "6b1d18e7a30fa6c6901c78b729e5d3e20ff10d29e96b00507770ff0598687f7f"
-
+SRC_URI[kernel.md5sum] = "688e92ff6f0132586fce97b10d8c2c4f"
+SRC_URI[kernel.sha256sum] = "18987c2e9a8f5e2583b1ac5c2bed52777b8730ab29612a5b70c94fa17c659803"
 
 COMPATIBLE_MACHINE = "cocon486"
 
