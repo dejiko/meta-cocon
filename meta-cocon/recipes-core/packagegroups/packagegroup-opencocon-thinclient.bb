@@ -18,7 +18,6 @@ dialog \
 eject \
 freerdp \
 gnome-icon-theme \
-gnome-keyring \
 hicolor-icon-theme \
 iproute2 \
 libnotify \
