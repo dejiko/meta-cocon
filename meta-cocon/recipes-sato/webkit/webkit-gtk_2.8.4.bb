@@ -11,7 +11,7 @@ ICU_LIB = "harfbuzz"
 ICU_LIB_powerpc = "pango"
 
 DEPENDS = "zlib enchant libsoup-2.4 curl libxml2 cairo libxslt libxt libidn gnutls \
-           gtk+ gstreamer gst-plugins-base flex-native gperf-native perl-native-runtime perl-native sqlite3 ${ICU_LIB} libwebp libsecret"
+           gtk+ gstreamer1.0 gstreamer1.0-plugins-base flex-native gperf-native perl-native-runtime perl-native sqlite3 ${ICU_LIB} libwebp libsecret"
 DEPENDS += " ${@base_contains('DISTRO_FEATURES', 'opengl', 'virtual/libgl', '', d)}"
 
 SRC_URI = "\
