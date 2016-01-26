@@ -5,8 +5,10 @@ SECCONF="/mnt/union/mnt/realroot/cocon.cnf"
 SECCONF_EXTREME="/cocon.cnf"
 CONF_MOUNT="/mnt/cfg"
 CNFFILE="/tmp/.cocon.cnf"
+CNFFILE_BOOTDRIVE="/tmp/.cocon.cnf.bootdrive"
 DISKSTATS_TMP="/var/volatile/tmp/.cocon.diskstats"
 CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
+CNF_NM_FILE_MOVETO_BOOTDRIVE="/tmp/.cocon.cnf.files/nm.bootdrive/"
 COPYTORAM_AFTER_INITRD="/mnt/oldroot/mnt/copytoram"
 CNF_LOGFILE="/var/log/cocon-cnf.log"
 
@@ -68,10 +70,12 @@ scan_cocon_setting()
   if [ "$COCON_COPYTORAM" = "1" ];
     then
     # first, attempt to read config from Copy-to-RAM mode directory.
+    # Parse coconcnf from here, but store to cocon.cnf.bootdrive
+    # because parse priority is high then other drives.
 
     if [ -d "$COPYTORAM_AFTER_INITRD" ];
     then
-      scan_cocon_userconfig $COPYTORAM_AFTER_INITRD/ COPYTORAM
+      scan_cocon_userconfig $COPYTORAM_AFTER_INITRD/ COPYTORAM $CNFFILE_BOOTDRIVE $CNF_NM_FILE_MOVETO_BOOTDRIVE
     fi
   fi
 
@@ -86,10 +90,12 @@ scan_cocon_setting()
       continue;
     fi
 
-    if [ "$ROOT_DEVICE" = "/dev/$dev" ];
+    if [ "$ROOT_DEVICE" = "/dev/$dev" -a -z "$COCON_COPYTORAM" ];
     then
-       # This is booted CD drive (or USB Stick).
-       # then ignore this drive.
+       # This is booted CD drive (or USB Stick) except Copy-to-RAM mode.
+       # Parse config from here, but store to cocon.cnf.bootdrive
+       # because parse priority is high then other drives.
+       scan_cocon_userconfig $CONF_MOUNT /dev/$dev $CNFFILE_BOOTDRIVE $CNF_NM_FILE_MOVETO_BOOTDRIVE
        continue;
     fi
 
@@ -98,6 +104,7 @@ scan_cocon_setting()
     if [ "$fstype" = "iso9660" -o "$fstype" = "vfat" -o "$fstype" = "ext3" -o "$fstype" = "ntfs" -o  "$fstype" = "ext4" ];
     then
       mount -o ro /dev/$dev $CONF_MOUNT
+      # Read config
       scan_cocon_userconfig $CONF_MOUNT /dev/$dev
       sync
       umount /dev/$dev
@@ -106,27 +113,41 @@ scan_cocon_setting()
 }
 
 
-# Scan $1 folder and place cocon.cnf, coconfrm, coconnm.
+# Scan cocon.cnf, coconfrm, coconnm.
 scan_cocon_userconfig()
 {
   ALLOW_LOAD_FIRMWARE_B43="wl_apsta-3.130.20.0.o\|wl_apsta.o"
   ALLOW_LOAD_FIRMWARE_IPW2X00="ipw2100-1.3-i.fw\|ipw2100-1.3-p.fw\|ipw2100-1.3.fw\|ipw2200-bss.fw\|ipw2200-ibss.fw\|ipw2200-sniffer.fw"
   ALLOW_LOAD_FIRMWARE_P54="isl3886pci\|isl3886usb\|isl3887usb"
 
-  userconfig_scanpath="$1"
-  echo "user config scan -> $2"
-  echo "scan $2" >> $CNF_LOGFILE
+  userconfig_scanpath="$1"  # Almost in /mnt/cfg
+  userconfig_realpath="$2"  # mount partition etc
+  userconfig_storefile="$3" # cocon.cnf store file (Default: $CNFFILE) 
+  nmconfig_storepath="$4"   # coconnm store path
+
+  if [ -z "$userconfig_storefile" ];
+  then
+    userconfig_storefile="$CNFFILE"
+  fi
+
+  if [ -z "$nmconfig_storepath" ];
+  then
+    userconfig_storefile="$CNF_NM_FILE_MOVETO"
+  fi
+
+  echo "user config scan -> $userconfig_realpath"
+  echo "scan $userconfig_realpath" >> $CNF_LOGFILE
 
   # cocon.cnf and related files
   if [ -r $userconfig_scanpath/cocon.cnf ];
   then
     echo  " --> cocon.cnf found"
-    echo "read $2/cocon.cnf ==>" >> $CNF_LOGFILE
+    echo "read $userconfig_realpath/cocon.cnf ==>" >> $CNF_LOGFILE
     cat $userconfig_scanpath/cocon.cnf >> $CNF_LOGFILE
     echo "=====" >> $CNF_LOGFILE
-    cocon-read-cnf $userconfig_scanpath/cocon.cnf >> $CNFFILE
+    cocon-read-cnf $userconfig_scanpath/cocon.cnf >> $userconfig_storefile
     echo "parsed data ==>" >> $CNF_LOGFILE
-    cat $CNFFILE >> $CNF_LOGFILE
+    cat $userconfig_storefile >> $CNF_LOGFILE
     echo "=====" >> $CNF_LOGFILE
   fi
 
@@ -138,14 +159,14 @@ scan_cocon_userconfig()
       if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_B43" > /dev/null ;
       then
         # Broadcom is big firmware file, so cut now.
-        b43-fwcutter -w /lib/firmware $userconfig_scanpath/coconfrm/$frm
+        b43-fwcutter -w /lib/firmware "$userconfig_scanpath/coconfrm/$frm"
         continue;
       fi
 
       if expr "$frm" : "$ALLOW_LOAD_FIRMWARE_IPW2X00\|$ALLOW_LOAD_FIRMWARE_P54" > /dev/null ;
       then
         # Just copy
-        cp $userconfig_scanpath/coconfrm/$frm /lib/firmware
+        cp "$userconfig_scanpath/coconfrm/$frm" /lib/firmware
         continue;
       fi
     done
@@ -153,17 +174,17 @@ scan_cocon_userconfig()
   fi
 
   # NetworkManager Settings
-  if [ -d $userconfig_scanpath/coconnm ];
+  if [ -d "$userconfig_scanpath/coconnm" ];
   then
-    mkdir -p $CNF_NM_FILE_MOVETO
+    mkdir -p $nmconfig_storepath
     echo "--> NetworkManager setting directory found"
     for nm in `ls -1 $userconfig_scanpath/coconnm`; do
       if [ -z ` cat $nm | grep '\#\!\/' ` ];
       then
         # TODO : more more inf file check
         #cp $CONF_MOUNT/coconnm/$nm $CNF_NM_FILE_MOVETO
-        sed '/mac-address=/d' "$CONF_MOUNT/coconnm/$nm" > "$CNF_NM_FILE_MOVETO/$nm"
-        chmod 600 "$CNF_NM_FILE_MOVETO/$nm"
+        sed '/mac-address=/d' "$CONF_MOUNT/coconnm/$nm" > "$nmconfig_storepath/$nm"
+        chmod 600 "$nmconfig_storepath/$nm"
       fi
     done
   fi
@@ -265,6 +286,20 @@ else
 fi
 
 scan_cocon_setting
+
+# If stored $CNFFILE_BOOTDRIVE and/or $CNF_NM_FILE_MOVETO_BOOTDRIVE,
+# overwrite in here.
+if [ -e "$CNFFILE_BOOTDRIVE" ];
+then
+  cat $CNFFILE $CNFFILE_BOOTDRIVE > $CNFFILE
+  # TODO : Merge, remove duplicate
+fi
+
+if [ -d "$CNF_NM_FILE_MOVETO_BOOTDRIVE" ];
+then
+  cp -R $CNF_NM_FILE_MOVETO_BOOTDRIVE $CNF_NM_FILE
+fi
+
 
 if [ "$COCON_DEBUG" = "1" ];
 then
