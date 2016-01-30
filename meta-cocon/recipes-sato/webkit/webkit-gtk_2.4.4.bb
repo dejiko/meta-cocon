@@ -6,8 +6,6 @@ LICENSE = "BSD & LGPLv2+"
 LIC_FILES_CHKSUM = "file://Source/WebCore/LICENSE-LGPL-2;md5=36357ffde2b64ae177b2494445b79d21 \
                     file://Source/WebCore/LICENSE-APPLE;md5=4646f90082c40bcf298c285f8bab0b12"
 
-#PR = "r2"
-
 # Choice of language backends - icu has issues on Big Endian machines so use pango
 ICU_LIB = "harfbuzz"
 ICU_LIB_powerpc = "pango"
@@ -49,6 +47,12 @@ EXTRA_OECONF_append_powerpc = " --with-unicode-backend=glib"
 CPPFLAGS_append_powerpc = " -I${STAGING_INCDIR}/pango-1.0 \
                             -I${STAGING_LIBDIR}/glib-2.0/include \
                             -I${STAGING_INCDIR}/glib-2.0"
+
+# ARMv5/v6 : disable jit
+# http://git.yoctoproject.org/cgit/cgit.cgi/poky/commit/?id=7ecfaaaf5886c1892cc5190f8d632265ffd92f50
+EXTRA_OECONF_append_armv5 = " --disable-jit"
+EXTRA_OECONF_append_armv6 = " --disable-jit"
+ 
 
 # ld can run out of memory linking libwebkitgtk!
 #
