@@ -13,7 +13,7 @@ ICU_LIB = "harfbuzz"
 ICU_LIB_powerpc = "pango"
 
 DEPENDS = "zlib enchant libsoup-2.4 curl libxml2 cairo libxslt libxt libidn gnutls \
-           gtk+ gstreamer gst-plugins-base flex-native gperf-native perl-native-runtime sqlite3 ${ICU_LIB} libwebp libsecret"
+           gtk+ gstreamer gst-plugins-base flex-native gperf-native perl-native-runtime sqlite3 ${ICU_LIB} libwebp libsecret make-native"
 DEPENDS += " ${@base_contains('DISTRO_FEATURES', 'opengl', 'virtual/libgl', '', d)}"
 
 # Special tarball naming : reason is http://webkitgtk.org/2014/10/01/webkitgtk-contains-non-free-files.html
