@@ -29,6 +29,7 @@ PACKAGES_DYNAMIC = "libfreerdp-plugin-*"
 do_patch() {
     # patch from Debian
     cd ${S}
+    patch -Np1 -i ${WORKDIR}/0003-dont-use-unavailable-c99-math-debian.patch
     patch -Np1 -i ${S}/debian/patches/1001_hide-internal-symbols.patch
     patch -Np1 -i ${S}/debian/patches/1002_update-pkg-config-file.patch
     # TODO
@@ -63,6 +64,7 @@ do_configure_prepend() {
         -e '24a\#include <stdio.h>' \
         ${S}/include/freerdp/utils/pcap.h
 }
+
 
 
 # TODO : useless on newer FreeRDP.

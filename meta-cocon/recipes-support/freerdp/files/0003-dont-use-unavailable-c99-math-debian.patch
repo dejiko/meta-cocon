@@ -1,0 +1,64 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fc9cdc3..bf14de6 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -266,6 +266,10 @@ else()
+ 	set(X11_FEATURE_TYPE "DISABLED")
+ endif()
+ 
++list(APPEND CMAKE_REQUIRED_LIBRARIES m)
++check_symbol_exists(ceill math.h HAVE_MATH_C99_LONG_DOUBLE)
++	list(REMOVE_ITEM CMAKE_REQUIRED_LIBRARIES m)
++
+ set(X11_FEATURE_PURPOSE "X11")
+ set(X11_FEATURE_DESCRIPTION "X11 client and server")
+ 
+diff --git a/config.h.in b/config.h.in
+index 2b8ec09..bbd3fff 100755
+--- a/config.h.in
++++ b/config.h.in
+@@ -22,7 +22,7 @@
+ #cmakedefine HAVE_SYS_STRTIO_H
+ #cmakedefine HAVE_EVENTFD_H
+ #cmakedefine HAVE_TM_GMTOFF
+-
++#cmakedefine HAVE_MATH_C99_LONG_DOUBLE
+ 
+ /* Options */
+ #cmakedefine WITH_PROFILER
+diff --git a/winpr/libwinpr/utils/trio/triodef.h b/winpr/libwinpr/utils/trio/triodef.h
+index 11c14b9..2a04795 100644
+--- a/winpr/libwinpr/utils/trio/triodef.h
++++ b/winpr/libwinpr/utils/trio/triodef.h
+@@ -313,25 +313,12 @@ typedef void * trio_pointer_t;
+ # define TRIO_COMPILER_SUPPORTS_LL
+ #endif
+ 
+-#if defined(__CYGWIN__)
+-/*
+- * Cygwin defines the macros for hosted C99, but does not support certain
+- * long double math functions.
+- */
+-# include <cygwin/version.h>
+-# define TRIO_CYGWIN_VERSION_API CYGWIN_VERSION_API_MAJOR * 1000 + \
+-   CYGWIN_VERSION_API_MINOR
+-/*
+- * Please change the version number below when the Cygwin API supports
+- * long double math functions (powl, fmodl, etc.)
+- */
+-# if TRIO_CYGWIN_VERSION_API < 99999999
+-#  define TRIO_NO_FLOORL 1
+-#  define TRIO_NO_CEILL 1
+-#  define TRIO_NO_POWL 1
+-#  define TRIO_NO_FMODL 1
+-#  define TRIO_NO_LOG10L 1
+-# endif
++#if !defined(HAVE_MATH_C99_LONG_DOUBLE)
++# define TRIO_NO_FLOORL 1
++# define TRIO_NO_CEILL 1
++# define TRIO_NO_POWL 1
++# define TRIO_NO_FMODL 1
++# define TRIO_NO_LOG10L 1
+ #endif
+ 
+ #endif /* TRIO_TRIODEF_H */

@@ -3,31 +3,16 @@
 
 include freerdp.inc
 
-#inherit gitpkgv
-
-#PV = "gitr${SRCPV}"
-#PKGV = "${GITPKGVTAG}"
-#PR = "${INC_PR}.11"
-
-SRCREV = "ff9d7abf3462debf575999a3f5ae24269a50af78"
-
-# v6
-#SRCREV = "15a22eb9c9656fab41cefbe9e39e4b70162bece2"
-
-# Tested v9(first commit of correct keymap)
-#SRCREV = "de9156e4a0dd6bf71b88d3c4bbd875ea48cd380a"
-
-# Stable tree (v3?)
-##SRCREV = "15069020d398c203df921da93eb1b72f55b6010a"
+# Currently opencocon uses debian branch.
+SRCREV = "160c3dad43f5ece0c11a22003b058820dea6a869"
 
 SRC_URI = "git://anonscm.debian.org/collab-maint/freerdp.git \
            file://futimens_cocon_v2.patch \
            file://cocon-fullscreen-v2.patch \
+           file://0003-dont-use-unavailable-c99-math-debian.patch \
 "
 
 GITPKGVTAG = "${SRCREV}"
 
 S = "${WORKDIR}/git"
-
-#CMAKE_MODULE_PATH += " ${S}/cmake/ "
 
