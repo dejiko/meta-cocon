@@ -18,21 +18,23 @@ SRCREV_aufs = "161911a653aa5c14aba800c8ace0c5fcf2f8a51a"
 
 COMPATIBLE_MACHINE = "cocon486"
 
-# B = "${WORKDIR}/linux-{PV}"
-
 # apply patches without quilt
 do_configure_prepend() {
   # Extract aufs tree to Linux tree
+  if [ ! -e ${S}/.cocon.aufs-patched ];
+  then
+    cd ${S} 
+    patch -p1 <${WORKDIR}/git/aufs4-kbuild.patch
+    patch -p1 <${WORKDIR}/git/aufs4-base.patch
+    patch -p1 <${WORKDIR}/git/aufs4-mmap.patch
+    patch -p1 <${WORKDIR}/git/aufs4-standalone.patch
+    cp -R ${WORKDIR}/git/fs/* ./fs/
+    cp -R ${WORKDIR}/git/include/uapi/linux/aufs_type.h ./include/uapi/linux/
 
-  cd ${WORKDIR}/linux-${PV} 
-  patch -p1 <${WORKDIR}/git/aufs4-kbuild.patch
-  patch -p1 <${WORKDIR}/git/aufs4-base.patch
-  patch -p1 <${WORKDIR}/git/aufs4-mmap.patch
-  patch -p1 <${WORKDIR}/git/aufs4-standalone.patch
-  cp -R ${WORKDIR}/git/fs/* ./fs/
-  cp -R ${WORKDIR}/git/include/uapi/linux/aufs_type.h ./include/uapi/linux/
+    cp ${WORKDIR}/defconfig ${S}/.config
 
-  cp ${WORKDIR}/defconfig ${B}/.config
+    touch ${S}/.cocon.aufs-patched
+  fi
 }
 
 
