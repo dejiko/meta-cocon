@@ -4,7 +4,7 @@ HOMEPAGE = "http://sourceforge.net/projects/libvncserver/"
 SECTION = "libs"
 PRIORITY = "optional"
 LICENSE = "GPLv2"
-DEPENDS = "zlib libjpeg-turbo libgcrypt libgcrypt-native gnutls"
+DEPENDS = "zlib libjpeg-turbo libgcrypt libgcrypt-native gnutls libpng"
 
 SRC_URI = "git://github.com/LibVNC/libvncserver;protocol=git;branch=master \
 	   file://acinclude.m4 \
@@ -14,7 +14,7 @@ SRCREV = "cf03f71780ace5db61f194bbe6c832f32fbc10f8"
 
 S = "${WORKDIR}/git"
 
-EXTRA_OECONF += " --without-x11vnc --disable-libtool-lock --without-websockets --with-gcrypt"
+EXTRA_OECONF += " --disable-libtool-lock --without-websockets --with-gcrypt"
 
 inherit autotools
 
