@@ -1,6 +1,7 @@
 require softether.inc
 
-DEPENDS = "zlib ncurses openssl softether-hamcorebuilder-native"
+DEPENDS += "zlib ncurses openssl softether-hamcorebuilder-native virtual/libiconv readline"
+RDEPENDS-${PN} += "virtual/libiconv readline"
 
 SRC_URI_append_libc-uclibc = "file://internat-uclibc.patch"
 
