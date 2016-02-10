@@ -9,7 +9,6 @@ inherit packagegroup
 
 RDEPENDS_${PN} = " \
 midori \
-webkit-gtk \
-harfbuzz-icu \
+webkitgtk \
 "
 
