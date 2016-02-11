@@ -1,11 +1,11 @@
 DESCRIPTION = "LXDE RandR"
 SECTION = "x11"
-DEPENDS = "xrandr glib-2.0 intltool"
+DEPENDS = "xrandr glib-2.0 intltool-native desktop-file-utils-native gtk+"
 LICENSE = "GPLv2"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/lxde/${PN}-${PV}.tar.xz"
 
-inherit autotools gettext
+inherit autotools-brokensep gettext pkgconfig 
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
