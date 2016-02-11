@@ -9,13 +9,9 @@ RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
 LIC_FILES_CHKSUM = "file://COPYING;md5=100d5a599bead70ddcd70dcd73f2e29c"
 
 EXTRA_OECONF = " \
-		--with-distro=debian \
-		--with-crypto=gnutls \
 		--disable-more-warnings"
 
 inherit autotools pkgconfig
-
-PR = "r0"
 
 SRC_URI += "${GNOME_MIRROR}/NetworkManager-openvpn/0.9/NetworkManager-openvpn-${PV}.tar.xz \
 "

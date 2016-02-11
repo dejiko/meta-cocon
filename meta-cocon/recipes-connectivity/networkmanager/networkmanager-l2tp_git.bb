@@ -2,17 +2,14 @@ DESCRIPTION = "NetworkManager"
 SECTION = "net/misc"
 LICENSE = "GPLv2"
 PRIORITY = "optional"
-DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade xl2tpd"
+DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade xl2tpd libgnome-keyring gtk+3 strongswan"
 RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            ${@base_contains('COMBINED_FEATURES', '3gmodem', 'ppp', '', d)} \
            "
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 
-EXTRA_OECONF = " \
-		--with-distro=debian \
-		--with-crypto=gnutls \
-		--disable-more-warnings \
-                --without-gnome"
+#EXTRA_OECONF = " \
+#                --without-gnome"
 
 inherit autotools pkgconfig
 
@@ -24,10 +21,16 @@ SRC_URI = "git://github.com/seriyps/NetworkManager-l2tp.git"
 
 S = "${WORKDIR}/git"
 
-FILES_${PN} += " \
-		${libdir}/NetworkManager/*.so \
+FILES_${PN} += "${libdir}/NetworkManager/*.so \
 		${datadir}/gnome-vpn-properties \
 		${datadir}/icons \
                 ${libdir}/pppd/2.4.5/*.so "
+FILES_${PN}-dev += "${libdir}/NetworkManager/libnm-l2tp-properties.la \
+                ${libdir}/pppd/2.4.5/nm-l2tp-pppd-plugin.la "
+FILES_${PN}-staticdev += "${libdir}/NetworkManager/libnm-l2tp-properties.a \
+                ${libdir}/pppd/2.4.5/nm-l2tp-pppd-plugin.a "
+FILES_${PN}-dbg += "${libdir}/NetworkManager/.debug/* \
+                ${libdir}/pppd/2.4.5/.debug/* "
+
 
 

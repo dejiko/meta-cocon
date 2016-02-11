@@ -9,13 +9,9 @@ RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 
 EXTRA_OECONF = " \
-		--with-distro=debian \
-		--with-crypto=gnutls \
 		--disable-more-warnings"
 
 inherit autotools pkgconfig
-
-PR = "r0"
 
 SRC_URI += "${GNOME_MIRROR}/NetworkManager-pptp/0.9/NetworkManager-pptp-${PV}.tar.xz \
 "
