@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # cocon-spmachine-early
 # Script for special machines (and need root).
