@@ -94,7 +94,7 @@ xserver-xorg-fbdev \
 xserver-xorg-module-exa \
 xserver-xorg-module-libint10 \
 xserver-xorg-module-libwfb \
-xserver-xorg-multimedia-modules \
+linuxconsole-inputattach \
 "
 
 
