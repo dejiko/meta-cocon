@@ -2,7 +2,8 @@
 
 DESCRIPTION = "opencocon VNC client"
 HOMEPAGE = "http://opencocon.org"
-DEPENDS = "virtual/libx11 openssl libvncserver"
+DEPENDS = "virtual/libx11 openssl libvncserver gtk+ glib-2.0 gdk-pixbuf"
+RDEPENDS_${PN} = "gtk+ glib-2.0 gdk-pixbuf libvncserver"
 SECTION = "x11/network"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=361b6b837cad26c6900a926b62aada5f"
