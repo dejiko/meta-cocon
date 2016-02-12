@@ -2,7 +2,7 @@ DESCRIPTION = "classic opencocon-local init"
 SECTION = "base"
 LICENSE = "MIT"
 DEPENDS = "base-files"
-RDEPENDS_${PN} = "busybox"
+RDEPENDS_${PN} = "busybox python"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
 SRC_URI = "file://COPYING.MIT \
