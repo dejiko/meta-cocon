@@ -2,7 +2,7 @@ DESCRIPTION = "NetworkManager"
 SECTION = "net/misc"
 LICENSE = "GPLv2"
 PRIORITY = "optional"
-DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade"
+DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade gtk+3 libgnome-keyring"
 RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            ${@base_contains('COMBINED_FEATURES', '3gmodem', 'ppp', '', d)} \
            "
@@ -22,6 +22,9 @@ FILES_${PN} += " \
 		${libdir}/NetworkManager/*.so \
 		${datadir}/gnome-vpn-properties \
 		${datadir}/icons "
+FILES_${PN}-dev += "${libdir}/NetworkManager/libnm-openvpn-properties.la"
+FILES_${PN}-staticdev += "${libdir}/NetworkManager/libnm-openvpn-properties.a"
+FILES_${PN}-dbg += "${libdir}/NetworkManager/.debug/*"
 
 SRC_URI[md5sum] = "6699552a550a18db9edb037951a81d62"
 SRC_URI[sha256sum] = "4196f4c124426884657c8d0e2578f4d35205b8981a46bf645fd599fb238395ce"
