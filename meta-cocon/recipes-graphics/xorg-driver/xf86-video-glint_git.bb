@@ -9,4 +9,4 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-glint;protocol=g
 "
 
 S = "${WORKDIR}/git"
-SRCREV = "073d5b0b392781bf4a6aa7f9e2dbe2ae51caed2c"
+SRCREV = "b54f27f0de0558880b2146a4315a99907eb72249"

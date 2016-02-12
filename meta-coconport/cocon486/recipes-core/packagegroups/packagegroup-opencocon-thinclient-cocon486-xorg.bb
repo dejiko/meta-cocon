@@ -73,11 +73,12 @@ xf86-video-s3virge \
 xf86-video-savage \
 xf86-video-siliconmotion \
 xf86-video-sis \
+xf86-video-sisimedia \
+xf86-video-sisusb \
 xf86-video-tdfx \
 xf86-video-trident \
 xf86-video-tseng \
 xf86-video-vesa \
-xf86-video-voodoo \
 xf86-video-xgi \
 xf86-video-xgixp \
 xinit \

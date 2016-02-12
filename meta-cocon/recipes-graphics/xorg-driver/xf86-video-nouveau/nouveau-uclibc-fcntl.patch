@@ -1,0 +1,27 @@
+diff --git a/src/nouveau_dri2.c b/src/nouveau_dri2.c
+index 81ee9be..32a90cb 100644
+--- a/src/nouveau_dri2.c
++++ b/src/nouveau_dri2.c
+@@ -1,5 +1,8 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#ifdef __UCLIBC__
++#define __USE_GNU
++#endif
+ #include <fcntl.h>
+ #include <errno.h>
+ 
+diff --git a/src/nv_driver.c b/src/nv_driver.c
+index 4dde8e0..eacf51a 100644
+--- a/src/nv_driver.c
++++ b/src/nv_driver.c
+@@ -21,6 +21,9 @@
+  */
+ 
+ #include <stdio.h>
++#ifdef __UCLIBC__
++#define __USE_GNU
++#endif
+ #include <fcntl.h>
+ 
+ #include "nv_include.h"

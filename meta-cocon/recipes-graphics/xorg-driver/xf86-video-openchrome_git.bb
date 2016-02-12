@@ -10,11 +10,10 @@ do_configure_prepend() {
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=ed28020670498bb992812791b7aa3cca"
 
-SRC_URI = "git://anongit.freedesktop.org/openchrome/xf86-video-openchrome;protocol=git;branch=master \
-           file://hp-tc-2533t.patch \
-          "
+SRC_URI = "git://anongit.freedesktop.org/openchrome/xf86-video-openchrome;protocol=git;branch=master"
+#           file://hp-tc-2533t.patch"
 
 S = "${WORKDIR}/git"
-SRCREV = "c391551492d692b5736f94ab066d9f35aa262bf5"
+SRCREV = "3d8aa5d0be2be6e874a11e898cfc0abdf32307dc"
 
 
