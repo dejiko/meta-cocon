@@ -10,6 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b \
                     file://grub/main.c;beginline=3;endline=9;md5=22a5f28d2130fff9f2a17ed54be90ed6"
 
 RDEPENDS_${PN} = "diffutils"
+DEPEND += "ncurses"
 
 SRC_URI = "ftp://alpha.gnu.org/gnu/grub/grub-${PV}.tar.gz; \
 	   http://ftp.debian.org/debian/pool/main/g/grub/grub_0.97-67.diff.gz;name=debian-patch \
@@ -65,4 +66,8 @@ do_install_append() {
 
 }
 
-FILES_${PN} += "/boot/*"
+# TODO : remove dupliate
+FILES_${PN} += "/boot/* \
+                ${datadir}/grub/* \
+                ${libdir}/grub/i386-pc/*"
+
