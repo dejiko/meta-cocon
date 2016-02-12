@@ -1,0 +1,29 @@
+diff --git a/utils/Makefile b/utils/Makefile
+index f5f3260..cb16c78 100644
+--- a/utils/Makefile
++++ b/utils/Makefile
+@@ -27,7 +27,7 @@
+ 
+ CFLAGS		?= -g -O2 -Wall
+ 
+-PROGRAMS	= inputattach jstest jscal fftest ffmvforce ffset \
++PROGRAMS	= inputattach jstest jscal fftest ffset \
+ 		  ffcfstress jscal-restore jscal-store
+ 
+ PREFIX          ?= /usr/local
+@@ -48,11 +48,11 @@ inputattach: inputattach.c
+ ffcfstress: ffcfstress.c
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) -funsigned-char $^ $(LDFLAGS) -lm -o $@
+ 
+-ffmvforce.o: ffmvforce.c
+-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@ `sdl-config --cflags`
++#ffmvforce.o: ffmvforce.c
++#	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@ `sdl-config --cflags`
+ 
+-ffmvforce: ffmvforce.o
+-	$(CC) $^ -o $@ $(LDFLAGS) -g -lm `sdl-config --libs`
++#ffmvforce: ffmvforce.o
++#	$(CC) $^ -o $@ $(LDFLAGS) -g -lm `sdl-config --libs`
+ 
+ axbtnmap.o: axbtnmap.c axbtnmap.h
+ 
