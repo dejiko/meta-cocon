@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
 

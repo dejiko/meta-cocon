@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 GEOMETRY="/tmp/.cocon.geometry"
 CNFFILE="/tmp/.cocon.cnf"
