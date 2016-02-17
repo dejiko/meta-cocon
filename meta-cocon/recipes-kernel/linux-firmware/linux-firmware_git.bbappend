@@ -8,9 +8,9 @@ LIC_FILES_CHKSUM += "file://LICENCE.agere;md5=af0133de6b4a9b2522defd5f188afd31 \
                    "
 
 PACKAGES =+ "${PN}-agere-license ${PN}-orinoco \
-             ${PN}-iwlwifi-5150-2 ${PN}-iwlwifi-5000-5 ${PN}-iwlwifi-6050-5 ${PN}-iwlwifi-6000-4 \
+             ${PN}-iwlwifi-5150-2 ${PN}-iwlwifi-5000-5 \
              ${PN}-iwlwifi-1000-5 ${PN}-iwlwifi-100-5 ${PN}-iwlwifi-105-6 ${PN}-iwlwifi-2000-6 \
-             ${PN}-iwlwifi-2030-6 ${PN}-iwlwifi-3160-7 ${PN}-iwlegacy-3945-2 ${PN}-iwlegacy-4965-2 \
+             ${PN}-iwlwifi-2030-6 ${PN}-iwlegacy-3945-2 ${PN}-iwlegacy-4965-2 \
              ${PN}-usb8388 ${PN}-usb8388-thinfirm ${PN}-mwl8366 ${PN}-mwl8687 \
              ${PN}-pcie8897 ${PN}-pcie8797 \
              ${PN}-rtl8192de ${PN}-rtl8192se ${PN}-rtl8723ae ${PN}-rtl8192e \
@@ -30,27 +30,21 @@ RDEPENDS_${PN}-orinoco += "${PN}-agere-license"
 
 RDEPENDS_${PN}-iwlwifi-5150-2 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-5000-5 = "${PN}-iwlwifi-license"
-RDEPENDS_${PN}-iwlwifi-6050-5 = "${PN}-iwlwifi-license"
-RDEPENDS_${PN}-iwlwifi-6000-4 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-1000-5 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-100-5 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-105-6 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-2000-6 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlwifi-2030-6 = "${PN}-iwlwifi-license"
-RDEPENDS_${PN}-iwlwifi-3160-7 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlegacy-3945-2 = "${PN}-iwlwifi-license"
 RDEPENDS_${PN}-iwlegacy-4965-2 = "${PN}-iwlwifi-license"
 
 FILES_${PN}-iwlwifi-5150-2 = "/lib/firmware/iwlwifi-5150-2.ucode"
 FILES_${PN}-iwlwifi-5000-5 = "/lib/firmware/iwlwifi-5000-5.ucode"
-FILES_${PN}-iwlwifi-6050-5 = "/lib/firmware/iwlwifi-6050-5.ucode"
-FILES_${PN}-iwlwifi-6000-4 = "/lib/firmware/iwlwifi-6000-4.ucode"
 FILES_${PN}-iwlwifi-1000-5 = "/lib/firmware/iwlwifi-1000-5.ucode"
 FILES_${PN}-iwlwifi-100-5 = "/lib/firmware/iwlwifi-100-5.ucode"
 FILES_${PN}-iwlwifi-105-6 = "/lib/firmware/iwlwifi-105-6.ucode"
 FILES_${PN}-iwlwifi-2000-6 = "/lib/firmware/iwlwifi-2000-6.ucode"
 FILES_${PN}-iwlwifi-2030-6 = "/lib/firmware/iwlwifi-2030-6.ucode"
-FILES_${PN}-iwlwifi-3160-7 = "/lib/firmware/iwlwifi-3160-7.ucode"
 FILES_${PN}-iwlegacy-3945-2 = "/lib/firmware/iwlwifi-3945-2.ucode"
 FILES_${PN}-iwlegacy-4965-2 = "/lib/firmware/iwlwifi-4965-2.ucode"
 
