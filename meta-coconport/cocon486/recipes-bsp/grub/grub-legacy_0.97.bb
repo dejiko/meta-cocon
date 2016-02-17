@@ -13,16 +13,19 @@ RDEPENDS_${PN} = "diffutils ncurses-libncurses ncurses-libtinfo"
 DEPEND += "ncurses"
 
 SRC_URI = "ftp://alpha.gnu.org/gnu/grub/grub-${PV}.tar.gz; \
-	   http://ftp.debian.org/debian/pool/main/g/grub/grub_0.97-67.diff.gz;name=debian-patch \
+	   http://ftp.debian.org/debian/pool/main/g/grub/grub_0.97-70.diff.gz;name=debian-patch \
 	   file://autohell.patch \
 	   file://grub_fix_for_automake-1.12.patch \
            file://grub-support-256byte-inode.diff \
+           file://ext4.patch \
+           file://grub-0.97-gpt.patch \
+           file://intelmac.patch \
 	   file://menu.lst \
             "
 SRC_URI_append_libc-musl += "file://grub-legacy-musl.patch"
 
-SRC_URI[debian-patch.md5sum] = "9950962dfcd94ef0e37f260e23dab321"
-SRC_URI[debian-patch.sha256sum] = "1a5113831c73ed61bc5ffdefa3bc373ed33bfa701c72c62870a4268ba0546af7"
+SRC_URI[debian-patch.md5sum] = "f035bfbdc8548f57237abc9ca30ed007"
+SRC_URI[debian-patch.sha256sum] = "8346cf2bf39ce1f0275869a686d61939ec91997cd2ce4b4be95adb28e6fd1dca"
 
 SRC_URI[md5sum] = "cd3f3eb54446be6003156158d51f4884"
 SRC_URI[sha256sum] = "4e1d15d12dbd3e9208111d6b806ad5a9857ca8850c47877d36575b904559260b"
