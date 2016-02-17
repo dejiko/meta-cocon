@@ -5,6 +5,7 @@ DEPENDS += "libogg"
 
 SRC_URI = "http://downloads.xiph.org/releases/celt/celt-${PV}.tar.gz \
 "
+SRC_URI_append_libc-musl += "file://0001-fix-gnuc-prereq.patch"
 
 inherit autotools
 
