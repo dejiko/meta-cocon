@@ -2,7 +2,6 @@ DESCRIPTION = "zd1211 wifi files for the Linux kernel"
 HOMEPAGE = "http://zd1211.ath.cx/"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://zd1211-firmware/COPYING;md5=eb723b61539feef013de476e68b5c50a"
-PR = "r2"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/zd1211/zd1211-firmware-${PV}.tar.bz2"
 
@@ -14,7 +13,7 @@ do_compile() {
 
 do_install() {
 	install -d  ${D}/lib/firmware/zd1211/
-	cp -RpP zd1211-firmware/zd1211* ${D}/lib/firmware/zd1211/
+	install -m 0644 ${S}/zd1211-firmware/zd1211* ${D}/lib/firmware/zd1211/
 }
 
 FILES_${PN} += "/lib/firmware/*"
