@@ -8,17 +8,11 @@ RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            "
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 
-#EXTRA_OECONF = " \
-#                --without-gnome"
-
 inherit autotools pkgconfig
-
 
 SRCREV = "79fd238a2d1d91725c4bb3a71a08546e5daf03d1"
 
-
 SRC_URI = "git://github.com/seriyps/NetworkManager-l2tp.git"
-
 S = "${WORKDIR}/git"
 
 FILES_${PN} += "${libdir}/NetworkManager/*.so \
@@ -31,6 +25,4 @@ FILES_${PN}-staticdev += "${libdir}/NetworkManager/libnm-l2tp-properties.a \
                 ${libdir}/pppd/2.4.5/nm-l2tp-pppd-plugin.a "
 FILES_${PN}-dbg += "${libdir}/NetworkManager/.debug/* \
                 ${libdir}/pppd/2.4.5/.debug/* "
-
-
 
