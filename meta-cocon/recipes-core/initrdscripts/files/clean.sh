@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 MOUNTLOC="/mnt/realroot"
 UNIONLOC="/mnt/union"
