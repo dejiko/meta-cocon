@@ -26,7 +26,6 @@ libgcrypt \
 libgpg-error \
 openssl \
 opkg \
-uclibc \
 udev \
 update-rc.d \
 usbutils \
