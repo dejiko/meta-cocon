@@ -1,7 +1,8 @@
 SUMMARY = "SPICE Client"
 LICENSE = "GPLv2"
 DEPENDS = "celt cyrus-sasl gtk+ jpeg pulseaudio zlib libusb orc gstreamer1.0 \
-           gstreamer1.0-plugins-base spice-protocol-native python-six-native python-pyparsing-native"
+           gstreamer1.0-plugins-base spice-protocol spice-protocol-native \
+           python-six-native python-pyparsing-native"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 inherit autotools gettext pkgconfig pythonnative python-dir
