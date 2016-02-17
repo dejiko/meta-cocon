@@ -10,7 +10,6 @@ CRUSOE_BASE_PACKAGE = " \
 base-files \
 base-passwd \
 busybox \
-uclibc \
 initramfs-uniboot \
 initramfs-module-bootmenu-crusoe \
 udev \
