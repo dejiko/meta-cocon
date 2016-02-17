@@ -77,7 +77,6 @@ linux-firmware-vt6656 \
 openssl \
 opkg \
 pcmciautils \
-uclibc \
 udev \
 update-rc.d \
 usbutils \
