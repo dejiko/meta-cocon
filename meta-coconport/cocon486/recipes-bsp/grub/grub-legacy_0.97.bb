@@ -9,7 +9,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=c93c0550bd3173f4504b2cbd8991e50b \
                     file://grub/main.c;beginline=3;endline=9;md5=22a5f28d2130fff9f2a17ed54be90ed6"
 
-RDEPENDS_${PN} = "diffutils"
+RDEPENDS_${PN} = "diffutils ncurses-libncurses ncurses-libtinfo"
 DEPEND += "ncurses"
 
 SRC_URI = "ftp://alpha.gnu.org/gnu/grub/grub-${PV}.tar.gz; \
@@ -19,7 +19,7 @@ SRC_URI = "ftp://alpha.gnu.org/gnu/grub/grub-${PV}.tar.gz; \
            file://grub-support-256byte-inode.diff \
 	   file://menu.lst \
             "
-
+SRC_URI_append_libc-musl += "file://grub-legacy-musl.patch"
 
 SRC_URI[debian-patch.md5sum] = "9950962dfcd94ef0e37f260e23dab321"
 SRC_URI[debian-patch.sha256sum] = "1a5113831c73ed61bc5ffdefa3bc373ed33bfa701c72c62870a4268ba0546af7"
