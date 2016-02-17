@@ -1,0 +1,12 @@
+diff --git a/utils/ndptool.c b/utils/ndptool.c
+index 04ec4e1..a722226 100644
+--- a/utils/ndptool.c
++++ b/utils/ndptool.c
+@@ -28,6 +28,7 @@
+ #include <arpa/inet.h>
+ #include <errno.h>
+ #include <ndp.h>
++#include <sys/select.h>
+ 
+ enum verbosity_level {
+ 	VERB1,
