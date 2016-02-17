@@ -12,11 +12,6 @@ RDEPENDS_${PV} = "expat zlib"
 inherit cmake gettext
 SRC_URI = "http://www.exiv2.org/exiv2-${PV}.tar.gz"
 
-do_compile_append() {
-    # Remove useless rpath
-    find ${B}/src -name "libexiv2.so" | xargs chrpath -d
-}
-
 FILES_${PN}-doc += "${exec_prefix}/man/man1/exiv2.1"
 
 SRC_URI[md5sum] = "258d4831b30f75a01e0234065c6c2806"
