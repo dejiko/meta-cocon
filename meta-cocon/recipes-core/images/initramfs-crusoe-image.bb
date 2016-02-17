@@ -14,7 +14,6 @@ uclibc \
 initramfs-uniboot \
 initramfs-module-bootmenu-crusoe \
 udev \
-udev-utils \
 kernel-module-usb-storage \
 kernel-module-ohci-hcd \
 kernel-module-uhci-hcd \
