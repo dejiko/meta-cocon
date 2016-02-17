@@ -37,6 +37,7 @@ inherit autotools
 # x86_64-linux
 COMPATIBLE_HOST = ".*86.*-linux"
 
+
 do_install_append_vmware() {
 	mkdir -p ${D}/boot/
 	ln -sf ../usr/lib/grub/{$TARGET_ARCH}{$TARGET_VENDOR}/ ${D}/boot/grub
@@ -49,6 +50,22 @@ do_configure_prepend() {
         sed -i \
                 -e s:'-fno-builtin -nostdinc':'-fno-builtin -nostdinc -fno-reorder-functions':g \
                 ${S}/stage2/Makefile.am
+}
+
+do_configure_append() {
+        # ADHOC : Turn off optimize in gcc
+	sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/Makefile
+        sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/grub/Makefile
+        sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/lib/Makefile
+        sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/stage1/Makefile
+        sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/stage2/Makefile
+        sed -i -e s:'-O2':'-O0':g \
+            -i -e s:'-O1':'-O0':g ${B}/util/Makefile
 }
 
 do_install_append() {
