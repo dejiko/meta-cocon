@@ -1,6 +1,8 @@
 LICENSE = "GPLv2"
 SRC_URI = "${SOURCEFORGE_MIRROR}/project/linuxconsole/linuxconsoletools-${PV}.tar.bz2 \
            file://without-sdl.patch" 
+SRC_URI_append_libc-musl += "file://sys-time.patch"
+
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 S = "${WORKDIR}/linuxconsoletools-${PV}"
