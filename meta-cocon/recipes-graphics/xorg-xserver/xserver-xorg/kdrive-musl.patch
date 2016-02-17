@@ -1,0 +1,15 @@
+diff --git a/hw/kdrive/linux/linux.c b/hw/kdrive/linux/linux.c
+index 73a8169..239e9e5 100644
+--- a/hw/kdrive/linux/linux.c
++++ b/hw/kdrive/linux/linux.c
+@@ -66,8 +66,8 @@ static void
+ LinuxCheckChown(const char *file)
+ {
+     struct stat st;
+-    __uid_t u;
+-    __gid_t g;
++    uid_t u;
++    gid_t g;
+     int r;
+ 
+     if (stat(file, &st) < 0)
