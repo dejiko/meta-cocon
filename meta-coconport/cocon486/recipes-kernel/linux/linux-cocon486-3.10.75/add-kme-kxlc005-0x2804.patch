@@ -1,0 +1,36 @@
+diff --git a/drivers/ata/pata_pcmcia.c b/drivers/ata/pata_pcmcia.c
+index 40254f4..fc1716b 100644
+--- a/drivers/ata/pata_pcmcia.c
++++ b/drivers/ata/pata_pcmcia.c
+@@ -215,7 +215,8 @@ static int pcmcia_init_one(struct pcmcia_device *pdev)
+ 	   vendor quirks */
+ 	is_kme = ((pdev->manf_id == MANFID_KME) &&
+ 		  ((pdev->card_id == PRODID_KME_KXLC005_A) ||
+-		   (pdev->card_id == PRODID_KME_KXLC005_B)));
++		   (pdev->card_id == PRODID_KME_KXLC005_B) ||
++		   (pdev->card_id == PRODID_KME_KXLC005_C)));
+ 
+ 	if (pcmcia_loop_config(pdev, pcmcia_check_one_config, &is_kme)) {
+ 		pdev->config_flags &= ~CONF_AUTO_CHECK_VCC;
+@@ -316,6 +317,7 @@ static const struct pcmcia_device_id pcmcia_devices[] = {
+ 	PCMCIA_DEVICE_MANF_CARD(0x000a, 0x0000),	/* I-O Data CFA */
+ 	PCMCIA_DEVICE_MANF_CARD(0x001c, 0x0001),	/* Mitsubishi CFA */
+ 	PCMCIA_DEVICE_MANF_CARD(0x0032, 0x0704),
++	PCMCIA_DEVICE_MANF_CARD(0x0032, 0x2804),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0032, 0x2904),
+ 	PCMCIA_DEVICE_MANF_CARD(0x0045, 0x0401),	/* SanDisk CFA */
+ 	PCMCIA_DEVICE_MANF_CARD(0x004f, 0x0000),	/* Kingston */
+diff --git a/include/pcmcia/ciscode.h b/include/pcmcia/ciscode.h
+index b417985..f60b4c2 100644
+--- a/include/pcmcia/ciscode.h
++++ b/include/pcmcia/ciscode.h
+@@ -47,7 +47,8 @@
+ 
+ #define MANFID_KME			0x0032
+ #define PRODID_KME_KXLC005_A		0x0704
+-#define PRODID_KME_KXLC005_B		0x2904
++#define PRODID_KME_KXLC005_B		0x2804
++#define PRODID_KME_KXLC005_C		0x2904
+ 
+ #define MANFID_LINKSYS			0x0143
+ #define PRODID_LINKSYS_PCMLM28		0xc0ab

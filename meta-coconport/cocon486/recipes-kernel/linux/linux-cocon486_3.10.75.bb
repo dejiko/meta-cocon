@@ -13,6 +13,7 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v3.0/linux-${PV}.tar.xz;name=kernel 
            file://defconfig \
            file://sm712fb-cocon.patch \
            file://pata_legacy.patch \
+           file://add-kme-kxlc005-0x2804.patch \
 "
 
 SRCREV_aufs = "3ec542bfe6854491bceb77b40c46f3b63849445a"
@@ -53,6 +54,7 @@ do_patch() {
 	patch -p1 <${WORKDIR}/pd6729.patch
 	patch -p1 <${WORKDIR}/platform_driver_probe.patch
         patch -p1 <${WORKDIR}/pata_legacy.patch
+        patch -p1 <${WORKDIR}/add-kme-kxlc005-0x2804.patch
 }
 
 
