@@ -1,18 +1,21 @@
-# Copyright (C) 2010, 2011, O.S. Systems Software Ltda.
+# Copyright (C) 2010-2012, O.S. Systems Software Ltda.
 # Released under the MIT license
 
 include freerdp.inc
 
-# Currently opencocon uses debian branch.
-SRCREV = "160c3dad43f5ece0c11a22003b058820dea6a869"
+inherit gitpkgv
 
-SRC_URI = "git://anonscm.debian.org/collab-maint/freerdp.git \
-           file://futimens_cocon_v2.patch \
-           file://cocon-fullscreen-v2.patch \
-           file://0003-dont-use-unavailable-c99-math-debian.patch \
-"
+PV = "1.2.5+gitr${SRCPV}"
+PKGV = "${GITPKGVTAG}"
 
-GITPKGVTAG = "${SRCREV}"
+EXTRA_OECMAKE += "-DBUILD_STATIC_LIBS=OFF \
+                  -DCMAKE_POSITION_INDEPENDANT_CODE=ON \
+                  -DWITH_MANPAGES=OFF \
+                 "
+
+SRCREV = "2a3e9996b33d1299ee5322e6f3f0a54e594ae8ee"
+SRC_URI = "git://github.com/FreeRDP/FreeRDP.git \
+           file://winpr-makecert-Build-with-install-RPATH.patch \
+          "
 
 S = "${WORKDIR}/git"
-

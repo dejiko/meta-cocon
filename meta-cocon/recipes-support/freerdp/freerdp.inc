@@ -1,75 +1,58 @@
-# Copyright (C) 2010, 2011 O.S. Systems Software Ltda. All Rights Reserved
+# Copyright (C) 2010-2012 O.S. Systems Software Ltda. All Rights Reserved
 # Released under the MIT license
 
-DESCRIPTION = "FreeRDP RDP client"
+DESCRIPTION = "FreeRDP RDP client & server library"
 HOMEPAGE = "http://www.freerdp.com"
-DEPENDS = "virtual/libx11 openssl libxcursor libxv alsa-lib pulseaudio libxkbfile"
-#DEPENDS_cocon486 = "libav"
-#DEPENDS_raspberrypi = "libav"
-SECTION = "x11/network"
+DEPENDS = "openssl alsa-lib"
+SECTION = "net"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-
 inherit pkgconfig cmake
 
-EXTRA_OECMAKE += " -DWITH_XINERAMA=OFF -DWITH_CUPS=OFF -DWITH_PULSEAUDIO=ON \
-		-DWITH_MANPAGES=OFF -DWITH_XKBFILE=ON  -DWITH_ALSA=ON \
-"
-EXTRA_OECMAKE += " -DWITH_FFMPEG=OFF "
+EXTRA_OECMAKE += "-DWITH_ALSA=ON \
+                  -DWITH_PCSC=OFF \
+                  -DWITH_FFMPEG=OFF \
+                  -DWITH_CUNIT=OFF \
+                  -DWITH_NEON=OFF \
+                  -DWITH_CUPS=OFF \
+                  -DWITH_GSTREAMER_1_0=OFF \
+                 "
+
+PACKAGECONFIG ??= "  \
+                ${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}\
+                ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland', '', d)}\
+                ${@bb.utils.contains('DISTRO_FEATURES', 'directfb', 'directfb', '', d)}\
+                ${@bb.utils.contains('DISTRO_FEATURES', 'pam', 'pam', '', d)}\
+                ${@bb.utils.contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}\
+                gstreamer cups \
+                "
+
+X11_DEPS = "virtual/libx11 libxinerama libxext libxcursor libxv libxi libxrender libxfixes libxdamage libxrandr libxkbfile"
+PACKAGECONFIG[x11] = "-DWITH_X11=ON -DWITH_XINERAMA=ON -DWITH_XEXT=ON -DWITH_XCURSOR=ON -DWITH_XV=ON -DWITH_XI=ON -DWITH_XRENDER=ON -DWITH_XFIXES=ON -DWITH_XDAMAGE=ON -DWITH_XRANDR=ON -DWITH_XKBFILE=ON,-DWITH_X11=OFF,${X11_DEPS}"
+PACKAGECONFIG[wayland] = "-DWITH_WAYLAND=ON,-DWITH_WAYLAND=OFF,wayland"
+PACKAGECONFIG[directfb] = "-DWITH_DIRECTFB=ON,-DWITH_DIRECTFB=OFF,directfb"
+PACKAGECONFIG[pam] = "-DWITH_PAM=ON,-DWITH_PAM=OFF,libpam"
+PACKAGECONFIG[pulseaudio] = "-DWITH_PULSEAUDIO=ON,-DWITH_PULSEAUDIO=OFF,pulseaudio"
+#PACKAGECONFIG[gstreamer] = "-DWITH_GSTREAMER_1_0=ON,-DWITH_GSTREAMER_1_0=OFF,gstreamer1.0 gstreamer1.0-plugins-base"
+# PACKAGECONFIG[cups] = "-DWITH_CUPS=ON,-DWITH_CUPS=OFF,cups"
 
 PACKAGES =+ "libfreerdp"
 
 LEAD_SONAME = "libfreerdp.so"
 FILES_libfreerdp = "${libdir}/lib*${SOLIBS}"
 
-PACKAGES_DYNAMIC = "libfreerdp-plugin-*"
+PACKAGES_DYNAMIC += "^libfreerdp-plugin-.*"
 
-
-do_patch() {
-    # patch from Debian
-    cd ${S}
-    patch -Np1 -i ${WORKDIR}/0003-dont-use-unavailable-c99-math-debian.patch
-    patch -Np1 -i ${S}/debian/patches/1001_hide-internal-symbols.patch
-    patch -Np1 -i ${S}/debian/patches/1002_update-pkg-config-file.patch
-    # TODO
-    patch -Np1 -i ${S}/debian/patches/1003_multi-arch-include-path.patch
-    patch -Np1 -i ${S}/debian/patches/1004_64-bit-architectures.patch
-    patch -Np1 -i ${S}/debian/patches/1005_parse-buffer-endianess.patch
-    patch -Np1 -i ${S}/debian/patches/1006_test-unicode-endianess.patch
-    patch -Np1 -i ${S}/debian/patches/1007_detect-arm-arch-correctly.patch
-    patch -Np1 -i ${S}/debian/patches/1008_gcc-fPIC-on-arm64.patch
-
-    # opencocon-local patches
-    patch -Np1 -i ${WORKDIR}/futimens_cocon_v2.patch
-    # based on https://github.com/FreeRDP/FreeRDP/issues/1361
-    patch -Np1 -i ${WORKDIR}/cocon-fullscreen-v2.patch
+# we will need winpr-makecert to generate TLS certificates
+do_install_append () {
+    install -m755 winpr/tools/makecert/cli/winpr-makecert ${D}${bindir}
+    rm -rf ${D}/${libdir}/cmake
+    rm -rf ${D}/${libdir}/freerdp
 }
 
-do_configure_prepend() {
-
-    # opencocon-local fixes
-    sed -i \
-        -e s:'set( CMAKE_MODULE_PATH ':'set( CMAKE_MODULE_PATH ${S}/cmake/ ':g \
-        ${S}/../toolchain.cmake
-
-    sed -i \
-        -e s:'check_include_files(sys/eventfd.h HAVE_EVENTFD_H)':'':g \
-        ${S}/CMakeLists.txt
-
-    # Ad-hoc fix :
-    # http://h30499.www3.hp.com/t5/Workstations-Thin-Clients/Installing-FreeRDP-on-ThinPro-3-3-Take-Three-The-Automated-Way/td-p/5547859
-
-    sed -i \
-        -e '24a\#include <stdio.h>' \
-        ${S}/include/freerdp/utils/pcap.h
-}
-
-
-
-# TODO : useless on newer FreeRDP.
 python populate_packages_prepend () {
-    freerdp_root = bb.data.expand('${libdir}/freerdp', d)
+    freerdp_root = d.expand('${libdir}/freerdp')
 
     do_split_packages(d, freerdp_root, '^(audin_.*)\.so$',
         output_pattern='libfreerdp-plugin-%s',
