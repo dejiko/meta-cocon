@@ -52,6 +52,11 @@ read_args() {
                 COCON_NOEJECT=1
                 export COCON_NOEJECT
                 ;;
+            noreadcnf-bootdrv)
+                # Do not reac cocon.cnf and some related files from boot drive
+                COCON_NOREADCNF_FROM_BOOTDRIVE=1
+                export COCON_NOREADCNF_FROM_BOOTDRIVE
+                ;;
             shell) sh ;;
         esac
     done
