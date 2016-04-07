@@ -1,0 +1,140 @@
+#!/usr/bin/python
+
+# -*- coding: utf-8 -*-
+
+# opencocon ini reader
+# edit by spyder
+
+import sys
+import os
+import tempfile
+import shutil
+import ConfigParser
+
+allow_option_bool=["COCON_FORCEFB",
+                   "COCON_FORCESVGA",
+                   "COCON_WAIT_CONNECTED",
+                   "COCON_POWEROFF_AFTER_AUTOCONNECT",
+                   "COCON_SE_SET_GATEWAY_ONVPN",
+                   "COCON_MUTE_MASTER_ON_BOOT",
+                   "COCON_RDP_MODEM"]
+
+allow_option_str=["COCON_KBD_CONSOLE",
+                  "COCON_KBD_X_MODEL",
+                  "COCON_KBD_X_LAYOUT",
+                  "COCON_KBD_X_VARIANT",
+                  "COCON_AUTOCONNECT",
+                  "COCON_AUTOVPN",
+                  "COCON_RDP_HOST",
+                  "COCON_RDP_USER",
+                  "COCON_RDP_DOMAIN",
+                  "COCON_RDP_KBD",
+                  "COCON_VNC_HOST",
+                  "COCON_VNC_USER",
+                  "COCON_SPICE_HOST",
+                  "COCON_WWW_START",
+                  "COCON_X_HOST",
+                  "COCON_SE_HOST",
+                  "COCON_SE_USER",
+                  "COCON_SE_HUB",
+                  "COCON_SE_AUTH_METHOD"]
+
+allow_option_int=["COCON_RDP_RFX",
+                  "COCON_SPICE_PORT",
+                  "COCON_SPICE_TLSPORT",
+                  "COCON_MASTER_VOLUME"]
+
+allow_option_file=["COCON_RDP_RDPFILE",
+                   "COCON_XCONF_ADD"]
+
+cnf_file_moveto="/tmp/.cocon.cnf.files/"
+cnf_file_placedir="coconkey"
+
+if(len(sys.argv) != 2):
+    sys.stderr.write("Syntax : %s [infile]\n" % sys.argv[0])
+    sys.exit(1)
+
+
+if(os.path.exists(sys.argv[1]) == False):
+	sys.stderr.write("Config file not found.\n")
+	sys.exit(1)
+
+# Make tempfile
+cfg_tmp = tempfile.TemporaryFile()
+cfg_tmp.write('[DEFAULT]\n')
+
+
+# Exclude [DEFAULT], and include first line of temp file.
+# for compatible for older opencocon parser, option without section to be include [DEFAULT].
+
+infile = open(sys.argv[1], "r")
+for line in infile:
+    if not "[DEFAULT]" in line:
+        cfg_tmp.write(line)
+infile.close()
+
+
+cfg_tmp.seek(0)
+
+cfg = ConfigParser.SafeConfigParser()
+cfg.readfp(cfg_tmp)
+
+
+# Boolean
+for pickup_bool in allow_option_bool:
+    if cfg.has_option('DEFAULT', pickup_bool) :
+        try :
+            cur = cfg.getboolean('DEFAULT',pickup_bool)
+        except ValueError:
+            continue
+        print "%s=%i" % (pickup_bool,cur)
+
+# String
+for pickup_str in allow_option_str:
+    if cfg.has_option('DEFAULT', pickup_str) :
+        cur = cfg.get('DEFAULT',pickup_str)
+         
+        # Exclude some bad word
+        cur = cur.replace('#!/', '')
+        
+        print "%s=%s" % (pickup_str,cur)
+
+# Integer
+for pickup_int in allow_option_int:
+    if cfg.has_option('DEFAULT', pickup_int) :
+        try :
+            cur = cfg.getint('DEFAULT',pickup_int)
+        except ValueError:
+            continue
+        print "%s=%i" % (pickup_int,cur)
+
+# File.
+# pickup file from "inside same as cocon.cfg folder" + "coconkey" 
+cfg_path = os.path.abspath(sys.argv[1])
+
+if os.path.isdir(cnf_file_moveto) == False :
+    os.mkdir(cnf_file_moveto)
+
+for pickup_file in allow_option_file:
+    if cfg.has_option('DEFAULT',pickup_file) :
+        cur = cfg.get('DEFAULT',pickup_file)
+        
+        # Exclude some bad word
+        cur = cur.replace('#!/', '')
+        cur = cur.replace('../', '')
+        
+        # Check file exists
+        cur_filename = os.path.dirname(cfg_path) + '/' + cnf_file_placedir + '/' + cur
+        if os.path.isfile(cur_filename) == True :
+            
+            # copy file
+            mv_filename = cnf_file_moveto + '/' + cur
+            try :
+                shutil.copyfile(cur_filename,mv_filename)
+            except IOError:
+                continue
+
+            print "%s=%s" % (pickup_file,mv_filename)
+
+
+cfg_tmp.close()

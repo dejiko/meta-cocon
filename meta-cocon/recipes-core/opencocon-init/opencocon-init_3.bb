@@ -14,7 +14,6 @@ SRC_URI = "file://COPYING.MIT \
 	   file://cocon-poweroff \
            file://default.cnf \
            file://cocon-version \
-           file://cocon-read-cnf \
            file://services \
 "
 
@@ -41,7 +40,6 @@ do_install() {
 
 	install -d ${D}${bindir}/
 	install -m 0755    ${WORKDIR}/cocon-poweroff     ${D}${bindir}/cocon-poweroff
-        install -m 0755    ${WORKDIR}/cocon-read-cnf     ${D}${bindir}/cocon-read-cnf
 
 	install -d ${D}${datadir}/cocon/
         install -m 0644 ${WORKDIR}/default.cnf ${D}${datadir}/cocon/default.cnf
