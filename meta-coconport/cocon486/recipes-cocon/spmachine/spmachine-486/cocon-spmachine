@@ -14,7 +14,7 @@ then
 fi
 
 # Force Framebuffer driver if boot option contains "forcefb*"
-if [ `cat /proc/cmdline | grep 'forcefb'` ];
+if [ "$( cat /proc/cmdline | grep 'forcefb' )" ];
 then
 
   # Temporary Dirty Fix : Disable some driver on forcefb
@@ -24,14 +24,14 @@ then
 fi
 
 # Force 800x600 16bit color if contains "forcesvga"
-if [ `cat /proc/cmdline | grep 'forcesvga'` ];
+if [ "$( cat /proc/cmdline | grep 'forcesvga' )" ];
 then
   ln -s $SPMACHINE486_CONF/defaultdepth.conf $XORG_CONF_D/defaultdepth.conf
 fi
 
 
 # Machine name
-if [ "`which dmidecode`" ];
+if [ "$( which dmidecode )" ];
 then
   # dmidecode is only for x86
   MACHINE_MAKER=`dmidecode -s system-manufacturer`
@@ -103,17 +103,15 @@ then
   export COCON_PCG_C1
 fi
 
-if [ "`echo $COCON_PCG_C1`" = "1" ];
+if [ "$COCON_PCG_C1" = "1" ];
 then
     ln -sf $SPMACHINE486_CONF/sony-pcg-c1.conf $XORG_CONF_D/sony-pcg-c1.conf
 fi 
 
 # Workaround for Libretto L1, L2, ...
-# TODO : maybe broken by sis driver.
-if [ "`echo "$MACHINE_MAKER" | grep 'TOSHIBA'`" -a "`echo "$MACHINE_NAME" | grep -E 'Libretto L'`" ];
+if [ "$( echo "$MACHINE_MAKER" | grep 'TOSHIBA' )" -a "$( echo "$MACHINE_NAME" | grep -E 'Libretto L' )" ];
 then
-#  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
-  ln -s $SPMACHINE486_CONF/card-fbdev.conf $XORG_CONF_D/card-fbdev.conf
+  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
 fi
 
 # Siliconmotion : Workaroud for SM712
