@@ -11,6 +11,7 @@ RDEPENDS_${PN} = " \
 celt \
 cocon-data \
 cocon-data-doc \
+cocon-readcnf \
 cocon-thinclient-desktop \
 coconvnc \
 cyrus-sasl \
