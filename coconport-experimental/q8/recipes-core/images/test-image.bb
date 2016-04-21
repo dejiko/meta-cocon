@@ -14,7 +14,6 @@ IMAGE_ROOTFS_EXTRA_SPACE_append = "${@bb.utils.contains("DISTRO_FEATURES", "syst
 IMAGE_INSTALL += "e-wm \
     sunxi-tools \
     packagegroup-x11-illume \
-    xserver-nodm-init \
     wireless-tools \
     wpa-supplicant \
     xf86-video-fbturbo \
