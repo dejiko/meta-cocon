@@ -27,6 +27,7 @@ lxpanel \
 lxrandr \
 lxterminal \
 matchbox-wm \
+mkfontdir \
 network-manager-applet \
 networkmanager \
 ntpdate \
@@ -35,21 +36,11 @@ python-core \
 python-io \
 python-shell \
 spice-gtk \
+sudo \
 tzdata \
 viewnior \
+xserver-xf86-config \
 xserver-xorg-xephyr \
 xuser-account \
 "
 
-# libfreerdp \
-# libfreerdp-plugin-audin \
-# libfreerdp-plugin-audin-alsa \
-# libfreerdp-plugin-audin-pulse \
-# libfreerdp-plugin-drdynvc \
-# libfreerdp-plugin-rdpsnd \
-# libfreerdp-plugin-rdpsnd-alsa \
-# libfreerdp-plugin-rdpsnd-pulse \
-# libfreerdp-plugin-tsmf \
-# libfreerdp-plugin-tsmf-alsa \
-# libfreerdp-plugin-tsmf-pulse \
-#  

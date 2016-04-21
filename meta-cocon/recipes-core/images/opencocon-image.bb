@@ -32,6 +32,6 @@ RDEPENDS = "${COCON_TC_PACKAGES}"
 IMAGE_INSTALL = "${COCON_TC_PACKAGES}"
 
 IMAGE_BASENAME = "opencocon"
-IMAGE_FSTYPES += " tar.gz squashfs "
+IMAGE_FSTYPES += " tar.gz squashfs ext4.gz"
 
 inherit image
