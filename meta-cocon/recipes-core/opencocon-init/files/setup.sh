@@ -204,7 +204,7 @@ echo "Memory: $COCON_MEM_MB MB"
 
 if [ "$COCON_MEM_MB" -lt 240 ];
 then
-  echo $(($COCON_MEM_MB*1048576)) > /sys/block/zram0/disksize
+  echo "`expr $COCON_MEM_MB * 1048576`" > /sys/block/zram0/disksize
   sleep 2
   mkswap /dev/zram0
   swapon /dev/zram0
@@ -293,7 +293,7 @@ then
 fi
 
 # Hostname
-hostname tiny$RANDOM
+hostname "tiny`echo $RANDOM`"
 
 if [ "$COCON_DEBUG" = "1" ];
 then

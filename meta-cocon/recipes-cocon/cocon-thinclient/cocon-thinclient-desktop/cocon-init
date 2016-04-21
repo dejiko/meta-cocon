@@ -4,22 +4,14 @@ CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
 
 # opencocon userland init
 
-
-
 # special machines
-# TODO : delete is need only for Extreme mode.
-rm /etc/X11/xorg.conf.d/*
 /usr/bin/cocon-spmachine
-
-# TODO : raspberrypi fixup
-modprobe snd-bcm2835
 
 # Copy NetworkManager settings
 if [ -d $CNF_NM_FILE_MOVETO ];
 then
   cp $CNF_NM_FILE_MOVETO/* /etc/NetworkManager/system-connections/
 fi
-
 
 # Run Menu
 su -c 'cocon-startx' xuser
