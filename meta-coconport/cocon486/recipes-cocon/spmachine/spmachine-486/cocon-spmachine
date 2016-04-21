@@ -110,8 +110,7 @@ fi
 # Workaround for Libretto L1, L2, ...
 if [ "`echo "$MACHINE_MAKER" | grep 'TOSHIBA'`" -a "`echo "$MACHINE_NAME" | grep -E 'Libretto L'`" ];
 then
-#  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
-  ln -s $SPMACHINE486_CONF/card-fbdev.conf $XORG_CONF_D/card-fbdev.conf
+  ln -sf $SPMACHINE486_CONF/libretto-lx.conf $XORG_CONF_D/libretto-lx.conf
 fi
 
 # Siliconmotion : Workaroud for SM712
