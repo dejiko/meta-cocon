@@ -16,7 +16,8 @@ SECCONF="/mnt/oldroot/mnt/copytoram"
 CONF_MOUNT="/mnt/cfg"                         # config store to (ramdisk)
 FIRMWARE_DIR="/lib/firmware"                  # firmware directory
 CNFFILE="/tmp/.cocon.cnf"                     # parsed cocon.cnf
-LOGFILE="/var/log/scan-cnf-from-storage"
+LOGFILE="/var/log/scan-cnf-from-storage.log"
+CNF_NM_FILE_MOVETO="/tmp/.cocon.cnf.files/nm/"
 
 # Unused on v9
 #. /lib/lsb/init-functions
@@ -30,8 +31,9 @@ log_info_msg()
 
 get_partition_type()
 {
-    fstype="$( blkid /dev/"$dev" )"
-    fstype="$( expr "$fstype" : '.*TYPE="\([A-Za-z0-9]*\)".*' )"
+  fstype="$( blkid /dev/"$1" )"
+  fstype="$( expr "$fstype" : '.*TYPE="\([A-Za-z0-9]*\)".*' )"
+  echo "$fstype"
 }
 
 
@@ -40,20 +42,24 @@ scan_coconcnf_files()
 {
   userconfig_scanpath="$1"  # Almost in /mnt/cfg
   userconfig_realpath="$2"  # mount partition etc
-  userconfig_storefile="$3" # cocon.cnf store file (Default: $CNFFILE) 
-  nmconfig_storepath="$4"   # coconnm store path
 
-  if [ -z "$userconfig_storefile" ];
+  userconfig_storefile="$CNFFILE"
+  nmconfig_storepath="$CNF_NM_FILE_MOVETO"
+
+  if [ $# -ge 3 ];
   then
-    userconfig_storefile="$CNFFILE"
+    userconfig_storefile="$3" # cocon.cnf store file (Default: $CNFFILE)
   fi
 
-  if [ -z "$nmconfig_storepath" ];
+  if [ $# -ge 4 ];
   then
-    userconfig_storefile="$CNF_NM_FILE_MOVETO"
+    nmconfig_storepath="$4"   # coconnm store path
   fi
 
   log_info_msg "config scan path : $userconfig_realpath"
+  log_info_msg "userconfig_scanpath : $userconfig_scanpath"
+  log_info_msg "userconfig_storefile : $userconfig_storefile"
+  log_info_msg "nmconfig_storepath : $nmconfig_storepath"
 
   copy_coconcnf_to_tmp "$userconfig_scanpath" "$userconfig_storefile"
 
@@ -68,11 +74,11 @@ copy_coconcnf_to_tmp()
   # cocon.cnf and related files
   if [ -r "$1/cocon.cnf" ];
   then
-    log_info_msg " --> cocon.cnf found"
+    log_info_msg " --> cocon.cnf found ($1/cocon.cnf)"
     log_info_msg "$( cat "$1/cocon.cnf" )"
     log_info_msg "====="
     cocon-read-cnf "$1/cocon.cnf" >> "$2"
-    log_info_msg "parsed data ==>"
+    log_info_msg "parsed data ($2) ==>"
     log_info_msg "$( cat "$2" )"
     log_info_msg "====="
   fi
@@ -163,18 +169,23 @@ scan_coconcnf_from_partiton()
   #  rootdv=`basename $ROOT_DEVICE`
   #fi
 
+  log_info_msg "diskstat is : "
+  log_info_msg "$(cat /proc/diskstats)"
+
   while read maj min dev ext; do
 
-    # Exclude ram and loop device
-    if ! echo "$arg" | grep -q loop;
-    then
-      continue;
-    fi
+    #log_info_msg "Scanning : $dev"
 
-    if ! echo "$arg" | grep -q ram;
-    then
-      continue;
-    fi
+    # Exclude ram and loop device
+    #if ! echo "$arg" | grep -q loop;
+    #then
+    #  continue;
+    #fi
+
+    #if ! echo "$arg" | grep -q ram;
+    #then
+    #  continue;
+    #fi
 
 
     log_info_msg "Searching: $dev"
@@ -188,7 +199,7 @@ scan_coconcnf_from_partiton()
        continue;
     fi
 
-    get_partition_type
+    fstype="$( get_partition_type "$dev" )"
 
     if [ "$fstype" = "iso9660" -o "$fstype" = "vfat" -o "$fstype" = "ext3" -o "$fstype" = "ntfs" -o "$fstype" = "ext4" ];
     then
