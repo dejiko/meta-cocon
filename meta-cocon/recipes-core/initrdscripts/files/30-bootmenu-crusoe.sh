@@ -29,7 +29,8 @@ mkdir /var/volatile/lock
 
 # It is need to writable on udev : /run
 mount -t tmpfs none $MODLOC
-mount -t aufs -o br:$MODLOC:/run none /run
+mkdir $MODLOC/work $MODLOC/upper
+mount -t overlay -o lowerdir=/run,upperdir=$MODLOC/upper,workdir=$MODLOC/work overlay /run
 
 # And, do udev
 /etc/init.d/udev start
@@ -244,14 +245,15 @@ boot_iso9660()
     echo "--- mount squashfs ---"
     mount -o loop -t squashfs $SQS_DEVICE/$SQSFILE $UNIONLOC
 
-    echo "--- union with aufs ---"
+    echo "--- overlay ---"
     mount -t tmpfs none $RAMLOC
+    mkdir $RAMLOC/upper $RAMLOC/work
     
-    mount -t aufs -o br:$RAMLOC:$UNIONLOC none $NEWLOC
+    mount -t overlay -o lowerdir=$UNIONLOC,upperdir=$RAMLOC/upper,workdir=$RAMLOC/work overlay $NEWLOC
 
     echo "--- switch root ---"
-    umount -l /proc
-    umount /sys
+#    umount -l /proc
+#    umount /sys
     mount -o bind /dev $NEWLOC/dev
 
     # Pivot to real opencocon
