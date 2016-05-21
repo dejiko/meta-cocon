@@ -39,6 +39,7 @@
 		};
 	};
 
+/*
 	display0: display@di0 {
 		compatible = "fsl,imx-parallel-display";
 		interface-pix-fmt = "rgb24";
@@ -97,6 +98,7 @@
 			};
 		};
 	};
+*/
 
 	gpio-keys {
 		compatible = "gpio-keys";
@@ -349,6 +351,7 @@
 	};
 };
 
+/*
 &ipu_di0_disp0 {
 	remote-endpoint = <&display0_in>;
 };
@@ -356,6 +359,7 @@
 &ipu_di1_disp1 {
 	remote-endpoint = <&display1_in>;
 };
+*/
 
 &kpp {
 	pinctrl-names = "default";
