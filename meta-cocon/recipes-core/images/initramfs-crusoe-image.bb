@@ -19,4 +19,6 @@ IMAGE_LINGUAS = ""
 
 BAD_RECOMMENDATIONS += "busybox-syslog"
 
+IMAGE_FSTYPES += " squashfs "
+
 inherit image
