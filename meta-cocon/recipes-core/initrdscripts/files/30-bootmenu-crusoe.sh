@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # based on 30-bootmenu.sh (c) 2007 Paul Sokolovsky
 #
@@ -34,7 +35,7 @@ mount -t aufs -o br:$MODLOC:/run none /run
 /etc/init.d/udev start
 
 # Debug
-if [ `echo $COCON_DEBUG` ];
+if [ "$COCON_INITRD_DEBUG" = "1" ];
 then
   echo " DEBUG: after initalize udev on initramfs."
   /bin/sh
@@ -46,10 +47,48 @@ get_partition_type()
     fstype=`expr "$fstype" : '.*TYPE="\([A-Za-z0-9]*\)".*'`
 }
 
+copy_cocon_cnf_to_ramdisk()
+{
+  sqs_copyfrom="$1"
+  store_ramdisk="$2"
+
+  # Is $sqs_copyform accessable?
+  if [ ! -d "$sqs_copyfrom" ];
+  then
+    echo "Error : $sqs_copyform is not directory."
+    return 1
+  fi
+  echo "scan $sqs_copyform"
+
+  # if contain cocon.cnf/coconnm/coconfrm on media, copy to memory.
+  if [ -f "$sqs_copyfrom/cocon.cnf" ];
+  then
+    echo " -> copy cocon.cnf"
+    cp $sqs_copyfrom/cocon.cnf $store_ramdisk/cocon.cnf
+  fi
+
+  if [ -d "$sqs_copyfrom/coconfrm" ];
+  then
+    # TODO : filter firmware files
+    echo " -> copy coconfrm"
+    cp -R $sqs_copyfrom/coconfrm $store_ramdisk/
+  fi
+
+  if [ -d "$sqs_copyfrom/coconnm" ];
+  then
+    # TODO : filter setting files
+    echo " -> copy coconnm"
+    cp -R $sqs_copyfrom/coconnm $store_ramdisk/
+  fi
+}
+
 boot_iso9660()
 {
     ROOT_DEVICE="/dev/$1"
     export ROOT_DEVICE
+
+    # from v9i, always alloc $COPYTORAMLOC.
+    mount -t tmpfs none $COPYTORAMLOC
 
     if [ -z "$SQSFILE" ];
     then
@@ -82,6 +121,13 @@ boot_iso9660()
           echo "found $SQSFILE on $FROMISO."
           # COCON_SQSFILE="$ISOLOC/$SQSFILE"
           # export COCON_SQSFILE
+
+          # In this case, copy config from $MOUNTLOC.
+          if [ -z "$COCON_NOREADCNF_FROM_BOOTDRIVE" ];
+          then
+            copy_cocon_cnf_to_ramdisk $MOUNTLOC $COPYTORAMLOC
+          fi
+          
           COCON_ISO_ONDISK=1
           export COCON_ISO_ONDISK
         fi
@@ -103,7 +149,6 @@ boot_iso9660()
       # Copy-to-RAM
       # TODO: disable for low memory
       echo "--- copy squashfs image to ram ---"
-      mount -t tmpfs none $COPYTORAMLOC
       # cp $MOUNTLOC/$SQSFILE.md5sum $COPYTORAMLOC/$SQSFILE.md5sum
       if [ "$COCON_ISO_ONDISK" = "1" ];
       then
@@ -117,26 +162,10 @@ boot_iso9660()
       # cd $COPYTORAMLOC && md5sum -cs $COPYTORAMLOC/$SQSFILE.md5sum -eq 0
       if [ $? -eq 0 ];
       then
-
         # if contain cocon.cnf/coconnm/coconfrm on media, copy to memory.
-        if [ -f "$sqs_copyfrom/cocon.cnf" ];
+        if [ -z "$COCON_NOREADCNF_FROM_BOOTDRIVE" ];
         then
-          echo " -> copy cocon.cnf"
-          cp $sqs_copyfrom/cocon.cnf $COPYTORAMLOC/cocon.cnf
-        fi
-
-        if [ -d "$sqs_copyfrom/coconfrm" ];
-        then
-          # TODO : filter firmware files
-          echo " -> copy coconfrm"
-          cp -R $sqs_copyfrom/coconfrm $COPYTORAMLOC/
-        fi
-
-        if [ -d "$sqs_copyfrom/coconnm" ];
-        then
-          # TODO : filter setting files
-          echo " -> copy coconnm"
-          cp -R $sqs_copyfrom/coconnm $COPYTORAMLOC/
+          copy_cocon_cnf_to_ramdisk $sqs_copyfrom $COPYTORAMLOC
         fi
 
         # copy ok. release the MOUNTLOC.
@@ -185,6 +214,13 @@ boot_iso9660()
           SQS_DEVICE="$MOUNTLOC"
         fi
 
+        # reading cocon.cnf
+        if [ -z "$COCON_NOREADCNF_FROM_BOOTDRIVE" ];
+        then
+          copy_cocon_cnf_to_ramdisk $SQS_DEVICE $COPYTORAMLOC
+        fi
+
+
      fi
     else
       echo "WARNING: Do not Eject or Unplug boot media."
@@ -196,6 +232,13 @@ boot_iso9660()
       # TODO
         SQS_DEVICE="$MOUNTLOC"
       fi
+
+      # TODO : add reading cocon.cnf
+      if [ -z "$COCON_NOREADCNF_FROM_BOOTDRIVE" ];
+      then
+        copy_cocon_cnf_to_ramdisk $SQS_DEVICE $COPYTORAMLOC
+      fi
+
     fi 
 
     echo "--- mount squashfs ---"
@@ -207,15 +250,11 @@ boot_iso9660()
     mount -t aufs -o br:$RAMLOC:$UNIONLOC none $NEWLOC
 
     echo "--- switch root ---"
-    # on Linux 3.10, it seems don't stop udev.
-#    /etc/init.d/udev stop
     umount -l /proc
     umount /sys
-#    umount -l /dev
     mount -o bind /dev $NEWLOC/dev
 
     # Pivot to real opencocon
-    # cd $UNIONLOC
     pivot_root $NEWLOC $NEWLOC/$OLDLOC
     exec chroot . /sbin/init <dev/console >dev/console 2>&1
 

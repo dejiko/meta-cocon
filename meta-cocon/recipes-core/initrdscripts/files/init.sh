@@ -40,6 +40,10 @@ read_args() {
                 COCON_DEBUG=1
                 export COCON_DEBUG
                 ;;
+            early) set -x
+                COCON_INITRD_DEBUG=1
+                export COCON_INITRD_DEBUG
+                ;;
             copytoram)
                 COCON_COPYTORAM=1
                 export COCON_COPYTORAM
@@ -47,6 +51,11 @@ read_args() {
             noeject)
                 COCON_NOEJECT=1
                 export COCON_NOEJECT
+                ;;
+            noreadcnf-bootdrv)
+                # Do not reac cocon.cnf and some related files from boot drive
+                COCON_NOREADCNF_FROM_BOOTDRIVE=1
+                export COCON_NOREADCNF_FROM_BOOTDRIVE
                 ;;
             shell) sh ;;
         esac

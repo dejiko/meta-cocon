@@ -14,7 +14,6 @@ SRC_URI = "file://COPYING.MIT \
 	   file://cocon-poweroff \
            file://default.cnf \
            file://cocon-version \
-           file://cocon-read-cnf \
            file://services \
 "
 
