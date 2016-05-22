@@ -9,6 +9,7 @@ SRC_URI_append_libc-musl += "file://exclude-systemd.patch \
 "
 
 RDEPENDS_${PN} += "polkit libnewt"
+DEPENDS += "make-native"
 
 EXTRA_OECONF_append_libc-musl += "--with-systemdsystemunitdir=no"
 
