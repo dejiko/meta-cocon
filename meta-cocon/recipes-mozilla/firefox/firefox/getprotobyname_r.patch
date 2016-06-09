@@ -1,0 +1,17 @@
+diff --git a/nsprpub/pr/src/misc/prnetdb.c b/nsprpub/pr/src/misc/prnetdb.c
+index b86248f..abfb316 100644
+--- a/nsprpub/pr/src/misc/prnetdb.c
++++ b/nsprpub/pr/src/misc/prnetdb.c
+@@ -65,8 +65,10 @@ PRLock *_pr_dnsLock = NULL;
+ 	|| (defined(LINUX) && defined(_REENTRANT) \
+         && !(defined(__GLIBC__) && __GLIBC__ >= 2) \
+         && !defined(ANDROID))
+-#define _PR_HAVE_GETPROTO_R
+-#define _PR_HAVE_GETPROTO_R_POINTER
++#undef _PR_HAVE_GETPROTO_R
++#undef _PR_HAVE_GETPROTO_R_INT
++#undef _PR_HAVE_GETPROTO_R_POINTER
++#undef _PR_HAVE_5_ARG_GETPROTO_R
+ #endif
+ 
+ #if defined(OSF1) \

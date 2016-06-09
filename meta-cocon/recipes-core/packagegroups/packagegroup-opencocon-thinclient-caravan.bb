@@ -8,7 +8,8 @@ inherit packagegroup
 
 
 RDEPENDS_${PN} = " \
-midori \
-webkitgtk \
+firefox \
+firefox-l10n-en-us \
+firefox-addon-webconverger \
 "
 
