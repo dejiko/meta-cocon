@@ -1,0 +1,13 @@
+diff --git a/nxproxy/Main.c b/nxproxy/Main.c
+index ae90990..8b52a0f 100644
+--- a/Main.c
++++ b/Main.c
+@@ -20,7 +20,7 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
+-#include "NX.h"
++#include <nx/NX.h>
+ 
+ #define PANIC
+ #define WARNING
