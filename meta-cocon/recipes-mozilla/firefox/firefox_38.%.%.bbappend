@@ -43,3 +43,6 @@ do_configure_prepend_libc-musl() {
          ac_cv_prog_hostcxx_works=1 
 }
 
+# v10 is still jethro and gcc-5.x.
+PNBLACKLIST[firefox] = ""
+
