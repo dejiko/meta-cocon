@@ -2,13 +2,13 @@ DESCRIPTION = "NetworkManager"
 SECTION = "net/misc"
 LICENSE = "GPLv2"
 PRIORITY = "optional"
-DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade gtk+3 libgnome-keyring"
+DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libgnome-keyring gtk+"
 RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            ${@base_contains('COMBINED_FEATURES', '3gmodem', 'ppp', '', d)} \
            "
 LIC_FILES_CHKSUM = "file://COPYING;md5=100d5a599bead70ddcd70dcd73f2e29c"
 
-EXTRA_OECONF = " \
+EXTRA_OECONF = " --with-gtkver=2 \
 		--disable-more-warnings"
 
 inherit autotools pkgconfig
@@ -26,6 +26,6 @@ FILES_${PN}-dev += "${libdir}/NetworkManager/libnm-openvpn-properties.la"
 FILES_${PN}-staticdev += "${libdir}/NetworkManager/libnm-openvpn-properties.a"
 FILES_${PN}-dbg += "${libdir}/NetworkManager/.debug/*"
 
-SRC_URI[md5sum] = "6699552a550a18db9edb037951a81d62"
-SRC_URI[sha256sum] = "4196f4c124426884657c8d0e2578f4d35205b8981a46bf645fd599fb238395ce"
+SRC_URI[md5sum] = "afe11c50ce63bd251e50a2f1b20af654"
+SRC_URI[sha256sum] = "af8c52b6a61af3c178eed1ea8f1d4704bea87331fde43deb3d4aafe1821e6687"
 

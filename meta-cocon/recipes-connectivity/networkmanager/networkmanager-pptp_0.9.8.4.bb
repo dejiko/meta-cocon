@@ -2,13 +2,13 @@ DESCRIPTION = "NetworkManager"
 SECTION = "net/misc"
 LICENSE = "GPLv2"
 PRIORITY = "optional"
-DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libglade gtk+3 libgnome-keyring"
+DEPENDS = "networkmanager libnl dbus dbus-glib wireless-tools polkit gnutls util-linux ppp libgnome-keyring gtk+"
 RDEPENDS_${PN} = "wpa-supplicant dhcp-client \
            ${@base_contains('COMBINED_FEATURES', '3gmodem', 'ppp', '', d)} \
            "
 LIC_FILES_CHKSUM = "file://COPYING;md5=59530bdf33659b29e73d4adb9f9f6552"
 
-EXTRA_OECONF = " \
+EXTRA_OECONF = " --with-gtkver=2 \
 		--disable-more-warnings"
 
 inherit autotools pkgconfig
@@ -22,15 +22,14 @@ FILES_${PN} += " \
 		${libdir}/NetworkManager/*.so \
 		${datadir}/gnome-vpn-properties \
 		${datadir}/icons \
-                ${libdir}/pppd/2.4.5/*.so"
+                ${libdir}/pppd/*/*.so"
 FILES_${PN}-dev += "${libdir}/NetworkManager/libnm-pptp-properties.la \
-                ${libdir}/pppd/2.4.5/nm-pptp-pppd-plugin.la "
+                ${libdir}/pppd/*/nm-pptp-pppd-plugin.la "
 FILES_${PN}-staticdev += "${libdir}/NetworkManager/libnm-pptp-properties.a \
-                ${libdir}/pppd/2.4.5/nm-pptp-pppd-plugin.a "
+                ${libdir}/pppd/*/nm-pptp-pppd-plugin.a "
 FILES_${PN}-dbg += "${libdir}/NetworkManager/.debug/* \
-                ${libdir}/pppd/2.4.5/.debug/* "
+                ${libdir}/pppd/*/.debug/* "
 
-
-SRC_URI[md5sum] = "37bad4600d4e26a6267ad425d16da3cf"
-SRC_URI[sha256sum] = "34d0981462d8948ace0dd4f49478c86017b53516afbbf62e2a4c6c0adc679cc8"
+SRC_URI[md5sum] = "2d1f48ab2383aaba1cc4acb43a187320"
+SRC_URI[sha256sum] = "97ba8f6f726056c3b8e0e1c8d2ab3d32791cadd7c3a38e0478fb2bd3ecafdce8"
 
