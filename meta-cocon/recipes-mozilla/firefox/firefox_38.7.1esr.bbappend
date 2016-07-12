@@ -8,7 +8,7 @@ EXTRA_OECONF_libc-musl += " --disable-jemalloc --disable-profiling \
                             --disable-xprint --disable-skia --disable-debug \
                             --enable-safe-browsing --disable-gio \
                             --enable-system-hunspell --enable-system-sqlite \
-                            --enable-system-nspr --enable-default-toolkit=cairo-gtk3"
+                            --enable-system-nspr"
 
 # patches from Void Linux, Gentoo, Sabotage
 SRC_URI_append_libc-musl += "file://0002-Use-C99-math-isfinite.patch \
@@ -27,6 +27,11 @@ SRC_URI_append_libc-musl += "file://0002-Use-C99-math-isfinite.patch \
                              file://basename.patch \
                              file://getprotobyname_r.patch \
                             "
+
+do_configure_prepend() {
+  # We don't need a fox logo.
+  sed -i -e 's/ac_add_options --enable-official-branding//g' ${WORKDIR}/mozconfig
+}
 
 do_configure_prepend_libc-musl() {
   cp ${WORKDIR}/stab.h ${S}/toolkit/crashreporter/google-breakpad/src/
