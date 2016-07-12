@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Cocon-caravan (midori) launcher
+# Web browser launcher
 
 if [ -e /tmp/.cocon.cnf ];
 then
@@ -17,6 +17,6 @@ then
 fi
 
 
-# Just run midori
-exec midori -p $COCON_WWW_START
+# Just run browser
+exec firefox "$COCON_WWW_START"
 

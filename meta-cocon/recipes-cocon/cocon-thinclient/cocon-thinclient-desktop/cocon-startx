@@ -27,6 +27,8 @@ then
   X_OPTION="-- -depth 24"
 fi
 
+export LD_LIBRARY_PATH="/lib:/usr/lib:/usr/lib/firefox"
+
 
 if [ "`echo $COCON_DEBUG`" -o "`echo /proc/cmdline | grep stopbeforex`" ];
 then
