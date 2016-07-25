@@ -48,6 +48,7 @@ xf86-input-keyboard \
 xf86-input-mouse \
 xf86-input-synaptics \
 xf86-video-ati \
+xf86-video-cirrus \
 xf86-video-fbdev \
 xf86-video-intel \
 xf86-video-modesetting \
@@ -57,6 +58,8 @@ xf86-video-siliconmotion \
 xf86-video-sisimedia \
 xf86-video-xgi \
 xf86-video-xgixp \
+xf86-video-vesa \
+xf86-video-vmware \
 xinit \
 xinput-calibrator \
 xmodmap \

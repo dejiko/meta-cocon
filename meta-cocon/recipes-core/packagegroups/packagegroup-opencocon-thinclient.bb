@@ -1,11 +1,12 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-DESCRIPTION = "Task for opencocon thinclient desktop environment"
+DESCRIPTION = "Packagegroup for opencocon thinclient desktop environment"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
 
 inherit packagegroup
 
+# opencocon-init : compat module
 
 RDEPENDS_${PN} = " \
 celt \
@@ -15,32 +16,22 @@ cocon-thinclient-desktop \
 coconvnc \
 cyrus-sasl \
 dialog \
-eject \
 freerdp \
-gnome-icon-theme \
-hicolor-icon-theme \
-iproute2 \
-libnotify \
 libvncserver \
-libwnck \
 lxpanel \
 lxrandr \
 lxterminal \
+lxqt-panel \
 matchbox-wm \
-mkfontdir \
 network-manager-applet \
-networkmanager \
-ntpdate \
+nxcomp \
+nxproxy \
 opencocon-init \
-python-core \
-python-io \
-python-shell \
+qtbase-plugins \
+qterminal \
 spice-gtk \
-sudo \
-tzdata \
-viewnior \
-xserver-xf86-config \
+x2goclient \
 xserver-xorg-xephyr \
-xuser-account \
+lxqt-common \
 "
 

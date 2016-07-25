@@ -1,7 +1,5 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-IMAGE_FSTYPES += "cramfs.gz"
-
 IMAGE_INSTALL += " \
 kernel-module-usb-storage \
 kernel-module-ohci-hcd \

@@ -3,7 +3,7 @@
 IMAGE_PKGTYPE = "ipk"
 
 
-IMAGE_NAME = "opencocon-${DISTRO_VERSION}-${MACHINE}"
+IMAGE_NAME = "opencocon-thinclient-${DISTRO_VERSION}-${MACHINE}"
 
 # TODO : postprocess?
 #IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
@@ -23,7 +23,11 @@ COCON_TC_PACKAGES = " \
 packagegroup-opencocon-thinclient \
 packagegroup-opencocon-thinclient-${MACHINE} \
 packagegroup-opencocon-thinclient-${MACHINE}-xorg \
+packagegroup-opencocon-debug-${MACHINE} \
 packagegroup-opencocon-thinclient-caravan \
+packagegroup-opencocon-debug \
+packagegroup-opencocon-common \
+packagegroup-opencocon-common-xorg \
 packagegroup-opencocon-thinclient-sound \
 packagegroup-opencocon-thinclient-vpn \
 "
@@ -31,7 +35,11 @@ packagegroup-opencocon-thinclient-vpn \
 RDEPENDS = "${COCON_TC_PACKAGES}"
 IMAGE_INSTALL = "${COCON_TC_PACKAGES}"
 
+PACKAGE_EXCLUDE = "linux-firmware \
+pulseaudio-module-null-source \
+"
+
 IMAGE_BASENAME = "opencocon"
-IMAGE_FSTYPES += " tar.gz squashfs ext4.gz"
+IMAGE_FSTYPES += "tar.gz squashfs"
 
 inherit image

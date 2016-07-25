@@ -1,6 +1,6 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
-DESCRIPTION = "Task for opencocon thinclient on cocon486 machine (without X.org)"
+DESCRIPTION = "Packagegroup for opencocon thinclient on cocon486 machine (without X.org)"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
 
@@ -8,27 +8,8 @@ inherit packagegroup
 
 COMPATIBLE_MACHINE = "cocon486"
 
-RDEPENDS_${PN} = " \
+COCON486_FIRMWARE = " \
 b43-fwcutter \
-base-files \
-base-passwd \
-busybox \
-cocon-data-doc \
-dmidecode \
-dropbear \
-e2fsprogs-badblocks \
-e2fsprogs-e2fsck \
-e2fsprogs-mke2fs \
-gnutls \
-gnutls-openssl \
-grub-legacy \
-kbd \
-kbd-keymaps \
-kernel-modules \
-keymaps \
-libgcc \
-libgcrypt \
-libgpg-error \
 linux-firmware-ar3k \
 linux-firmware-ar9170 \
 linux-firmware-ath6k \
@@ -74,18 +55,20 @@ linux-firmware-sd8797 \
 linux-firmware-usb8388 \
 linux-firmware-usb8388-thinfirm \
 linux-firmware-vt6656 \
-openssl \
-opkg \
-pcmciautils \
-udev \
-update-rc.d \
-usbutils \
-util-linux-cfdisk \
-util-linux-fdisk \
-v86d \
-wireless-tools \
-wpa-supplicant \
 zd1211-firmware \
-minicom \
+"
+
+RDEPENDS_${PN} = " \
+cocon-data-doc \
+dmidecode \
+grub-legacy \
+kbd \
+kbd-keymaps \
+kernel-modules \
+keymaps \
+pcmciautils \
+opengalax \
+spmachine-486 \
+${COCON486_FIRMWARE} \
 "
 

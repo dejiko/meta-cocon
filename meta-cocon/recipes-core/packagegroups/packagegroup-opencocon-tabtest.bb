@@ -1,0 +1,24 @@
+# Released under the MIT license (see COPYING.MIT for the terms)
+
+DESCRIPTION = "Task for opencocon canvas"
+LICENSE = "MIT"
+LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
+
+inherit packagegroup
+
+
+RDEPENDS_${PN} = " \
+e-wm \
+packagegroup-x11-illume \
+lxterminal \
+dialog \
+eject \
+elementary \
+network-manager-applet \
+networkmanager \
+xserver-xf86-config \
+xserver-xorg-xephyr \
+xuser-account \
+initscripts \
+"
+
