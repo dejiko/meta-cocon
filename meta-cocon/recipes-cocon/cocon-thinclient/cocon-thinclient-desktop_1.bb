@@ -17,7 +17,6 @@ SRC_URI = "file://COPYING.MIT \
 	   file://cocon-xephyr-launch \
 	   file://cocon-spice-launch \
 	   file://lxterminal.conf \
-	   file://midori-config \
 	   file://xinitrc \ 
 	   file://cocon-startx \
 	   file://cocon-option-menu \
@@ -64,14 +63,12 @@ do_install() {
 	install -d ${D}${sysconfdir}/skel
 	install -d ${D}${sysconfdir}/skel/.config/lxpanel/default/panels	
 	install -d ${D}${sysconfdir}/skel/.config/lxterminal
-	install -d ${D}${sysconfdir}/skel/.config/midori
 	install -d ${D}${sysconfdir}/skel/.config/spicy
         install -d ${D}${sysconfdir}/polkit-1/
         install -d ${D}${sysconfdir}/polkit-1/rules.d/
 	install -m 0755 ${WORKDIR}/xinitrc ${D}${sysconfdir}/skel/.xinitrc
 	install -m 0644 ${WORKDIR}/panel ${D}${sysconfdir}/skel/.config/lxpanel/default/panels/panel
 	install -m 0644 ${WORKDIR}/lxterminal.conf ${D}${sysconfdir}/skel/.config/lxterminal/lxterminal.conf
-	install -m 0644 ${WORKDIR}/midori-config ${D}${sysconfdir}/skel/.config/midori/config
 	install -m 0644 ${WORKDIR}/spicy-settings ${D}${sysconfdir}/skel/.config/spicy/settings
         install -m 0644 ${WORKDIR}/50-org.freedesktop.NetworkManager.rules ${D}${sysconfdir}/polkit-1/rules.d/50-org.freedesktop.NetworkManager.rules
 
