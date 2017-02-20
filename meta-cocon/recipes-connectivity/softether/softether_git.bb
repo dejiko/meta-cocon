@@ -3,7 +3,7 @@ require softether.inc
 DEPENDS += "zlib ncurses openssl softether-hamcorebuilder-native virtual/libiconv readline"
 RDEPENDS-${PN} += "virtual/libiconv readline"
 
-SRC_URI_append_libc-uclibc = "file://internat-uclibc.patch"
+SRC_URI_append = "file://internat-uclibc.patch"
 
 EXTRA_OEMAKE += "'PREFIX=${D}${prefix} CC=${CC} -fomit-frame-pointer \
                  ${CFLAGS}'"
@@ -40,6 +40,7 @@ do_configure_append_linux-uclibc () {
         -e "s:OPTIONS_LINK_RELEASE=:OPTIONS_LINK_RELEASE=-liconv :g" \
         ${S}/Makefile
 }
+
 
 do_compile() {
     oe_runmake

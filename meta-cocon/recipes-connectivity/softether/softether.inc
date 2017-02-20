@@ -8,15 +8,21 @@ LICENSE = "GPLv2"
 SRC_URI = "git://github.com/SoftEtherVPN/SoftEtherVPN.git;branch=master \
 "
 
-SRCREV = "d3a1b26413acf3b387475f9ec5c4cbd93c5ffffe"
+SRCREV = "4df2eb4f9c2a8cf50e0123496bc20470edc21dc4"
 
 S = "${WORKDIR}/git"
 
 do_configure() {
     # Copy linux-32bit makefile
     # TODO : 64bit
-    cp ${S}/src/makefiles/linux_32bit.mak ${S}/Makefile
+
+    if [ "$TARGET_ARCH" = "x86_64" ];
+    then
+        cp ${S}/src/makefiles/linux_64bit.mak ${S}/Makefile
+    else
+        cp ${S}/src/makefiles/linux_32bit.mak ${S}/Makefile
+    fi
 }
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=bb2892df08b38bb8481923827d174b93"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=e877766b4a0fc05772993084f765afc7"
 
