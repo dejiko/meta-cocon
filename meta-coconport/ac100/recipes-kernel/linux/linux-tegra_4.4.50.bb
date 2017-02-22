@@ -9,12 +9,9 @@ B = "${S}"
 
 COMPATIBLE_MACHINE = "ac100"
 
-SRC_URI = " ${KERNELORG_MIRROR}/linux/kernel/v3.0/linux-${PV}.tar.xz;name=kernel\
+SRC_URI = " ${KERNELORG_MIRROR}/linux/kernel/v4.0/linux-${PV}.tar.xz;name=kernel\
     file://defconfig \
 "
-
-SRC_URI[kernel.md5sum] = "fb3ef8da32a25607807887b9567a6927"
-SRC_URI[kernel.sha256sum] = "2c6aec73fd868db12d29dfa2dc34d6cfa04b0e3e5ae65be34c2cb30243470e2e"
 
 do_compile_append() {
     oe_runmake dtbs
@@ -24,4 +21,6 @@ do_compile_append() {
     cat ${S}/arch/arm/boot/zImage.org arch/arm/boot/dts/tegra20-paz00.dtb > ${S}/arch/arm/boot/zImage
 }
 
+SRC_URI[kernel.md5sum] = "6f7f4cb7ceaac770eadf0c7a18ef5225"
+SRC_URI[kernel.sha256sum] = "e4944ca5bb0bdf63a7e97dc7fbdd38bcc820d8b3b57c4a3a7b3bf9c8a48216b7"
 
