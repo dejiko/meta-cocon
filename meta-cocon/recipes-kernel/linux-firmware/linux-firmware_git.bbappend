@@ -14,7 +14,7 @@ PACKAGES =+ "${PN}-agere-license ${PN}-orinoco \
              ${PN}-usb8388 ${PN}-usb8388-thinfirm ${PN}-mwl8366 ${PN}-mwl8687 \
              ${PN}-pcie8897 ${PN}-pcie8797 \
              ${PN}-rtl8192de ${PN}-rtl8192se ${PN}-rtl8723ae ${PN}-rtl8192e \
-             ${PN}-rtl-nic"
+             ${PN}-rtl-nic ${PN}-rtl8188eu"
 
 # Agere
 FILES_${PN}-agere-license = "/lib/firmware/LICENCE.agere"
@@ -105,9 +105,8 @@ FILES_${PN}-rtl8192e = "/lib/firmware/RTL8192E/*"
 #LICENSE_${PN}-rtl8712u = "Firmware-rtlwifi"
 #FILES_${PN}-rtl8712u = "/lib/firmware/rtlwifi/rtl8712u.bin"
 
-# Disabled
-#LICENSE_${PN}-rtl8188eu = "Firmware-rtlwifi"
-#FILES_${PN}-rtl8188eu = "/lib/firmware/rtlwifi/rtl8188eufw.bin"
+LICENSE_${PN}-rtl8188eu = "Firmware-rtlwifi"
+FILES_${PN}-rtl8188eu = "/lib/firmware/rtlwifi/rtl8188eufw.bin"
 
 # rtl-nic
 LICENSE_${PN}-rtl-nic = "Firmware-rtlwifi"
