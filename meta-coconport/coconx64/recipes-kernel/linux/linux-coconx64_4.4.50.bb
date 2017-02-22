@@ -10,8 +10,8 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v4.x/linux-${PV}.tar.xz;name=kernel 
            file://defconfig \
 "
 
-SRC_URI[kernel.md5sum] = "7b59c25c783173969bfb62cac4f057ce"
-SRC_URI[kernel.sha256sum] = "303634711f0f39806fdbfaae69f59be26b46ef45f080c7d801a26864e264acb0"
+SRC_URI[kernel.md5sum] = "6f7f4cb7ceaac770eadf0c7a18ef5225"
+SRC_URI[kernel.sha256sum] = "e4944ca5bb0bdf63a7e97dc7fbdd38bcc820d8b3b57c4a3a7b3bf9c8a48216b7"
 
 COMPATIBLE_MACHINE = "coconx64"
 
