@@ -36,11 +36,11 @@ KERNEL=="agpgart", GROUP="video", MODE="0660"
 KERNEL=="pmu", GROUP="video", MODE="0660"
 KERNEL=="nvidia*|nvidiactl*", GROUP="video", MODE="0660"
 SUBSYSTEM=="graphics", GROUP="video", MODE="0660"
-SUBSYSTEM=="drm", GROUP="video", MODE="0660"
+SUBSYSTEM=="drm", GROUP="video", MODE="0666"
 
 # sound
 SUBSYSTEM=="sound", GROUP="audio", \
-  OPTIONS+="static_node=snd/seq", OPTIONS+="static_node=snd/timer", MODE="0660"
+  OPTIONS+="static_node=snd/seq", OPTIONS+="static_node=snd/timer", MODE="0666"
 
 # DVB (video)
 SUBSYSTEM=="dvb", GROUP="video"
