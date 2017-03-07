@@ -2,10 +2,9 @@ DESCRIPTION = "opencocon thin-client focused desktop environment"
 SECTION = "base"
 LICENSE = "MIT"
 DEPENDS = "cocon-data dialog lxterminal"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
 
-SRC_URI = "file://COPYING.MIT \
-	   file://panel \
+SRC_URI = "file://panel \
 	   file://gtkrc \
 	   file://cocon-caravan-launch \
 	   file://cocon-freerdp-launch \
@@ -66,7 +65,8 @@ do_install() {
 	install -d ${D}${sysconfdir}/skel/.config/spicy
         install -d ${D}${sysconfdir}/polkit-1/
         install -d ${D}${sysconfdir}/polkit-1/rules.d/
-	install -m 0755 ${WORKDIR}/xinitrc ${D}${sysconfdir}/skel/.xinitrc
+	# v10 : moved from skel/.xinitrc
+	install -m 0755 ${WORKDIR}/xinitrc ${D}${bindir}/x-window-manager
 	install -m 0644 ${WORKDIR}/panel ${D}${sysconfdir}/skel/.config/lxpanel/default/panels/panel
 	install -m 0644 ${WORKDIR}/lxterminal.conf ${D}${sysconfdir}/skel/.config/lxterminal/lxterminal.conf
 	install -m 0644 ${WORKDIR}/spicy-settings ${D}${sysconfdir}/skel/.config/spicy/settings
