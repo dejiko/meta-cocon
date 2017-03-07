@@ -1,0 +1,17 @@
+#!/bin/sh
+
+start(){
+  /usr/bin/cocon-spmachine
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+  stop)
+    # Do nothing.
+  ;;
+  *)
+    echo "invalid argument."
+    exit 1
+esac
