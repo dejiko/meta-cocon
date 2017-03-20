@@ -23,7 +23,7 @@ do
   dialog --no-cancel --menu "Option, Ambient tools" 20 60 25 \
   MIX   "Sound mixer" \
   SNDT  "Sound test (Caution: play noise sound!)" \
-  TPAD  "Touchpad calibration" \
+  TPAD  "Touchscreen calibration" \
   IMAGE "Image viewer (Incomplete)" \
   RANDR "Change resolution, output of screen" \
   KBD   "Change keyboard layout" \

@@ -34,6 +34,7 @@ XEPHYR "Connect XDMCP" \
 RDP "Connect RDP" \
 VNC "Connect VNC" \
 SPICE "Connect SPICE" \
+X2GO "Connect X2GO" \
 WWW "Web Browser" \
 NET "Network Setting" \
 VPN "Connect VPN" \
@@ -219,6 +220,11 @@ SPICE)
     fi
   fi
 
+  ;;
+
+X2GO)
+  # TODO: Write here
+  x2goclient
   ;;
 
 

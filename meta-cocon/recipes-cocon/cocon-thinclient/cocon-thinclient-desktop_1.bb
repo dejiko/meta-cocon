@@ -8,7 +8,7 @@ SRC_URI = "file://panel \
 	   file://gtkrc \
 	   file://cocon-caravan-launch \
 	   file://cocon-freerdp-launch \
-	   file://cocon-init \
+	   file://cocon-cnf-copynm \
 	   file://cocon-menu \
 	   file://cocon-menu-launch \
 	   file://cocon-netset-launch \
@@ -17,7 +17,7 @@ SRC_URI = "file://panel \
 	   file://cocon-spice-launch \
 	   file://lxterminal.conf \
 	   file://xinitrc \ 
-	   file://cocon-startx \
+	   file://cocon-pre-startx \
 	   file://cocon-option-menu \
 	   file://spicy-settings \
            file://cocon-x-session \
@@ -34,10 +34,9 @@ S="${WORKDIR}"
 do_install() {
 	set -ex
 
-        install -d ${D}${base_bindir}/
-        install -m 0755    ${WORKDIR}/cocon-init          ${D}${base_bindir}/cocon-init
-
-	install -d ${D}${bindir}/
+        install -d ${D}${bindir}/
+	install -d ${D}${sysconfdir}/init.d/
+        install -m 0755    ${WORKDIR}/cocon-cnf-copynm          ${D}${sysconfdir}/init.d/cocon-cnf-copynm
 	install -m 0755    ${WORKDIR}/cocon-caravan-launch     ${D}${bindir}/cocon-caravan-launch
 	install -m 0755    ${WORKDIR}/cocon-freerdp-launch     ${D}${bindir}/cocon-freerdp-launch
 	install -m 0755    ${WORKDIR}/cocon-menu     ${D}${bindir}/cocon-menu
@@ -45,7 +44,7 @@ do_install() {
 	install -m 0755    ${WORKDIR}/cocon-netset-launch     ${D}${bindir}/cocon-netset-launch
 	install -m 0755    ${WORKDIR}/cocon-vnc-launch     ${D}${bindir}/cocon-vnc-launch
 	install -m 0755    ${WORKDIR}/cocon-xephyr-launch     ${D}${bindir}/cocon-xephyr-launch
-	install -m 0755    ${WORKDIR}/cocon-startx     ${D}${bindir}/cocon-startx
+	install -m 0755    ${WORKDIR}/cocon-pre-startx     ${D}${sysconfdir}/init.d/cocon-pre-startx
 	install -m 0755    ${WORKDIR}/cocon-option-menu     ${D}${bindir}/cocon-option-menu
         install -m 0755    ${WORKDIR}/cocon-spice-launch    ${D}${bindir}/cocon-spice-launch
         install -m 0755    ${WORKDIR}/cocon-x-session    ${D}${bindir}/cocon-x-session
@@ -74,6 +73,17 @@ do_install() {
 
 }
 
+PACKAGES =+ "${PN}-copynm ${PN}-pre-startx"
+FILES_${PN}-copynm = "${sysconfdir}/init.d/cocon-cnf-copynm"
+FILES_${PN}-pre-startx = "${sysconfdir}/init.d/cocon-pre-startx"
+
+inherit update-rc.d
+
+INITSCRIPT_PACKAGES = "${PN}-copynm ${PN}-pre-startx"
+INITSCRIPT_NAME_${PN}-copynm = "cocon-cnf-copynm"
+INITSCRIPT_PARAMS_${PN}-copynm = "start 45 S ."
+INITSCRIPT_NAME_${PN}-pre-startx = "cocon-pre-startx"
+INITSCRIPT_PARAMS_${PN}-pre-startx = "start 00 5 ."
 
 FILES_${PN} = "/"
 
