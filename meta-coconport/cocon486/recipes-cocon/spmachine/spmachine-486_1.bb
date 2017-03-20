@@ -18,6 +18,7 @@ SRC_URI = "file://COPYING.MIT \
            file://libretto-lx.conf \
            file://sony-pcg-c1.conf \
            file://kohjinsha-pm.conf \
+           file://depth-24.conf \
 "
 
 S="${WORKDIR}"

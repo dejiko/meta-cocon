@@ -27,8 +27,16 @@ fi
 if [ `cat /proc/cmdline | grep 'forcesvga'` ];
 then
   ln -s $SPMACHINE486_CONF/defaultdepth.conf $XORG_CONF_D/defaultdepth.conf
-fi
+else
 
+  # Workaround chips for broken X.org driver
+  #  (Currently ATI, Savage, Siliconmotion, Neomagic.
+  #   Almost these chips can display 24-bit color depth.)
+  if [ "` lsmod | grep -E 'radeon|savage|atyfb|sm7xx|neofb|i915'`" ];
+  then
+    ln -s $SPMACHINE486_CONF/depth-24.conf $XORG_CONF_D/depth-24.conf
+  fi
+fi
 
 # Machine name
 if [ "`which dmidecode`" ];
@@ -188,6 +196,12 @@ then
   opengalax &
   ln -sf $SPMACHINE486_CONF/opengalax.conf $XORG_CONF_D/opengalax.conf
 
+fi
+
+# Enable Framebuffer console : needed for i810
+if [ -c /dev/fb0 ];
+then
+  /sbin/modprobe fbcon
 fi
 
 
