@@ -2,7 +2,7 @@
 
 # opencocon power-off script
 
-if [ `echo $COCON_DEBUG` ];
+if [ "`echo $COCON_DEBUG`" ];
 then
   echo "DEBUG: before shutdown. Maybe X.org failed."
   /bin/sh
@@ -14,15 +14,16 @@ then
   # Direct-boot
 
   # only for x86
+  # TODO : move to spmachine
   modprobe apm power_off=1  >/dev/null 2>&1
 
-  /sbin/poweroff
+  #/sbin/poweroff
 
 else
 
   # Stop udev
-  /etc/init.d/udev stop
-  pkill udevd
+#  /etc/init.d/udev stop
+#  pkill udevd
 
   # have union-boot flag
   cd /mnt/oldroot

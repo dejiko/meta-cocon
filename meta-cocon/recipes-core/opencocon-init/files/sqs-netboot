@@ -1,0 +1,44 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides: sqs-netboot
+# Required-Start: 
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:      
+# Short-Description: sqs netboot
+# Description: sqs-based netboot on opencocon
+### END INIT INFO
+
+if [ "` cat /proc/cmdline | grep sqs-netboot`" ];
+then
+  # TODO : Cleanup and devide to common scripts.
+  [ -c /dev/zero ] || mount -t devtmpfs devtmpfs /dev
+  touch /run/write_check 2> /dev/null || {
+    mount -t tmpfs none /mnt/ram
+
+    mkdir /mnt/ram/volatile
+    mount --bind /mnt/ram/volatile /var/volatile
+    mkdir /var/volatile/tmp
+    mkdir /var/volatile/log
+    mkdir /var/volatile/run
+    mkdir /var/volatile/run/dbus
+    mkdir /var/volatile/lock
+
+    mkdir /mnt/ram/run
+    mount --bind /mnt/ram/run /run
+
+    mkdir /mnt/ram/etc
+    mount -t aufs -o br:/mnt/ram/etc:/etc none /etc
+
+    mkdir /mnt/ram/home
+    mount -t aufs -o br:/mnt/ram/home:/home none /home
+  }
+  rm -f /run/write_check
+
+  COCON_SQS_NETBOOT=1
+
+  # TODO : to coconcnf
+  export COCON_SQS_NETBOOT
+fi
+
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# mount missing volatile directories
+
+#mount -t tmpfs none /var/volatile
+#mkdir /var/volatile/tmp
+
+if [ ! -d /var/volatile/log ];
+then
+  mkdir -p /var/volatile/log
+fi
+
+# TODO : create on base-files.
+mkdir -p /var/volatile/run
+mkdir -p /var/volatile/lock
+mkdir -p /var/volatile/run
+mkdir -p /var/volatile/run/dbus
+mkdir -p /var/volatile/lock
+
+
