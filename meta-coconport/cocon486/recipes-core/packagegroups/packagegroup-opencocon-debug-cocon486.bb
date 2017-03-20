@@ -8,9 +8,10 @@ inherit packagegroup
 
 COMPATIBLE_MACHINE = "cocon486"
 
-RDEPENDS_${PN} = " \
-xf86-video-chips-dbg \
-xf86-video-sis-dbg \
-"
+#RDEPENDS_${PN} = " \
+#xf86-video-chips-dbg \
+#xf86-video-sis-dbg \
+#gdb \
+#"
 
 

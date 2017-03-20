@@ -8,17 +8,10 @@ inherit packagegroup
 
 
 RDEPENDS_${PN} = " \
-e-wm \
-packagegroup-x11-illume \
-lxterminal \
 dialog \
-eject \
-elementary \
-network-manager-applet \
+kbd \
+kbd-keymaps \
 networkmanager \
-xserver-xf86-config \
-xserver-xorg-xephyr \
-xuser-account \
 initscripts \
 "
 

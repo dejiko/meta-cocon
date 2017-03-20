@@ -12,7 +12,10 @@ RDEPENDS_${PN} = " \
 celt \
 cocon-data \
 cocon-data-doc \
+cocon-readcnf \
 cocon-thinclient-desktop \
+cocon-thinclient-desktop-copynm \
+cocon-thinclient-desktop-pre-startx \
 coconvnc \
 cyrus-sasl \
 dialog \
@@ -21,17 +24,19 @@ libvncserver \
 lxpanel \
 lxrandr \
 lxterminal \
-lxqt-panel \
 matchbox-wm \
 network-manager-applet \
 nxcomp \
 nxproxy \
 opencocon-init \
+opencocon-init-poweroff \
+opencocon-init-make-tmpdir \
+opencocon-init-sqs-netboot \
+opencocon-init-zram \
 qtbase-plugins \
-qterminal \
 spice-gtk \
 x2goclient \
+xserver-nodm-init \
 xserver-xorg-xephyr \
-lxqt-common \
 "
 

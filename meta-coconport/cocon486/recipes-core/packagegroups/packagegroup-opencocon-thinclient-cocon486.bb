@@ -69,6 +69,7 @@ keymaps \
 pcmciautils \
 opengalax \
 spmachine-486 \
+spmachine-486-early \
 ${COCON486_FIRMWARE} \
 "
 
