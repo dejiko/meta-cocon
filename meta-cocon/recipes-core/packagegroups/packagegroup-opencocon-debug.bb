@@ -8,8 +8,9 @@ inherit packagegroup
 
 
 RDEPENDS_${PN} = " \
+dropbear \
 "
-#dropbear
+
 #gdb
 #minicom
 

@@ -34,6 +34,7 @@ util-linux-cfdisk \
 util-linux-fdisk \
 wireless-tools \
 wpa-supplicant \
+nss \
 networkmanager \
 iproute2 \
 eject \
