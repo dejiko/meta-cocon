@@ -16,6 +16,8 @@ while :
 do
   if [ -e $PWROFF ];
   then
+    # do poweroff
+    su -c "poweroff" root
     break
   fi
   /usr/bin/cocon-menu

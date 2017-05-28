@@ -8,10 +8,8 @@ then
   . $CNFFILE
 fi
 
-
 # first, copy settings from skel.
 su -c "cp -R /etc/skel/.config/ /home/xuser" xuser
 su -c "cp /etc/skel/.profile /home/xuser" xuser
-su -c "cp /etc/skel/.xinitrc /home/xuser" xuser
 
 exit 0
