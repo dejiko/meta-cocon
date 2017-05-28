@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# only for x86
+# If runnning APM machine, do modprobe with poweroff flag.
+modprobe apm power_off=1  >/dev/null 2>&1
+
