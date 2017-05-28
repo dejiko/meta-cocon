@@ -46,7 +46,7 @@ d_start() {
 		chown $USER:$USER $PIDDIR
 	fi
 
-	start-stop-daemon --start --quiet --pidfile $PIDFILE \
+	/sbin/start-stop-daemon --start --quiet --pidfile $PIDFILE \
 		--oknodo --user $USER --exec $DAEMON -- $DAEMON_OPTS --pid-file $PIDFILE
 
 }
@@ -55,7 +55,7 @@ d_start() {
 #	Function that stops the daemon/service.
 #
 d_stop() {
-	start-stop-daemon --stop --retry 5 --quiet --pidfile $PIDFILE \
+	/sbin/start-stop-daemon --stop --retry 5 --quiet --pidfile $PIDFILE \
 		 --oknodo --user $USER --exec $DAEMON
  
 }
