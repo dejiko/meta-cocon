@@ -9,6 +9,8 @@
 # Description: sqs-based netboot on opencocon
 ### END INIT INFO
 
+CNFFILE="/tmp/.cocon.cnf"
+
 if [ "` cat /proc/cmdline | grep sqs-netboot`" ];
 then
   # TODO : Cleanup and devide to common scripts.
@@ -35,10 +37,7 @@ then
   }
   rm -f /run/write_check
 
-  COCON_SQS_NETBOOT=1
-
-  # TODO : to coconcnf
-  export COCON_SQS_NETBOOT
+  echo "COCON_SQS_NETBOOT=1" >> $CNFFILE
 fi
 
 

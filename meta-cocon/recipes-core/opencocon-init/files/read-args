@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Read flags from bootloader, and store to /tmp/.cocon.cnf .
+
+
+CNFFILE="/tmp/.cocon.cnf"
+
+read_args() {
+    [ -z "$CMDLINE" ] && CMDLINE=`cat /proc/cmdline`
+    for arg in $CMDLINE; do
+        optarg=`expr "x$arg" : 'x[^=]*=\(.*\)'`
+        case $arg in
+            debug) set -x
+                echo "COCON_DEBUG=1"  >> $CNFFILE
+                ;;
+            forcefb1|forcefb2|forcefb3|forcefb)
+                echo "COCON_FORCEFB=1"  >> $CNFFILE
+                ;;
+            forcesvga)
+                # It seems x86 only
+                echo "COCON_FORCESVGA=1" >> $CNFFILE
+                ;;
+            dropbear)
+                echo "COCON_DROPBEAR=1"  >> $CNFFILE
+                ;;
+            stopbeforex)
+                echo "COCON_XDEBUG=1"  >> $CNFFILE
+                ;;
+            delayreadcfg)
+                echo "COCON_DELAY_CFG=1"  >> $CNFFILE
+                ;;
+        esac
+    done
+}
+
+
+read_args
+
+if [ -n "$BOOT_FS" ];
+then
+  echo "BOOT_FS=$BOOT_FS" >> $CNFFILE
+fi
+
