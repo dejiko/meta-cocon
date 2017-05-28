@@ -70,6 +70,7 @@ pcmciautils \
 opengalax \
 spmachine-486 \
 spmachine-486-early \
+spmachine-486-shutdown \
 ${COCON486_FIRMWARE} \
 "
 
