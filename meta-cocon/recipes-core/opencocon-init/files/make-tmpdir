@@ -17,4 +17,20 @@ mkdir -p /var/volatile/run
 mkdir -p /var/volatile/run/dbus
 mkdir -p /var/volatile/lock
 
+# If /var/log is not folder, recreate it.
+# (only for coconrpi?)
+if [ ! -d "/var/log/" ];
+then
+  rm -rf /var/log/
+  mkdir -p /var/log/
+fi
+
+# make /var/run/dbus#
+if [ ! -d "/var/run/dbus" ];
+then
+  mkdir -p /var/run/dbus
+fi
+
+# NetworkManager IPv6 fix
+ln -sf /var/lib/dbus/machine-id /etc/machine-id
 

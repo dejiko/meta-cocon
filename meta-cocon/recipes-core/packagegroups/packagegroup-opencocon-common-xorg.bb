@@ -35,6 +35,7 @@ xinput-calibrator \
 xmodmap \
 xorg-minimal-fonts \
 xrandr \
+xserver-common \
 xserver-xorg \
 linuxconsole-inputattach \
 "

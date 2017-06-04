@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# opencocon x2go launcher
+
+if [ -e /tmp/.cocon.cnf ];
+then
+  . /tmp/.cocon.cnf
+fi
+if [ -e /tmp/.cocon.cnf.part ];
+then
+  . /tmp/.cocon.cnf.part
+fi
+
+if [ $COCON_X2GO_HOST ];
+then
+  #spiceop=" -h $COCON_SPICE_HOST "
+
+  fi
+
+  # Make session time
+  session_date="$( date +%Y%m%d%H%M%S000 )"
+  
+
+
+  # Make session file
+
+
+  # Run session
+   $spiceop
+
+  # Delete session file
+
+
+else
+  echo "Please specify HOST."
+fi
+
+

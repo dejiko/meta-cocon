@@ -29,5 +29,5 @@ inherit update-rc.d
 
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME_${PN} = "NetworkManager"
-INITSCRIPT_PARAMS_${PN} = "start 50 S . stop 01 0 6 ."
+INITSCRIPT_PARAMS_${PN} = "start 05 5 . stop 01 0 6 ."
 

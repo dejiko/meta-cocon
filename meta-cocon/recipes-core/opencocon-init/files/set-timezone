@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CNFFILE="/tmp/.cocon.cnf"
+TZDIR="/usr/share/zoneinfo"
+
+# Read .cocon.cnf
+if [ -e $CNFFILE ];
+then
+  . $CNFFILE
+fi
+
+if [ -z "$COCON_TZ" ];
+then
+  COCON_TZ="Asia/Tokyo"
+fi
+
+# Set Timezone
+if [ -e "$TZDIR/$COCON_TZ" ];
+then
+  ln -sf $TZDIR/$COCON_TZ /etc/localtime
+fi
+

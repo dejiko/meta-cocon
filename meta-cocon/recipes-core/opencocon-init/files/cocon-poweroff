@@ -1,33 +1,28 @@
 #!/bin/sh
 
 # opencocon power-off script
+CNFFILE="/tmp/.cocon.cnf"
 
-if [ "`echo $COCON_DEBUG`" ];
+
+# Read .cocon.cnf
+if [ -e $CNFFILE ];
 then
-  echo "DEBUG: before shutdown. Maybe X.org failed."
+  . $CNFFILE
+fi
+
+
+if [ -n "$COCON_DEBUG" ];
+then
+  echo "DEBUG: before shutdown."
   /bin/sh
 fi
 
 
-if [ -z "$BOOT_FS" ];
+if [ -n "$BOOT_FS" ];
 then
-  # Direct-boot
-
-  # only for x86
-  # TODO : move to spmachine
-  modprobe apm power_off=1  >/dev/null 2>&1
-
-  #/sbin/poweroff
-
-else
-
-  # Stop udev
-#  /etc/init.d/udev stop
-#  pkill udevd
-
-  # have union-boot flag
+  # have union-boot flag : Run cleanup script to eject Live CD.
   cd /mnt/oldroot
-  exec ./sbin/clean <dev/console >dev/console 2>&1
+  . ./sbin/clean <dev/console >dev/console 2>&1
 
 fi
 

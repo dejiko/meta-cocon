@@ -20,13 +20,14 @@ do_install() {
 
 }
 
+
 # init.d : run on rc.S after udev, before of spmachine.
 
 inherit update-rc.d
 
-INITSCRIPT_PACKAGES = "scan-cnf-from-storage"
-INITSCRIPT_NAME_scan-cnf-from-storage = "scan-cnf-from-storage"
-INITSCRIPT_PARAMS_scan-cnf-from-storage = "start 40 S ."
+INITSCRIPT_PACKAGES = "cocon-readcnf"
+INITSCRIPT_NAME_cocon-readcnf = "scan-cnf-from-storage"
+INITSCRIPT_PARAMS_cocon-readcnf = "start 40 S ."
 
 FILES_${PN} = "/"
 

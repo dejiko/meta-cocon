@@ -2,5 +2,11 @@
 
 # .xinitrc : setup routine after initalize X.org
 
+
+# Workaround for xserver-common isn't provide CWD.
+cd /home/`/etc/X11/Xusername`
+export PWD="/home/`/etc/X11/Xusername`"
+export OLDPWD="$PWD"
+
 exec ck-launch-session dbus-launch /usr/bin/cocon-x-session
 

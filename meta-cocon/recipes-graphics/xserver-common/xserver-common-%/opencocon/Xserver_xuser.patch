@@ -1,0 +1,13 @@
+diff --git a/X11/xserver-common b/X11/xserver-common
+index 4dc48c4..f1f4f0b 100644
+--- a/X11/xserver-common
++++ b/X11/xserver-common
+@@ -41,7 +41,7 @@ fallback_screen_arg() {
+ }
+ 
+ SCREEN_SIZE=`fallback_screen_arg`
+-export USER=root
++export USER=`cat /etc/X11/Xusername`
+ export XSERVER_DEFAULT_ORIENTATION=normal
+ 
+ ARGS="-br -pn -nolisten tcp $INPUT_EXTRA_ARGS"
