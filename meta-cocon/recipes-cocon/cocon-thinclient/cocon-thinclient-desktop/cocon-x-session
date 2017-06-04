@@ -4,6 +4,7 @@
 
 PWROFF="/tmp/.cocon.poweroff"
 
+cd $HOME
 
 get_nm_connected() {
   timeout=90
@@ -41,7 +42,6 @@ fi
 # Default running on matchbox window manager
 matchbox-window-manager -theme blondie -use_desktop_mode plain &
 lxpanel &
-nm-applet &
 
 
 # Volume

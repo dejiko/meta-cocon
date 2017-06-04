@@ -1,0 +1,18 @@
+#!/bin/sh
+
+CNFFILE="/tmp/.cocon.cnf"
+
+# Read .cocon.cnf
+if [ -e $CNFFILE ];
+then
+  . $CNFFILE
+fi
+
+# Console Keymap
+if [ -z "$COCON_KBD_CONSOLE" ];
+then
+  COCON_KBD_CONSOLE="jp106"
+fi
+
+/usr/bin/loadkeys $COCON_KBD_CONSOLE
+

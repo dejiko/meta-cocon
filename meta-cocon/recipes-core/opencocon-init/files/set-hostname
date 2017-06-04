@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# opencocon sets random hostname.
+hostn="tiny$RANDOM"
+
+hostname $hostn
+echo "127.0.0.1	localhost $hostn" > /etc/hosts

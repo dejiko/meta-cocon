@@ -11,7 +11,7 @@
 ::sysinit:/etc/init.d/rcS
 
 # Stuff to do before rebooting
-::ctrlaltdel:/sbin/reboot
+#::ctrlaltdel:/sbin/reboot
 ::shutdown:/etc/init.d/rcK
 ::shutdown:/sbin/swapoff -a
 ::shutdown:/bin/umount -a -r
@@ -19,5 +19,5 @@
 # Stuff to do when restarting the init process
 ::restart:/sbin/init
 
-tty1::askfirst:/bin/sh
+#tty1::askfirst:/bin/sh
 tty2::askfirst:/bin/sh

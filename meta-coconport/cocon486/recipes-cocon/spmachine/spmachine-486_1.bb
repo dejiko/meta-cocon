@@ -9,6 +9,7 @@ SRC_URI = "file://COPYING.MIT \
            file://cocon-spmachine-early \
            file://spmachine486 \
            file://spmachine486-early \
+           file://spmachine486-shutdown \
 	   file://card-fbdev.conf \
 	   file://defaultdepth.conf \
            file://geode-1024x600.conf \
@@ -29,6 +30,7 @@ do_install() {
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/spmachine486-early ${D}${sysconfdir}/init.d/spmachine486-early
 	install -m 0755 ${WORKDIR}/spmachine486 ${D}${sysconfdir}/init.d/spmachine486
+	install -m 0755 ${WORKDIR}/spmachine486-shutdown ${D}${sysconfdir}/init.d/spmachine486-shutdown
 
 	install -d ${D}${bindir}/
         install -m 0755    ${WORKDIR}/cocon-spmachine    ${D}${bindir}/cocon-spmachine
@@ -42,13 +44,17 @@ FILES_${PN} = "/"
 
 inherit update-rc.d
 
-PACKAGES =+ "${PN}-early"
+PACKAGES =+ "${PN}-early ${PN}-shutdown"
 FILES_${PN}-early = "${bindir}/cocon-spmachine-early ${sysconfdir}/init.d/spmachine486-early"
+FILES_${PN}-shutdown = "${sysconfdir}/init.d/spmachine486-shutdown"
 
-INITSCRIPT_PACKAGES = "${PN} ${PN}-early"
+INITSCRIPT_PACKAGES = "${PN} ${PN}-early ${PN}-shutdown"
 # spmachine486-early must be run before udev
 INITSCRIPT_NAME_${PN}-early = "spmachine486-early"
 INITSCRIPT_PARAMS_${PN}-early = "start 01 S ."
 INITSCRIPT_NAME_${PN} = "spmachine486"
 INITSCRIPT_PARAMS_${PN} = "start 36 S ."
+INITSCRIPT_NAME_${PN}-shutdown = "spmachine486-shutdown"
+INITSCRIPT_PARAMS_${PN}-shutdown = "stop 01 0 6 ."
+
 
