@@ -8,7 +8,7 @@ inherit packagegroup
 
 
 RDEPENDS_${PN} = " \
-lxterminal \
+xterm \
 xuser-account \
 xserver-nodm-init \
 kernel-modules \
