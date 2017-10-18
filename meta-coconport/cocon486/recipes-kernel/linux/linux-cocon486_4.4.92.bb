@@ -14,6 +14,6 @@ SRC_URI = "${KERNELORG_MIRROR}/linux/kernel/v4.x/linux-${PV}.tar.xz;name=kernel 
 
 COMPATIBLE_MACHINE = "cocon486"
 
-SRC_URI[kernel.md5sum] = "6f7f4cb7ceaac770eadf0c7a18ef5225"
-SRC_URI[kernel.sha256sum] = "e4944ca5bb0bdf63a7e97dc7fbdd38bcc820d8b3b57c4a3a7b3bf9c8a48216b7"
+SRC_URI[kernel.md5sum] = "ebf8185c276d94e76eae79aaa778e8da"
+SRC_URI[kernel.sha256sum] = "53f8cd8b024444df0f242f8e6ab5147b0b009d7a30e8b2ed3854e8d17937460d"
 
