@@ -1,5 +1,5 @@
 opencocon : Old computer, New generation.
-distributed by SHIMADA Hirofumi, 2016
+distributed by SHIMADA Hirofumi, 2017
 
 For disk-space saving, This image not contains source
 code of each components.
