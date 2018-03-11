@@ -31,6 +31,8 @@ COCON_CORE_LAYERS = " \
 #---------------------------------------------------------
 COCON_CORE_DEPENDENCY_LAYERS = " \
   ${METADIR}/meta-cocon \
+  ${METADIR}/meta-qt5 \
+  ${METADIR}/meta-qt5-extra \
   "
 
 ####################
