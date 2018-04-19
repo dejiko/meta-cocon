@@ -1,0 +1,5 @@
+# Config for Thin-Client flavor
+kconf non-hardware thinclient-crypto.cfg
+kconf non-hardware thinclient-filesystem.cfg
+kconf non-hardware thinclient-nodebug.cfg
+kconf non-hardware thinclient-tomoyo.cfg
