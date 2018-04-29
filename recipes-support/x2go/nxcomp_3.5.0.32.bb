@@ -1,7 +1,7 @@
 
 require nx-libs.inc
 
-DEPENDS += "zlib libpng jpeg "
+DEPENDS += "zlib libpng jpeg xproto"
 S = "${WORKDIR}/nx-libs-${PV}/${PN}"
 
 do_configure_prepend() {

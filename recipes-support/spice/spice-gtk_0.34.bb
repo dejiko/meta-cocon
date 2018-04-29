@@ -1,13 +1,13 @@
 SUMMARY = "SPICE Client"
 LICENSE = "GPLv2"
-DEPENDS = "celt cyrus-sasl gtk+ jpeg pulseaudio zlib libusb orc gstreamer1.0 \
+DEPENDS = "celt cyrus-sasl gtk+3 jpeg pulseaudio zlib libusb orc gstreamer1.0 \
            gstreamer1.0-plugins-base spice-protocol spice-protocol-native \
-           python-six-native python-pyparsing-native"
+           python-six-native python-pyparsing-native glib-2.0-native"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4fbd65380cdd255951079008b364516c"
 
 inherit autotools gettext pkgconfig pythonnative python-dir
 
-EXTRA_OECONF += "--without-python --disable-gtk-doc-html --disable-gtk-doc --with-gtk=2.0 --enable-smartcard=no --enable-introspection=no"
+EXTRA_OECONF += "--without-python --disable-gtk-doc-html --disable-gtk-doc --enable-smartcard=no --enable-introspection=no"
 
 SRC_URI = "http://spice-space.org/download/gtk/spice-gtk-${PV}.tar.bz2"
 
@@ -34,6 +34,5 @@ CFLAGS += "-fno-stack-protector"
 PACKAGES += "${PN}-vala"
 FILES_${PN}-vala += "${datadir}/vala/*"
 
-SRC_URI[md5sum] = "723e0e9ce9d507ba5d6cd331a3a9b7fb"
-SRC_URI[sha256sum] = "e23323fa399efba17b3c18475ef10a29815851be5e7dbedd246b28ee8eb1379c"
-
+SRC_URI[md5sum] = "ec01b0b50337aa23f0566423b2f83109"
+SRC_URI[sha256sum] = "e9720e01165f8451c9f3f58ad50e3afb990993b81cc2db86b3661b7ac5b976ee"
