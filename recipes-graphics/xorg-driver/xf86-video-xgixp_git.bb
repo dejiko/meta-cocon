@@ -11,5 +11,5 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-xgixp;protocol=g
            file://xdriver_xf86-video-xgixp-cross-compile.patch"
 
 S = "${WORKDIR}/git"
-SRCREV = "e36331f3f2641900efe8363fe3dc15877a72c027"
+SRCREV = "ee201fc80796f97befcb1952178d0f91c03cecd6"
 

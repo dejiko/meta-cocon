@@ -8,6 +8,9 @@ COMPATIBLE_HOST = "i.86.*-linux"
 
 RDEPENDS_${PN} += "xserver-xorg-module-exa"
 
-SRC_URI[md5sum] = "7d049187ee3640087e99f4267de6baf1"
-SRC_URI[sha256sum] = "d6ece9a862a68be3cdf86a87e0e1ba5e199168b8d075129646638f53649ba9e8"
+SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-geode;protocol=git;branch=master \
+"
+
+S = "${WORKDIR}/git"
+SRCREV = "8382e6bb0c76a8029493eae3f2d7a3dbfd0cfc12"
 

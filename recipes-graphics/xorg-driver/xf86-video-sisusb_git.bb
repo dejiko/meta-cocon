@@ -8,5 +8,5 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=b08997efa10dc31f51dad7e85e77f182"
 SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-sisusb;protocol=git;branch=master"
 
 S = "${WORKDIR}/git"
-SRCREV = "293d0902705c272b83432a955fb6a3c96dd6cea7"
+SRCREV = "06a2f92d23d512f348bf3ebf6582d6a9e13697d7"
 

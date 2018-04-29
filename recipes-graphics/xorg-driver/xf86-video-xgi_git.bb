@@ -11,4 +11,4 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-xgi;protocol=git
           "
 
 S = "${WORKDIR}/git"
-SRCREV = "bd94c475035739b42294477cff108e0c5f15ef67"
+SRCREV = "986b2fd0819b34c8291a4e33bee21440db2b4988"

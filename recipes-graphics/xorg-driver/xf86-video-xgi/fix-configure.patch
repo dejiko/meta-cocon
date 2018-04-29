@@ -1,12 +1,5 @@
-Similar to 97a4e747bfac14f34646c55ddf639e8fe22f2f55 in xf86-video-ati.
-
-Signed-off-by: Wolfram Sang <w.sang at pengutronix.de>
----
- configure.ac |   20 +++++++++++++-------
- 1 files changed, 13 insertions(+), 7 deletions(-)
-
 diff --git a/configure.ac b/configure.ac
-index 0116265..7884b28 100644
+index 1e631d9..abab6f0 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -78,12 +78,19 @@ sdkdir=`$PKG_CONFIG --variable=sdkdir xorg-server`
@@ -19,19 +12,19 @@ index 0116265..7884b28 100644
 -                      [have_sarea_h="yes"], [have_sarea_h="no"])
 -        AC_CHECK_FILE([${sdkdir}/dristruct.h],
 -                      [have_dristruct_h="yes"], [have_dristruct_h="no"])
-+	PKG_CHECK_MODULES(DRI, [libdrm >= 2.0 xf86driproto glproto])
-+	save_CPPFLAGS="$CPPFLAGS"
-+	CPPFLAGS="$XORG_CFLAGS $DRI_CFLAGS"
-+	AC_CHECK_HEADER([dri.h],
++       PKG_CHECK_MODULES(DRI, [libdrm >= 2.0 xf86driproto glproto])
++       save_CPPFLAGS="$CPPFLAGS"
++       CPPFLAGS="$XORG_CFLAGS $DRI_CFLAGS"
++       AC_CHECK_HEADER([dri.h],
 +                      [have_dri_h="yes"], [have_dri_h="no"],[-])
-+	AC_CHECK_HEADER([sarea.h],
++       AC_CHECK_HEADER([sarea.h],
 +                      [have_sarea_h="yes"], [have_sarea_h="no"],[-])
-+	AC_PREPROC_IFELSE([AC_LANG_PROGRAM([[
++       AC_PREPROC_IFELSE([AC_LANG_PROGRAM([[
 +#include <xorg-server.h>
 +#include <dristruct.h>
 +                      ]])],
 +                      [have_dristruct_h="yes"], [have_dristruct_h="no"],[-])
-+	CPPFLAGS="$save_CPPFLAGS"
++       CPPFLAGS="$save_CPPFLAGS"
  fi
  
  AC_MSG_CHECKING([whether to include DRI support])
@@ -39,10 +32,7 @@ index 0116265..7884b28 100644
  
  AM_CONDITIONAL(DRI, test "x$DRI" = xyes)
  if test "x$DRI" = xyes; then
--        PKG_CHECK_MODULES(DRI, [libdrm >= 2.0 xf86driproto glproto])
+-        PKG_CHECK_MODULES(DRI, [libdrm >= 2.0 xf86driproto])
          AC_DEFINE(XF86DRI,1,[Enable DRI driver support])
          AC_DEFINE(XF86DRI_DEVEL,1,[Enable developmental DRI driver support])
  fi
--- 
-1.7.2.3
-
