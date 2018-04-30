@@ -9,6 +9,8 @@ PACKAGES =+ "firmware-${PN}"
 FILES_firmware-${PN} += "${libdir}/xorg/modules/v*0002d.uc"
 INSANE_SKIP_firmware-${PN} = "arch"
 
-SRC_URI[md5sum] = "405dd1acba9c2e43d7aa67b631762495"
-SRC_URI[sha256sum] = "660ecf21f65a4d6002c1b603d62c314f8e9624d208db5b346850b0df9dc2f9a8"
+SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-rendition;protocol=git;branch=master \
+          "
+S = "${WORKDIR}/git"
+SRCREV = "70dd6c22b8af58c415ee142468d19dc8b428fffd"
 

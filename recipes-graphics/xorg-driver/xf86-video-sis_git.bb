@@ -13,4 +13,4 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-sis;protocol=git
 S = "${WORKDIR}/git"
 SRCREV = "a50b2b3412dd8e7f3916acb142c942e85ffcb3e5"
 
-EXTRA_OECONF += " --enable-dri"
+# EXTRA_OECONF += " --enable-dri"

@@ -5,6 +5,8 @@ DEPENDS += " xf86dgaproto"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=3a6358ddf387f4be24801a5337a021a8"
 
-SRC_URI[md5sum] = "4b5b52e9da0a954cd3d6068a33975bc1"
-SRC_URI[sha256sum] = "72f89396b10527549337cb72a7eafb1194cf140144f9236a94ad2becdf140bf2"
+SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-neomagic;protocol=git;branch=master \
+          "
+S = "${WORKDIR}/git"
+SRCREV = "81b8ea1cb8aa8bc07e57ad885b4ba2957c90da6a"
 

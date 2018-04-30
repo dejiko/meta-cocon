@@ -8,5 +8,5 @@ SRC_URI = "git://anongit.freedesktop.org/xorg/driver/xf86-video-i128;protocol=gi
 "
 
 S = "${WORKDIR}/git"
-SRCREV = "c87753733a6e1f85d1d037dced0b47ce0cf41658"
+SRCREV = "628ffa784be178f402e4cb126ce3556fbd601df2"
 
