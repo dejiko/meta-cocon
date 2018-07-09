@@ -1,7 +1,8 @@
 #!/bin/sh
 
 USERN=/tmp/.cocon.menu.usern
-
+SCRX=/tmp/.cocon.freerdp.x
+SCRY=/tmp/.cocon.freerdp.y
 
 # opencocon FreeRDP Launcher
 if [ -e /tmp/.cocon.cnf ];
@@ -72,8 +73,12 @@ then
   OPTION="$OPTION /network:modem "
 fi
 
+# Calclate screen size
+expr $( xrandr |grep \* |awk '{print $1}' | cut -d 'x' -f 1 ) - 25 > $SCRX
+expr $( xrandr |grep \* |awk '{print $1}' | cut -d 'x' -f 2 ) - 20 > $SCRY
+
 # finally, add HOSTNAME
-OPTION="$OPTION /v:$COCON_RDP_HOST "
+OPTION="$OPTION /v:$COCON_RDP_HOST +smart-sizing /size:$(cat $SCRX)x$(cat $SCRY) /sound:sys:alsa"
 
 pw_count=0
 
@@ -84,7 +89,7 @@ do
   echo "    PASSWORD is not shown in console."
   echo "=========================================="
 
-  xfreerdp /f /sound:sys:alsa $OPTION
+  xfreerdp $OPTION
   retr=$?
 
   if [ "$retr" != "131" ];
