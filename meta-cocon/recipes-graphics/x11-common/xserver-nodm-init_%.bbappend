@@ -1,5 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+SRC_URI_append += "file://xserver-nodm"
+
 ROOTLESS_X = "1"
 
 # force ROOTLESS X
