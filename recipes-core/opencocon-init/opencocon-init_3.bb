@@ -2,7 +2,7 @@ DESCRIPTION = "opencocon-local init"
 SECTION = "base"
 LICENSE = "MIT"
 DEPENDS = "base-files"
-RDEPENDS_${PN} = "busybox python"
+RDEPENDS_${PN} = "busybox"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
 
 SRC_URI = "file://cocon-poweroff \
