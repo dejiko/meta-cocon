@@ -1,0 +1,10 @@
+diff --git a/src/spy/pcsc-spy b/src/spy/pcsc-spy
+index cef0e1e..d74a85e 100755
+--- a/src/spy/pcsc-spy
++++ b/src/spy/pcsc-spy
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python
++#! /usr/bin/python3
+ 
+ """
+ #    Display PC/SC functions arguments
