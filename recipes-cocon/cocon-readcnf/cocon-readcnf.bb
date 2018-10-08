@@ -1,6 +1,6 @@
 DESCRIPTION = "opencocon configuration reader"
 SECTION = "base"
-RDEPENDS_${PN} = "lsb python"
+RDEPENDS_${PN} = "lsb python3-core python3-io"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/LICENSE;md5=4d92cd373abda3937c2bc47fbc49d690"
 
