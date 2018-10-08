@@ -88,9 +88,11 @@ do
       dialog --inputbox "Enter SoftEther username" 8 40 2>$SE_USERN
 
 
+#      dialog --no-cancel --menu "Select default gateway to use" 20 60 25 \
+#        PHY "Physical gateway" \
+#        VPN "VPN gateway" 2>$SE_GATEWAY_SELECT
       dialog --no-cancel --menu "Select default gateway to use" 20 60 25 \
-        PHY "Physical gateway" \
-        VPN "VPN gateway" 2>$SE_GATEWAY_SELECT
+        PHY "Physical gateway" 2>$SE_GATEWAY_SELECT
 
       if [ `cat $SE_GATEWAY_SELECT` = "VPN" ];
       then
