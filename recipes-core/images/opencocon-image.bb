@@ -41,5 +41,6 @@ pulseaudio-module-null-source \
 
 IMAGE_BASENAME = "opencocon"
 IMAGE_FSTYPES += "tar.gz squashfs"
+IMAGE_FEATURES += "empty-root-password allow-empty-password"
 
 inherit image
