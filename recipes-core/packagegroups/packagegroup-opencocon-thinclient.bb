@@ -17,9 +17,6 @@ cyrus-sasl \
 dialog \
 freerdp \
 libvncserver \
-lxpanel \
-lxrandr \
-lxterminal \
 matchbox-wm \
 network-manager-applet \
 nxcomp \
@@ -34,8 +31,15 @@ opencocon-init-sqs-netboot \
 opencocon-init-zram \
 qtbase-plugins \
 spice-gtk \
-viewnior \
 x2goclient \
 xserver-xorg-xephyr \
+"
+
+# for lxqt testing
+RDEPENDS_${PN} += " \
+lxqt-panel \
+qterminal \
+lxqt-config \
+lxqt-powermanagement \
 "
 
