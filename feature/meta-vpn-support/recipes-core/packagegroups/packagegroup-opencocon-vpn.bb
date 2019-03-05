@@ -8,9 +8,6 @@ inherit packagegroup
 
 RDEPENDS_${PN} = " \
 xl2tpd \
-networkmanager-l2tp \
-networkmanager-openvpn \
-networkmanager-pptp \
 openssh-ssh \
 strongswan \
 openvpn \
