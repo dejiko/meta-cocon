@@ -24,12 +24,10 @@ packagegroup-opencocon-thinclient \
 packagegroup-opencocon-thinclient-${MACHINE} \
 packagegroup-opencocon-thinclient-${MACHINE}-xorg \
 packagegroup-opencocon-debug-${MACHINE} \
-packagegroup-opencocon-thinclient-caravan \
 packagegroup-opencocon-debug \
 packagegroup-opencocon-common \
 packagegroup-opencocon-common-xorg \
 packagegroup-opencocon-thinclient-sound \
-packagegroup-opencocon-thinclient-vpn \
 "
 
 RDEPENDS = "${COCON_TC_PACKAGES}"
