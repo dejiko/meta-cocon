@@ -1,7 +1,7 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 DESCRIPTION = "X.Org X server -- SiS display driver"
-DEPENDS += "xf86miscproto xf86dgaproto drm xf86driproto"
+DEPENDS += "drm"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=cbbdd887d04deb501076c22917e2030d"
 

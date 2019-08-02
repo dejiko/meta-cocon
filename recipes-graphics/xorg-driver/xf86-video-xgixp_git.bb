@@ -2,7 +2,7 @@ require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 inherit pkgconfig
 
-DEPENDS += "xf86miscproto drm xf86driproto"
+DEPENDS += "drm"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=225ca1644e92badb31a40ef755bf2364"
 

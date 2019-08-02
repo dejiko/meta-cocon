@@ -1,7 +1,7 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 DESCRIPTION = "X.Org X server -- Savage display driver"
-DEPENDS += " drm xf86driproto"
+DEPENDS += "drm"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=1f50f1289ca3b91a542a26ba5df51608"
 

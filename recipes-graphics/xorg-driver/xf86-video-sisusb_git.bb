@@ -1,7 +1,7 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 DESCRIPTION = "X.Org X server -- SiS Net2280-based USB video driver"
-DEPENDS += "xf86miscproto xf86dgaproto drm xf86driproto"
+DEPENDS += "drm"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=b08997efa10dc31f51dad7e85e77f182"
 

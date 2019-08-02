@@ -29,7 +29,6 @@ update-rc.d \
 usbutils \
 util-linux-cfdisk \
 util-linux-fdisk \
-wireless-tools \
 wpa-supplicant \
 nss \
 networkmanager \

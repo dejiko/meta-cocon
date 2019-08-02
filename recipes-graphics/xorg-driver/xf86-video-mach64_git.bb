@@ -1,7 +1,7 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 DESCRIPTION = "X.Org X server -- ATI Mach64 display driver"
-DEPENDS += " virtual/libx11 libxvmc drm xf86driproto"
+DEPENDS += "libxvmc drm"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=be79d1b174a1e5b7e9303201e18d45f4"
 

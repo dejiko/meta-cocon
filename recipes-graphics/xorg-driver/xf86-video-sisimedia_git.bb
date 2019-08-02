@@ -3,7 +3,7 @@
 require recipes-graphics/xorg-driver/xorg-driver-video.inc
 
 DESCRIPTION = "X.Org X server -- X.org SiS 671 video driver"
-DEPENDS += "xf86miscproto xf86dgaproto drm xf86driproto util-macros"
+DEPENDS += "util-macros"
 
 LIC_FILES_CHKSUM = "file://src/sis_driver.c;beginline=6;endline=28;md5=8c7057c95db5909c1e455042c48cec57"
 
