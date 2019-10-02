@@ -1,11 +1,11 @@
 require recipes-graphics/ttf-fonts/ttf.inc
 
 DESCRIPTION = "The Koruri - Japanese TrueType fonts"
-HOMEPAGE = "http://koruri.lindwurm.biz/"
-LICENSE = "Apache-2.0 & mplus"
+HOMEPAGE = "https://koruri.github.io"
+LICENSE = "Apache-2.0 & ttf-mplus"
 RDEPENDS_${PN} = "fontconfig-utils"
 
-SRC_URI = "https://osdn.jp/dl/koruri/Koruri-${PV}.tar.xz"
+SRC_URI = "https://github.com/Koruri/Koruri/releases/download/Koruri-${PV}/Koruri-${PV}.tar.xz"
 S = "${WORKDIR}/Koruri-${PV}"
 
 
@@ -24,9 +24,9 @@ do_install () {
 FILES_${PN} += "${sysconfdir} ${datadir}"
 
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=9d088c3f7ae366ec868f971a0a4b664e \
+LIC_FILES_CHKSUM = "file://LICENSE;md5=dcbf253b3d6d09ae7e64cb34b4d0ec33 \
                     file://LICENSE_E.mplus;md5=0ac67069f6b72509c2a25f49ee987f4a"
 
-SRC_URI[md5sum] = "45a25d40ad1a628c7524d0c64d63b9f6"
-SRC_URI[sha256sum] = "15b72c803af963f72c838053a10bea1ae608b36ac9acaf2b69f7d924ee38181f"
+SRC_URI[md5sum] = "1e4af5d50c261b9a9173be98bd147342"
+SRC_URI[sha256sum] = "9cfd9a867f60b8da8653b87706b9bafc113bb477b5e72d1095f43117f7fb3366"
 
