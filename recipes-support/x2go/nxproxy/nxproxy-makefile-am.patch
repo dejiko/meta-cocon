@@ -1,0 +1,19 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 20ec702..ae99a94 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -9,7 +9,7 @@ nxproxy_SOURCES =					\
+     $(NULL)
+ 
+ nxproxy_LDADD =						\
+-    -L$(top_srcdir)/../nxcomp/src/.libs -lXcomp		\
++    -lXcomp		\
+     $(NULL)
+ 
+ nxproxy_LDFLAGS =					\
+@@ -26,5 +26,4 @@ nxproxy_CFLAGS =					\
+     $(NULL)
+ 
+ AM_CPPFLAGS =						\
+-    -I$(top_srcdir)/../nxcomp/include/			\
+     $(NULL)
