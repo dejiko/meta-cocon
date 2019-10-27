@@ -1,0 +1,58 @@
+From patchwork Tue Jun 26 18:55:20 2018
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [xf86-video-s3virge] Add check for max[HV]Value to ValidMode hook
+From: Stefan Dirsch <sndirsch@suse.de>
+X-Patchwork-Id: 232385
+Message-Id: <20180626185520.28114-1-sndirsch@suse.de>
+To: xorg-devel@lists.freedesktop.org
+Date: Tue, 26 Jun 2018 20:55:20 +0200
+
+xorg-server 1.20 removed this check, so implement this in the driver
+itself.
+
+Signed-off-by: Stefan Dirsch <sndirsch@suse.de>
+---
+ src/s3v_driver.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/src/s3v_driver.c b/src/s3v_driver.c
+index e5dd2e4..b546c4f 100644
+--- a/src/s3v_driver.c
++++ b/src/s3v_driver.c
+@@ -1203,17 +1203,6 @@ S3VPreInit(ScrnInfoPtr pScrn, int flags)
+    vga256InfoRec.directMode = XF86DGADirectPresent;
+ #endif
+ 
+-    /*
+-     * xf86ValidateModes will check that the mode HTotal and VTotal values
+-     * don't exceed the chipset's limit if pScrn->maxHValue and
+-     * pScrn->maxVValue are set.  
+-     */
+-
+-    /* todo -  The virge limit is 2048 vertical & horizontal */
+-    /* pixels, not clock register settings. */
+-			 	/* true for all ViRGE? */
+-  pScrn->maxHValue = 2048;
+-  pScrn->maxVValue = 2048;
+ 
+     				/* Lower depths default to config file */
+   pScrn->virtualX = pScrn->display->virtualX;
+@@ -2566,6 +2555,16 @@ S3VValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode, Bool verbose, int flags)
+     if ((pScrn->bitsPerPixel + 7)/8 * mode->HDisplay > 4095)
+ 	return MODE_VIRTUAL_X;
+ 
++    /* todo -  The virge limit is 2048 vertical & horizontal */
++    /* pixels, not clock register settings. */
++    /* true for all ViRGE? */
++
++    if (mode->HTotal > 2048)
++	return MODE_BAD_HVALUE;
++
++    if (mode->VTotal > 2048)
++	return MODE_BAD_VVALUE;
++
+     return MODE_OK;
+ }
+ 
