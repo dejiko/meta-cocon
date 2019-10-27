@@ -19,8 +19,6 @@ freerdp \
 libvncserver \
 matchbox-wm \
 network-manager-applet \
-nxcomp \
-nxproxy \
 opencocon-init \
 opencocon-init-poweroff \
 opencocon-init-make-tmpdir \
@@ -29,17 +27,14 @@ opencocon-init-set-hostname \
 opencocon-init-set-timezone \
 opencocon-init-sqs-netboot \
 opencocon-init-zram \
-qtbase-plugins \
+pyhoca-cli \
 spice-gtk \
-x2goclient \
 xserver-xorg-xephyr \
+xpra \
 "
 
 # for lxqt testing
 RDEPENDS_${PN} += " \
-lxqt-panel \
-qterminal \
-lxqt-config \
-lxqt-powermanagement \
+xfce4-panel \
 "
 
